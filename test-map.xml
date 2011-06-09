@@ -1,0 +1,124 @@
+<resource><requires file="Exterior_Castle-tiles.xml" />
+<rectmap id="map0" origin="0,0,0" tile_size="32x32">
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="wall-bottom-left" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+<column>
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+<cell tile="grass" />
+</column>
+</rectmap>
+</resource>
