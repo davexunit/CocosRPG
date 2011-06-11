@@ -6,7 +6,7 @@
  </imageatlas>
  <tileset>
     <tile id="grass"><image ref="i-grass" /></tile>
-    <tile id="wall-bottom-left"><image ref="i-wall" />
+    <tile id="wall"><image ref="i-wall" />
         <property type="bool" name="bottom" value="True" />
         <property type="bool" name="top" value="True" />
         <property type="bool" name="left" value="True" />
