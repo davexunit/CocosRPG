@@ -197,6 +197,18 @@ if __name__ == "__main__":
                     state = "dialog"
                     player.remove_action(action)
                     stop_sprite(player)
+                    if player.direction == DIR_NORTH:
+                        npc.direction = DIR_SOUTH
+                        npc.image = stand_south
+                    elif player.direction == DIR_SOUTH:
+                        npc.direction = DIR_NORTH
+                        npc.image = stand_north
+                    elif player.direction == DIR_EAST:
+                        npc.direction = DIR_WEST
+                        npc.image = stand_west
+                    elif player.direction == DIR_WEST:
+                        npc.direction = DIR_EAST
+                        npc.image = stand_east
                     label = cocos.text.Label('Hello! I am an NPC! I wish I had something more interesting to say! Okay, bye!', font_name='DroidSans', font_size=16, multiline=True, width=dialog_layer.width)
                     label.position =(dialog_layer.width/2, dialog_layer.height/2) 
                     label.element.anchor_x = 'center'

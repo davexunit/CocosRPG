@@ -34,7 +34,9 @@
 </column>
 <column>
 <cell tile="wall" />
-<cell tile="grass" />
+<cell tile="grass" >
+    <property type="unicode" name="portal" value="test-map.xml" />
+</cell>
 <cell tile="grass" />
 <cell tile="grass" />
 <cell tile="grass" />
