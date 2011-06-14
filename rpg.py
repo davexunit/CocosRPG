@@ -54,21 +54,23 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
         # Set new velocity
         self.target.velocity = (self.dx, self.dy)
 
-        # Get cells that sprite is currently over before moving
-        target_x, target_y = self.target.get_rect().x + self.target.hitbox.x, self.target.get_rect().y + self.target.hitbox.y, 
-        old_cells = test_layer.get_in_region(target_x, target_y, target_x + self.target.hitbox.width, target_y + self.target.hitbox.height)
+        # Get objects that sprite is currently over before moving
+        old_objects = object_layer.get_in_region(self.target.get_hitbox())
 
         # Move
         super(MovePlayer, self).step(dt)
 
-        # Get cells that sprite is currently over after moving
-        target_x, target_y = self.target.get_rect().x + self.target.hitbox.x, self.target.get_rect().y + self.target.hitbox.y, 
-        new_cells = test_layer.get_in_region(target_x, target_y, target_x + self.target.hitbox.width, target_y + self.target.hitbox.height)
+        # Get objects that sprite is currently over after moving
+        new_objects = object_layer.get_in_region(self.target.get_hitbox())
 
         # For any cells in the new list that are not in the old list, analyze their properties and act accordingly
-        for cell in new_cells:
-            if cell not in old_cells:
-                if cell.get('portal'):
+        for obj in new_objects:
+            if obj not in old_objects:
+                obj.on_object_enter(self.target)
+        for obj in old_objects:
+            if obj not in new_objects:
+                    obj.on_object_exit(self.target)
+        '''        if cell.get('portal'):
                     # Arguments are separated by a colon
                     map_file, map = cell.get('portal').split(':')
                     # Remove map
@@ -77,6 +79,7 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
                     test_layer = tiles.load(map_file)[map]
                     # Add new map
                     scroller.add(test_layer)
+        '''
 
         # Focus scrolling layer on player
         scroller.set_focus(self.target.x, self.target.y)
@@ -85,7 +88,7 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
         object_layer.add_object(self.target)
 
     def collide_player(self, new):
-        for s in object_layer.get_objects():
+        for s in object_layer.get_in_region(new):
             if s == self.target:
                 continue
             if s.collidable and s.get_hitbox().intersects(new):
@@ -113,10 +116,31 @@ class MapObject(object):
     def get_hitbox(self):
         return self.hitbox.copy()
 
+    def on_object_enter(self, obj):
+        pass
+
+    def on_object_exit(self, obj):
+        pass
+
 class Portal(MapObject):
     def __init__(self, id, rect, map_file, collidable=False):
         super(Portal, self).__init__(id, rect, collidable)
         self.map_file = map_file
+    
+    def on_object_enter(self, obj):
+        global test_layer, object_layer, map
+        print obj.id, "in", self.map_file
+        scroller.remove(test_layer)
+        scroller.remove(object_layer)
+        map = tiles.load(self.map_file)
+        test_layer = map['ground']
+        object_layer = map['objects']
+        object_layer.add_object(obj)
+        scroller.add(test_layer)
+        scroller.add(object_layer, z=1)
+
+    def on_object_exit(self, obj):
+        print obj.id, "out"
 
 class Character(MapObject, cocos.sprite.Sprite):
     DIR_NORTH = 0
@@ -196,6 +220,13 @@ class ObjectLayer(cocos.layer.ScrollableLayer):
     def get_objects(self):
         return self.objects
 
+    def get_in_region(self, rect):
+        objs = []
+        for o in self.objects:
+            if o.get_hitbox().intersects(rect):
+                objs.append(o)
+        return objs
+
 @cocos.tiles.Resource.register_factory('objects')
 def objectlayer_factory(resource, tag):
     obj_layer = ObjectLayer()
@@ -233,13 +264,14 @@ def stop_sprite(sprite):
     sprite.walking = False
 
 def create_sprite(x, y):
-    sprite = Character('King', anims, rect.Rect(4, 0, 30, 38), 300)
+    sprite = Character('King', anims, rect.Rect(4, 0, 30, 38), 500)
     sprite.position = (x, y)
     return sprite
 
 if __name__ == "__main__":
     from cocos.director import director
     director.init(width=640, height=480, do_not_scale=True, resizable=True)
+    director.show_FPS = True
 
     # Load animation
     image = pyglet.resource.image('king.png')
@@ -256,9 +288,7 @@ if __name__ == "__main__":
     anims = [stand_north, stand_south, stand_east, stand_west, walk_north, walk_south, walk_east, walk_west]
 
     # Setup player sprite
-    #object_layer = layer.ScrollableLayer()
     player = create_sprite(200, 100)
-    #object_layer.add_object(player, z=-player.y)
 
     action = player.do(MovePlayer())
 
@@ -269,7 +299,6 @@ if __name__ == "__main__":
     scroller = layer.ScrollingManager()
     test_layer = map['ground']
     scroller.add(test_layer)
-    #scroller.add(object_layer)
 
     # Load object layer and add it to the scrolling layer
     object_layer = map['objects']

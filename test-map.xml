@@ -1,4 +1,7 @@
 <resource><requires file="Exterior_Castle-tiles.xml" />
+<objects id="objects">
+    <portal id="Portal" xy="200,200" wh="100,100" map="test2-map.xml" />
+</objects>
 <rectmap id="ground" origin="0,0,0" tile_size="32x32">
 <column>
 <cell tile="wall" />
