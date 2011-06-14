@@ -1,5 +1,8 @@
 <resource><requires file="Exterior_Castle-tiles.xml" />
-<rectmap id="test" origin="0,0,0" tile_size="32x32">
+<objects id="objects">
+    <portal id="Portal" xy="200,200" wh="100,100" map="test-map.xml" />
+</objects>
+<rectmap id="ground" origin="0,0,0" tile_size="32x32">
 <column>
 <cell tile="wall" />
 <cell tile="wall" />
@@ -34,9 +37,7 @@
 </column>
 <column>
 <cell tile="wall" />
-<cell tile="grass" >
-    <property type="unicode" name="portal" value="test-map.xml" />
-</cell>
+<cell tile="grass" />
 <cell tile="grass" />
 <cell tile="grass" />
 <cell tile="grass" />
