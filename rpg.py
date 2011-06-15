@@ -1,8 +1,4 @@
 # This code is so you can run the samples without installing the package
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
 import pyglet
 from pyglet.window import key, mouse
 from pyglet.gl import *
@@ -23,13 +19,13 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
         if self.dx != 0 or self.dy != 0:
             self.target.walking = True
             if self.dy > 0:
-                self.target.direction = Character.DIR_NORTH
+                self.target.direction = 'north'
             elif self.dy < 0:
-                self.target.direction = Character.DIR_SOUTH
+                self.target.direction = 'south'
             elif self.dx > 0:
-                self.target.direction = Character.DIR_EAST
+                self.target.direction = 'east'
             elif self.dx < 0:
-                self.target.direction = Character.DIR_WEST
+                self.target.direction = 'west'
             # Create rect for collision testing by translating hitbox by sprite location
             last = self.target.get_hitbox()
 
@@ -63,23 +59,14 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
         # Get objects that sprite is currently over after moving
         new_objects = object_layer.get_in_region(self.target.get_hitbox())
 
-        # For any cells in the new list that are not in the old list, analyze their properties and act accordingly
+        # Call on_object_enter event handler for any object that is in the new list but not in the old list
         for obj in new_objects:
             if obj not in old_objects:
                 obj.on_object_enter(self.target)
+        # Call on_object_exit event handler for any object that is in the old list but not in the new list
         for obj in old_objects:
             if obj not in new_objects:
                     obj.on_object_exit(self.target)
-        '''        if cell.get('portal'):
-                    # Arguments are separated by a colon
-                    map_file, map = cell.get('portal').split(':')
-                    # Remove map
-                    scroller.remove(test_layer)
-                    # Load new map
-                    test_layer = tiles.load(map_file)[map]
-                    # Add new map
-                    scroller.add(test_layer)
-        '''
 
         # Focus scrolling layer on player
         scroller.set_focus(self.target.x, self.target.y)
@@ -143,12 +130,7 @@ class Portal(MapObject):
         print obj.id, "out"
 
 class Character(MapObject, cocos.sprite.Sprite):
-    DIR_NORTH = 0
-    DIR_SOUTH = 1
-    DIR_EAST = 2
-    DIR_WEST = 3
-
-    def __init__(self, id, anims, hitbox, speed, direction=DIR_SOUTH, collidable=True):
+    def __init__(self, id, anims, hitbox, speed, direction='south', collidable=True):
         '''Anims is a list of pyglet.image.Animation.
         Order:
             standing north, standing south, standing east, standing west, walking north, walking south, walking east, walking west
@@ -157,7 +139,7 @@ class Character(MapObject, cocos.sprite.Sprite):
         self._direction = direction
         self._walking = False
         self.anims = anims
-        cocos.sprite.Sprite.__init__(self, self.anims[self._direction])
+        cocos.sprite.Sprite.__init__(self, self.anims['stand_' + self._direction])
         MapObject.__init__(self, id, hitbox, collidable)
 
     def get_hitbox(self):
@@ -167,15 +149,8 @@ class Character(MapObject, cocos.sprite.Sprite):
         return rect
 
     def _update_animation(self):
-        offset = 4 if self._walking else 0
-        if self._direction == self.DIR_NORTH:
-            self.image = self.anims[offset]
-        elif self._direction == self.DIR_SOUTH:
-            self.image = self.anims[offset + 1]
-        elif self._direction == self.DIR_EAST:
-            self.image = self.anims[offset + 2]
-        elif self._direction == self.DIR_WEST:
-            self.image = self.anims[offset + 3]
+        prefix = 'walk_' if self._walking else 'stand_'
+        self.image = self.anims[prefix + self._direction]
 
     @property
     def direction(self):
@@ -245,6 +220,8 @@ def objectlayer_factory(resource, tag):
         # Object factory
         if child.tag == 'portal':
             obj = _handle_portal(child, id, hitbox, collidable)
+        elif child.tag == 'character':
+            obj = _handle_character(child, id, hitbox, collidable)
         if obj != None:
             obj_layer.add_object(obj)
 
@@ -253,6 +230,20 @@ def objectlayer_factory(resource, tag):
         resource.add_resource(obj_layer.id, obj_layer)
 
     return obj_layer
+
+def _handle_character(tag, hitbox, id, collidable):
+    if collidable == None:
+        collidable = True
+    image = pyglet.resource.get(tag.get('image'))
+    speed = tag.get('speed')
+    direction = tag.get('direction')
+    if tag.get('direction') == None:
+        direction = 'south'
+    anims = _handle_anims(tag.findall('anim'))
+
+def _handle_anims(tags):
+    for tag in tags:
+        print tag
 
 def _handle_portal(tag, hitbox, id, collidable):
     if collidable == None:
@@ -285,7 +276,7 @@ if __name__ == "__main__":
     stand_east = pyglet.image.Animation.from_image_sequence(sequence[4:5], .25, loop=True)
     stand_west = pyglet.image.Animation.from_image_sequence(sequence[8:9], .25, loop=True)
     stand_south = pyglet.image.Animation.from_image_sequence(sequence[12:13], .25, loop=True)
-    anims = [stand_north, stand_south, stand_east, stand_west, walk_north, walk_south, walk_east, walk_west]
+    anims = {'stand_north':stand_north, 'stand_south':stand_south, 'stand_east':stand_east, 'stand_west':stand_west, 'walk_north':walk_north, 'walk_south':walk_south, 'walk_east':walk_east, 'walk_west':walk_west}
 
     # Setup player sprite
     player = create_sprite(200, 100)
@@ -329,13 +320,13 @@ if __name__ == "__main__":
             if key == pyglet.window.key.SPACE:
                 npc = None
                 player_rect = player.get_hitbox()
-                if player.direction == Character.DIR_NORTH:
+                if player.direction == 'north':
                     player_rect.y += player.hitbox.height
-                elif player.direction == Character.DIR_SOUTH:
+                elif player.direction == 'south':
                     player_rect.y -= player.hitbox.height
-                elif player.direction == Character.DIR_EAST:
+                elif player.direction == 'east':
                     player_rect.x += player.hitbox.width
-                elif player.direction == Character.DIR_WEST:
+                elif player.direction == 'west':
                     player_rect.x -= player.hitbox.width
                 for s in object_layer.get_objects():
                     if s != player:
@@ -347,14 +338,14 @@ if __name__ == "__main__":
                     state = "dialog"
                     player.remove_action(action)
                     stop_sprite(player)
-                    if player.direction == Character.DIR_NORTH:
-                        npc.direction = Character.DIR_SOUTH
-                    elif player.direction == Character.DIR_SOUTH:
-                        npc.direction = Character.DIR_NORTH
-                    elif player.direction == Character.DIR_EAST:
-                        npc.direction = Character.DIR_WEST
-                    elif player.direction == Character.DIR_WEST:
-                        npc.direction = Character.DIR_EAST
+                    if player.direction == 'north':
+                        npc.direction = 'south'
+                    elif player.direction == 'south':
+                        npc.direction = 'north'
+                    elif player.direction == 'east':
+                        npc.direction = 'west'
+                    elif player.direction == 'west':
+                        npc.direction = 'east'
                     label = cocos.text.Label('Hello! I am an NPC! I wish I had something more interesting to say! Okay, bye!', font_name='DroidSans', font_size=16, multiline=True, width=dialog_layer.width)
                     label.position =(dialog_layer.width/2, dialog_layer.height/2) 
                     label.element.anchor_x = 'center'
