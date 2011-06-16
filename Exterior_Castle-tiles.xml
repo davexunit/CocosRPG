@@ -3,10 +3,17 @@
  <imageatlas size="32x32" file="Exterior_Castle.png">
     <image id="i-grass" offset="0,96" />
     <image id="i-wall" offset="448,96" />
+    <image id="i-sign" offset="320,384" />
  </imageatlas>
  <tileset>
     <tile id="grass"><image ref="i-grass" /></tile>
     <tile id="wall"><image ref="i-wall" />
+        <property type="bool" name="bottom" value="True" />
+        <property type="bool" name="top" value="True" />
+        <property type="bool" name="left" value="True" />
+        <property type="bool" name="right" value="True" />
+    </tile>
+    <tile id="sign"><image ref="i-sign" />
         <property type="bool" name="bottom" value="True" />
         <property type="bool" name="top" value="True" />
         <property type="bool" name="left" value="True" />
