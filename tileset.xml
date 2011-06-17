@@ -1,0 +1,1884 @@
+<resource>
+<imageatlas file="Exterior_Castle.png" size="32x32">
+<image id="i-tileset-0-0" offset="0,0" />
+<image id="i-tileset-0-32" offset="0,32" />
+<image id="i-tileset-0-64" offset="0,64" />
+<image id="i-tileset-0-96" offset="0,96" />
+<image id="i-tileset-0-128" offset="0,128" />
+<image id="i-tileset-0-160" offset="0,160" />
+<image id="i-tileset-0-192" offset="0,192" />
+<image id="i-tileset-0-224" offset="0,224" />
+<image id="i-tileset-0-256" offset="0,256" />
+<image id="i-tileset-0-288" offset="0,288" />
+<image id="i-tileset-0-320" offset="0,320" />
+<image id="i-tileset-0-352" offset="0,352" />
+<image id="i-tileset-0-384" offset="0,384" />
+<image id="i-tileset-0-416" offset="0,416" />
+<image id="i-tileset-0-448" offset="0,448" />
+<image id="i-tileset-0-480" offset="0,480" />
+<image id="i-tileset-0-512" offset="0,512" />
+<image id="i-tileset-0-544" offset="0,544" />
+<image id="i-tileset-32-0" offset="32,0" />
+<image id="i-tileset-32-32" offset="32,32" />
+<image id="i-tileset-32-64" offset="32,64" />
+<image id="i-tileset-32-96" offset="32,96" />
+<image id="i-tileset-32-128" offset="32,128" />
+<image id="i-tileset-32-160" offset="32,160" />
+<image id="i-tileset-32-192" offset="32,192" />
+<image id="i-tileset-32-224" offset="32,224" />
+<image id="i-tileset-32-256" offset="32,256" />
+<image id="i-tileset-32-288" offset="32,288" />
+<image id="i-tileset-32-320" offset="32,320" />
+<image id="i-tileset-32-352" offset="32,352" />
+<image id="i-tileset-32-384" offset="32,384" />
+<image id="i-tileset-32-416" offset="32,416" />
+<image id="i-tileset-32-448" offset="32,448" />
+<image id="i-tileset-32-480" offset="32,480" />
+<image id="i-tileset-32-512" offset="32,512" />
+<image id="i-tileset-32-544" offset="32,544" />
+<image id="i-tileset-64-0" offset="64,0" />
+<image id="i-tileset-64-32" offset="64,32" />
+<image id="i-tileset-64-64" offset="64,64" />
+<image id="i-tileset-64-96" offset="64,96" />
+<image id="i-tileset-64-128" offset="64,128" />
+<image id="i-tileset-64-160" offset="64,160" />
+<image id="i-tileset-64-192" offset="64,192" />
+<image id="i-tileset-64-224" offset="64,224" />
+<image id="i-tileset-64-256" offset="64,256" />
+<image id="i-tileset-64-288" offset="64,288" />
+<image id="i-tileset-64-320" offset="64,320" />
+<image id="i-tileset-64-352" offset="64,352" />
+<image id="i-tileset-64-384" offset="64,384" />
+<image id="i-tileset-64-416" offset="64,416" />
+<image id="i-tileset-64-448" offset="64,448" />
+<image id="i-tileset-64-480" offset="64,480" />
+<image id="i-tileset-64-512" offset="64,512" />
+<image id="i-tileset-64-544" offset="64,544" />
+<image id="i-tileset-96-0" offset="96,0" />
+<image id="i-tileset-96-32" offset="96,32" />
+<image id="i-tileset-96-64" offset="96,64" />
+<image id="i-tileset-96-96" offset="96,96" />
+<image id="i-tileset-96-128" offset="96,128" />
+<image id="i-tileset-96-160" offset="96,160" />
+<image id="i-tileset-96-192" offset="96,192" />
+<image id="i-tileset-96-224" offset="96,224" />
+<image id="i-tileset-96-256" offset="96,256" />
+<image id="i-tileset-96-288" offset="96,288" />
+<image id="i-tileset-96-320" offset="96,320" />
+<image id="i-tileset-96-352" offset="96,352" />
+<image id="i-tileset-96-384" offset="96,384" />
+<image id="i-tileset-96-416" offset="96,416" />
+<image id="i-tileset-96-448" offset="96,448" />
+<image id="i-tileset-96-480" offset="96,480" />
+<image id="i-tileset-96-512" offset="96,512" />
+<image id="i-tileset-96-544" offset="96,544" />
+<image id="i-tileset-128-0" offset="128,0" />
+<image id="i-tileset-128-32" offset="128,32" />
+<image id="i-tileset-128-64" offset="128,64" />
+<image id="i-tileset-128-96" offset="128,96" />
+<image id="i-tileset-128-128" offset="128,128" />
+<image id="i-tileset-128-160" offset="128,160" />
+<image id="i-tileset-128-192" offset="128,192" />
+<image id="i-tileset-128-224" offset="128,224" />
+<image id="i-tileset-128-256" offset="128,256" />
+<image id="i-tileset-128-288" offset="128,288" />
+<image id="i-tileset-128-320" offset="128,320" />
+<image id="i-tileset-128-352" offset="128,352" />
+<image id="i-tileset-128-384" offset="128,384" />
+<image id="i-tileset-128-416" offset="128,416" />
+<image id="i-tileset-128-448" offset="128,448" />
+<image id="i-tileset-128-480" offset="128,480" />
+<image id="i-tileset-128-512" offset="128,512" />
+<image id="i-tileset-128-544" offset="128,544" />
+<image id="i-tileset-160-0" offset="160,0" />
+<image id="i-tileset-160-32" offset="160,32" />
+<image id="i-tileset-160-64" offset="160,64" />
+<image id="i-tileset-160-96" offset="160,96" />
+<image id="i-tileset-160-128" offset="160,128" />
+<image id="i-tileset-160-160" offset="160,160" />
+<image id="i-tileset-160-192" offset="160,192" />
+<image id="i-tileset-160-224" offset="160,224" />
+<image id="i-tileset-160-256" offset="160,256" />
+<image id="i-tileset-160-288" offset="160,288" />
+<image id="i-tileset-160-320" offset="160,320" />
+<image id="i-tileset-160-352" offset="160,352" />
+<image id="i-tileset-160-384" offset="160,384" />
+<image id="i-tileset-160-416" offset="160,416" />
+<image id="i-tileset-160-448" offset="160,448" />
+<image id="i-tileset-160-480" offset="160,480" />
+<image id="i-tileset-160-512" offset="160,512" />
+<image id="i-tileset-160-544" offset="160,544" />
+<image id="i-tileset-192-0" offset="192,0" />
+<image id="i-tileset-192-32" offset="192,32" />
+<image id="i-tileset-192-64" offset="192,64" />
+<image id="i-tileset-192-96" offset="192,96" />
+<image id="i-tileset-192-128" offset="192,128" />
+<image id="i-tileset-192-160" offset="192,160" />
+<image id="i-tileset-192-192" offset="192,192" />
+<image id="i-tileset-192-224" offset="192,224" />
+<image id="i-tileset-192-256" offset="192,256" />
+<image id="i-tileset-192-288" offset="192,288" />
+<image id="i-tileset-192-320" offset="192,320" />
+<image id="i-tileset-192-352" offset="192,352" />
+<image id="i-tileset-192-384" offset="192,384" />
+<image id="i-tileset-192-416" offset="192,416" />
+<image id="i-tileset-192-448" offset="192,448" />
+<image id="i-tileset-192-480" offset="192,480" />
+<image id="i-tileset-192-512" offset="192,512" />
+<image id="i-tileset-192-544" offset="192,544" />
+<image id="i-tileset-224-0" offset="224,0" />
+<image id="i-tileset-224-32" offset="224,32" />
+<image id="i-tileset-224-64" offset="224,64" />
+<image id="i-tileset-224-96" offset="224,96" />
+<image id="i-tileset-224-128" offset="224,128" />
+<image id="i-tileset-224-160" offset="224,160" />
+<image id="i-tileset-224-192" offset="224,192" />
+<image id="i-tileset-224-224" offset="224,224" />
+<image id="i-tileset-224-256" offset="224,256" />
+<image id="i-tileset-224-288" offset="224,288" />
+<image id="i-tileset-224-320" offset="224,320" />
+<image id="i-tileset-224-352" offset="224,352" />
+<image id="i-tileset-224-384" offset="224,384" />
+<image id="i-tileset-224-416" offset="224,416" />
+<image id="i-tileset-224-448" offset="224,448" />
+<image id="i-tileset-224-480" offset="224,480" />
+<image id="i-tileset-224-512" offset="224,512" />
+<image id="i-tileset-224-544" offset="224,544" />
+<image id="i-tileset-256-0" offset="256,0" />
+<image id="i-tileset-256-32" offset="256,32" />
+<image id="i-tileset-256-64" offset="256,64" />
+<image id="i-tileset-256-96" offset="256,96" />
+<image id="i-tileset-256-128" offset="256,128" />
+<image id="i-tileset-256-160" offset="256,160" />
+<image id="i-tileset-256-192" offset="256,192" />
+<image id="i-tileset-256-224" offset="256,224" />
+<image id="i-tileset-256-256" offset="256,256" />
+<image id="i-tileset-256-288" offset="256,288" />
+<image id="i-tileset-256-320" offset="256,320" />
+<image id="i-tileset-256-352" offset="256,352" />
+<image id="i-tileset-256-384" offset="256,384" />
+<image id="i-tileset-256-416" offset="256,416" />
+<image id="i-tileset-256-448" offset="256,448" />
+<image id="i-tileset-256-480" offset="256,480" />
+<image id="i-tileset-256-512" offset="256,512" />
+<image id="i-tileset-256-544" offset="256,544" />
+<image id="i-tileset-288-0" offset="288,0" />
+<image id="i-tileset-288-32" offset="288,32" />
+<image id="i-tileset-288-64" offset="288,64" />
+<image id="i-tileset-288-96" offset="288,96" />
+<image id="i-tileset-288-128" offset="288,128" />
+<image id="i-tileset-288-160" offset="288,160" />
+<image id="i-tileset-288-192" offset="288,192" />
+<image id="i-tileset-288-224" offset="288,224" />
+<image id="i-tileset-288-256" offset="288,256" />
+<image id="i-tileset-288-288" offset="288,288" />
+<image id="i-tileset-288-320" offset="288,320" />
+<image id="i-tileset-288-352" offset="288,352" />
+<image id="i-tileset-288-384" offset="288,384" />
+<image id="i-tileset-288-416" offset="288,416" />
+<image id="i-tileset-288-448" offset="288,448" />
+<image id="i-tileset-288-480" offset="288,480" />
+<image id="i-tileset-288-512" offset="288,512" />
+<image id="i-tileset-288-544" offset="288,544" />
+<image id="i-tileset-320-0" offset="320,0" />
+<image id="i-tileset-320-32" offset="320,32" />
+<image id="i-tileset-320-64" offset="320,64" />
+<image id="i-tileset-320-96" offset="320,96" />
+<image id="i-tileset-320-128" offset="320,128" />
+<image id="i-tileset-320-160" offset="320,160" />
+<image id="i-tileset-320-192" offset="320,192" />
+<image id="i-tileset-320-224" offset="320,224" />
+<image id="i-tileset-320-256" offset="320,256" />
+<image id="i-tileset-320-288" offset="320,288" />
+<image id="i-tileset-320-320" offset="320,320" />
+<image id="i-tileset-320-352" offset="320,352" />
+<image id="i-tileset-320-384" offset="320,384" />
+<image id="i-tileset-320-416" offset="320,416" />
+<image id="i-tileset-320-448" offset="320,448" />
+<image id="i-tileset-320-480" offset="320,480" />
+<image id="i-tileset-320-512" offset="320,512" />
+<image id="i-tileset-320-544" offset="320,544" />
+<image id="i-tileset-352-0" offset="352,0" />
+<image id="i-tileset-352-32" offset="352,32" />
+<image id="i-tileset-352-64" offset="352,64" />
+<image id="i-tileset-352-96" offset="352,96" />
+<image id="i-tileset-352-128" offset="352,128" />
+<image id="i-tileset-352-160" offset="352,160" />
+<image id="i-tileset-352-192" offset="352,192" />
+<image id="i-tileset-352-224" offset="352,224" />
+<image id="i-tileset-352-256" offset="352,256" />
+<image id="i-tileset-352-288" offset="352,288" />
+<image id="i-tileset-352-320" offset="352,320" />
+<image id="i-tileset-352-352" offset="352,352" />
+<image id="i-tileset-352-384" offset="352,384" />
+<image id="i-tileset-352-416" offset="352,416" />
+<image id="i-tileset-352-448" offset="352,448" />
+<image id="i-tileset-352-480" offset="352,480" />
+<image id="i-tileset-352-512" offset="352,512" />
+<image id="i-tileset-352-544" offset="352,544" />
+<image id="i-tileset-384-0" offset="384,0" />
+<image id="i-tileset-384-32" offset="384,32" />
+<image id="i-tileset-384-64" offset="384,64" />
+<image id="i-tileset-384-96" offset="384,96" />
+<image id="i-tileset-384-128" offset="384,128" />
+<image id="i-tileset-384-160" offset="384,160" />
+<image id="i-tileset-384-192" offset="384,192" />
+<image id="i-tileset-384-224" offset="384,224" />
+<image id="i-tileset-384-256" offset="384,256" />
+<image id="i-tileset-384-288" offset="384,288" />
+<image id="i-tileset-384-320" offset="384,320" />
+<image id="i-tileset-384-352" offset="384,352" />
+<image id="i-tileset-384-384" offset="384,384" />
+<image id="i-tileset-384-416" offset="384,416" />
+<image id="i-tileset-384-448" offset="384,448" />
+<image id="i-tileset-384-480" offset="384,480" />
+<image id="i-tileset-384-512" offset="384,512" />
+<image id="i-tileset-384-544" offset="384,544" />
+<image id="i-tileset-416-0" offset="416,0" />
+<image id="i-tileset-416-32" offset="416,32" />
+<image id="i-tileset-416-64" offset="416,64" />
+<image id="i-tileset-416-96" offset="416,96" />
+<image id="i-tileset-416-128" offset="416,128" />
+<image id="i-tileset-416-160" offset="416,160" />
+<image id="i-tileset-416-192" offset="416,192" />
+<image id="i-tileset-416-224" offset="416,224" />
+<image id="i-tileset-416-256" offset="416,256" />
+<image id="i-tileset-416-288" offset="416,288" />
+<image id="i-tileset-416-320" offset="416,320" />
+<image id="i-tileset-416-352" offset="416,352" />
+<image id="i-tileset-416-384" offset="416,384" />
+<image id="i-tileset-416-416" offset="416,416" />
+<image id="i-tileset-416-448" offset="416,448" />
+<image id="i-tileset-416-480" offset="416,480" />
+<image id="i-tileset-416-512" offset="416,512" />
+<image id="i-tileset-416-544" offset="416,544" />
+<image id="i-tileset-448-0" offset="448,0" />
+<image id="i-tileset-448-32" offset="448,32" />
+<image id="i-tileset-448-64" offset="448,64" />
+<image id="i-tileset-448-96" offset="448,96" />
+<image id="i-tileset-448-128" offset="448,128" />
+<image id="i-tileset-448-160" offset="448,160" />
+<image id="i-tileset-448-192" offset="448,192" />
+<image id="i-tileset-448-224" offset="448,224" />
+<image id="i-tileset-448-256" offset="448,256" />
+<image id="i-tileset-448-288" offset="448,288" />
+<image id="i-tileset-448-320" offset="448,320" />
+<image id="i-tileset-448-352" offset="448,352" />
+<image id="i-tileset-448-384" offset="448,384" />
+<image id="i-tileset-448-416" offset="448,416" />
+<image id="i-tileset-448-448" offset="448,448" />
+<image id="i-tileset-448-480" offset="448,480" />
+<image id="i-tileset-448-512" offset="448,512" />
+<image id="i-tileset-448-544" offset="448,544" />
+<image id="i-tileset-480-0" offset="480,0" />
+<image id="i-tileset-480-32" offset="480,32" />
+<image id="i-tileset-480-64" offset="480,64" />
+<image id="i-tileset-480-96" offset="480,96" />
+<image id="i-tileset-480-128" offset="480,128" />
+<image id="i-tileset-480-160" offset="480,160" />
+<image id="i-tileset-480-192" offset="480,192" />
+<image id="i-tileset-480-224" offset="480,224" />
+<image id="i-tileset-480-256" offset="480,256" />
+<image id="i-tileset-480-288" offset="480,288" />
+<image id="i-tileset-480-320" offset="480,320" />
+<image id="i-tileset-480-352" offset="480,352" />
+<image id="i-tileset-480-384" offset="480,384" />
+<image id="i-tileset-480-416" offset="480,416" />
+<image id="i-tileset-480-448" offset="480,448" />
+<image id="i-tileset-480-480" offset="480,480" />
+<image id="i-tileset-480-512" offset="480,512" />
+<image id="i-tileset-480-544" offset="480,544" />
+<image id="i-tileset-512-0" offset="512,0" />
+<image id="i-tileset-512-32" offset="512,32" />
+<image id="i-tileset-512-64" offset="512,64" />
+<image id="i-tileset-512-96" offset="512,96" />
+<image id="i-tileset-512-128" offset="512,128" />
+<image id="i-tileset-512-160" offset="512,160" />
+<image id="i-tileset-512-192" offset="512,192" />
+<image id="i-tileset-512-224" offset="512,224" />
+<image id="i-tileset-512-256" offset="512,256" />
+<image id="i-tileset-512-288" offset="512,288" />
+<image id="i-tileset-512-320" offset="512,320" />
+<image id="i-tileset-512-352" offset="512,352" />
+<image id="i-tileset-512-384" offset="512,384" />
+<image id="i-tileset-512-416" offset="512,416" />
+<image id="i-tileset-512-448" offset="512,448" />
+<image id="i-tileset-512-480" offset="512,480" />
+<image id="i-tileset-512-512" offset="512,512" />
+<image id="i-tileset-512-544" offset="512,544" />
+<image id="i-tileset-544-0" offset="544,0" />
+<image id="i-tileset-544-32" offset="544,32" />
+<image id="i-tileset-544-64" offset="544,64" />
+<image id="i-tileset-544-96" offset="544,96" />
+<image id="i-tileset-544-128" offset="544,128" />
+<image id="i-tileset-544-160" offset="544,160" />
+<image id="i-tileset-544-192" offset="544,192" />
+<image id="i-tileset-544-224" offset="544,224" />
+<image id="i-tileset-544-256" offset="544,256" />
+<image id="i-tileset-544-288" offset="544,288" />
+<image id="i-tileset-544-320" offset="544,320" />
+<image id="i-tileset-544-352" offset="544,352" />
+<image id="i-tileset-544-384" offset="544,384" />
+<image id="i-tileset-544-416" offset="544,416" />
+<image id="i-tileset-544-448" offset="544,448" />
+<image id="i-tileset-544-480" offset="544,480" />
+<image id="i-tileset-544-512" offset="544,512" />
+<image id="i-tileset-544-544" offset="544,544" />
+<image id="i-tileset-576-0" offset="576,0" />
+<image id="i-tileset-576-32" offset="576,32" />
+<image id="i-tileset-576-64" offset="576,64" />
+<image id="i-tileset-576-96" offset="576,96" />
+<image id="i-tileset-576-128" offset="576,128" />
+<image id="i-tileset-576-160" offset="576,160" />
+<image id="i-tileset-576-192" offset="576,192" />
+<image id="i-tileset-576-224" offset="576,224" />
+<image id="i-tileset-576-256" offset="576,256" />
+<image id="i-tileset-576-288" offset="576,288" />
+<image id="i-tileset-576-320" offset="576,320" />
+<image id="i-tileset-576-352" offset="576,352" />
+<image id="i-tileset-576-384" offset="576,384" />
+<image id="i-tileset-576-416" offset="576,416" />
+<image id="i-tileset-576-448" offset="576,448" />
+<image id="i-tileset-576-480" offset="576,480" />
+<image id="i-tileset-576-512" offset="576,512" />
+<image id="i-tileset-576-544" offset="576,544" />
+<image id="i-tileset-608-0" offset="608,0" />
+<image id="i-tileset-608-32" offset="608,32" />
+<image id="i-tileset-608-64" offset="608,64" />
+<image id="i-tileset-608-96" offset="608,96" />
+<image id="i-tileset-608-128" offset="608,128" />
+<image id="i-tileset-608-160" offset="608,160" />
+<image id="i-tileset-608-192" offset="608,192" />
+<image id="i-tileset-608-224" offset="608,224" />
+<image id="i-tileset-608-256" offset="608,256" />
+<image id="i-tileset-608-288" offset="608,288" />
+<image id="i-tileset-608-320" offset="608,320" />
+<image id="i-tileset-608-352" offset="608,352" />
+<image id="i-tileset-608-384" offset="608,384" />
+<image id="i-tileset-608-416" offset="608,416" />
+<image id="i-tileset-608-448" offset="608,448" />
+<image id="i-tileset-608-480" offset="608,480" />
+<image id="i-tileset-608-512" offset="608,512" />
+<image id="i-tileset-608-544" offset="608,544" />
+<image id="i-tileset-640-0" offset="640,0" />
+<image id="i-tileset-640-32" offset="640,32" />
+<image id="i-tileset-640-64" offset="640,64" />
+<image id="i-tileset-640-96" offset="640,96" />
+<image id="i-tileset-640-128" offset="640,128" />
+<image id="i-tileset-640-160" offset="640,160" />
+<image id="i-tileset-640-192" offset="640,192" />
+<image id="i-tileset-640-224" offset="640,224" />
+<image id="i-tileset-640-256" offset="640,256" />
+<image id="i-tileset-640-288" offset="640,288" />
+<image id="i-tileset-640-320" offset="640,320" />
+<image id="i-tileset-640-352" offset="640,352" />
+<image id="i-tileset-640-384" offset="640,384" />
+<image id="i-tileset-640-416" offset="640,416" />
+<image id="i-tileset-640-448" offset="640,448" />
+<image id="i-tileset-640-480" offset="640,480" />
+<image id="i-tileset-640-512" offset="640,512" />
+<image id="i-tileset-640-544" offset="640,544" />
+<image id="i-tileset-672-0" offset="672,0" />
+<image id="i-tileset-672-32" offset="672,32" />
+<image id="i-tileset-672-64" offset="672,64" />
+<image id="i-tileset-672-96" offset="672,96" />
+<image id="i-tileset-672-128" offset="672,128" />
+<image id="i-tileset-672-160" offset="672,160" />
+<image id="i-tileset-672-192" offset="672,192" />
+<image id="i-tileset-672-224" offset="672,224" />
+<image id="i-tileset-672-256" offset="672,256" />
+<image id="i-tileset-672-288" offset="672,288" />
+<image id="i-tileset-672-320" offset="672,320" />
+<image id="i-tileset-672-352" offset="672,352" />
+<image id="i-tileset-672-384" offset="672,384" />
+<image id="i-tileset-672-416" offset="672,416" />
+<image id="i-tileset-672-448" offset="672,448" />
+<image id="i-tileset-672-480" offset="672,480" />
+<image id="i-tileset-672-512" offset="672,512" />
+<image id="i-tileset-672-544" offset="672,544" />
+<image id="i-tileset-704-0" offset="704,0" />
+<image id="i-tileset-704-32" offset="704,32" />
+<image id="i-tileset-704-64" offset="704,64" />
+<image id="i-tileset-704-96" offset="704,96" />
+<image id="i-tileset-704-128" offset="704,128" />
+<image id="i-tileset-704-160" offset="704,160" />
+<image id="i-tileset-704-192" offset="704,192" />
+<image id="i-tileset-704-224" offset="704,224" />
+<image id="i-tileset-704-256" offset="704,256" />
+<image id="i-tileset-704-288" offset="704,288" />
+<image id="i-tileset-704-320" offset="704,320" />
+<image id="i-tileset-704-352" offset="704,352" />
+<image id="i-tileset-704-384" offset="704,384" />
+<image id="i-tileset-704-416" offset="704,416" />
+<image id="i-tileset-704-448" offset="704,448" />
+<image id="i-tileset-704-480" offset="704,480" />
+<image id="i-tileset-704-512" offset="704,512" />
+<image id="i-tileset-704-544" offset="704,544" />
+<image id="i-tileset-736-0" offset="736,0" />
+<image id="i-tileset-736-32" offset="736,32" />
+<image id="i-tileset-736-64" offset="736,64" />
+<image id="i-tileset-736-96" offset="736,96" />
+<image id="i-tileset-736-128" offset="736,128" />
+<image id="i-tileset-736-160" offset="736,160" />
+<image id="i-tileset-736-192" offset="736,192" />
+<image id="i-tileset-736-224" offset="736,224" />
+<image id="i-tileset-736-256" offset="736,256" />
+<image id="i-tileset-736-288" offset="736,288" />
+<image id="i-tileset-736-320" offset="736,320" />
+<image id="i-tileset-736-352" offset="736,352" />
+<image id="i-tileset-736-384" offset="736,384" />
+<image id="i-tileset-736-416" offset="736,416" />
+<image id="i-tileset-736-448" offset="736,448" />
+<image id="i-tileset-736-480" offset="736,480" />
+<image id="i-tileset-736-512" offset="736,512" />
+<image id="i-tileset-736-544" offset="736,544" />
+<image id="i-tileset-768-0" offset="768,0" />
+<image id="i-tileset-768-32" offset="768,32" />
+<image id="i-tileset-768-64" offset="768,64" />
+<image id="i-tileset-768-96" offset="768,96" />
+<image id="i-tileset-768-128" offset="768,128" />
+<image id="i-tileset-768-160" offset="768,160" />
+<image id="i-tileset-768-192" offset="768,192" />
+<image id="i-tileset-768-224" offset="768,224" />
+<image id="i-tileset-768-256" offset="768,256" />
+<image id="i-tileset-768-288" offset="768,288" />
+<image id="i-tileset-768-320" offset="768,320" />
+<image id="i-tileset-768-352" offset="768,352" />
+<image id="i-tileset-768-384" offset="768,384" />
+<image id="i-tileset-768-416" offset="768,416" />
+<image id="i-tileset-768-448" offset="768,448" />
+<image id="i-tileset-768-480" offset="768,480" />
+<image id="i-tileset-768-512" offset="768,512" />
+<image id="i-tileset-768-544" offset="768,544" />
+</imageatlas>
+<tileset id="tileset">
+<tile id="tileset-640-224">
+<image ref="i-tileset-640-224" />
+</tile>
+<tile id="tileset-256-32">
+<image ref="i-tileset-256-32" />
+</tile>
+<tile id="tileset-160-544">
+<image ref="i-tileset-160-544" />
+</tile>
+<tile id="tileset-128-0">
+<image ref="i-tileset-128-0" />
+</tile>
+<tile id="tileset-320-352">
+<image ref="i-tileset-320-352" />
+</tile>
+<tile id="tileset-96-416">
+<image ref="i-tileset-96-416" />
+</tile>
+<tile id="tileset-416-352">
+<image ref="i-tileset-416-352" />
+</tile>
+<tile id="tileset-192-448">
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-192-448" />
+</tile>
+<tile id="tileset-576-512">
+<image ref="i-tileset-576-512" />
+</tile>
+<tile id="tileset-128-288">
+<image ref="i-tileset-128-288" />
+</tile>
+<tile id="tileset-640-32">
+<image ref="i-tileset-640-32" />
+</tile>
+<tile id="tileset-640-352">
+<image ref="i-tileset-640-352" />
+</tile>
+<tile id="tileset-128-32">
+<image ref="i-tileset-128-32" />
+</tile>
+<tile id="tileset-640-128">
+<image ref="i-tileset-640-128" />
+</tile>
+<tile id="tileset-192-288">
+<image ref="i-tileset-192-288" />
+</tile>
+<tile id="tileset-352-192">
+<image ref="i-tileset-352-192" />
+</tile>
+<tile id="tileset-192-192">
+<image ref="i-tileset-192-192" />
+</tile>
+<tile id="tileset-192-320">
+<image ref="i-tileset-192-320" />
+</tile>
+<tile id="tileset-160-64">
+<image ref="i-tileset-160-64" />
+</tile>
+<tile id="tileset-320-320">
+<image ref="i-tileset-320-320" />
+</tile>
+<tile id="tileset-608-320">
+<image ref="i-tileset-608-320" />
+</tile>
+<tile id="tileset-416-128">
+<image ref="i-tileset-416-128" />
+</tile>
+<tile id="tileset-288-384">
+<image ref="i-tileset-288-384" />
+</tile>
+<tile id="tileset-320-0">
+<image ref="i-tileset-320-0" />
+</tile>
+<tile id="tileset-224-256">
+<image ref="i-tileset-224-256" />
+</tile>
+<tile id="tileset-736-96">
+<image ref="i-tileset-736-96" />
+</tile>
+<tile id="tileset-352-160">
+<image ref="i-tileset-352-160" />
+</tile>
+<tile id="tileset-224-320">
+<image ref="i-tileset-224-320" />
+</tile>
+<tile id="tileset-224-448">
+<image ref="i-tileset-224-448" />
+</tile>
+<tile id="tileset-352-224">
+<image ref="i-tileset-352-224" />
+</tile>
+<tile id="tileset-448-384">
+<image ref="i-tileset-448-384" />
+</tile>
+<tile id="tileset-704-416">
+<image ref="i-tileset-704-416" />
+</tile>
+<tile id="tileset-576-160">
+<image ref="i-tileset-576-160" />
+</tile>
+<tile id="tileset-384-256">
+<image ref="i-tileset-384-256" />
+</tile>
+<tile id="tileset-128-416">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-128-416" />
+</tile>
+<tile id="tileset-512-0">
+<image ref="i-tileset-512-0" />
+</tile>
+<tile id="tileset-672-384">
+<image ref="i-tileset-672-384" />
+</tile>
+<tile id="tileset-352-32">
+<image ref="i-tileset-352-32" />
+</tile>
+<tile id="tileset-608-256">
+<image ref="i-tileset-608-256" />
+</tile>
+<tile id="tileset-384-32">
+<image ref="i-tileset-384-32" />
+</tile>
+<tile id="tileset-768-320">
+<image ref="i-tileset-768-320" />
+</tile>
+<tile id="tileset-384-512">
+<image ref="i-tileset-384-512" />
+</tile>
+<tile id="tileset-96-224">
+<image ref="i-tileset-96-224" />
+</tile>
+<tile id="tileset-128-256">
+<image ref="i-tileset-128-256" />
+</tile>
+<tile id="tileset-672-256">
+<image ref="i-tileset-672-256" />
+</tile>
+<tile id="tileset-0-416">
+<image ref="i-tileset-0-416" />
+</tile>
+<tile id="tileset-384-320">
+<image ref="i-tileset-384-320" />
+</tile>
+<tile id="tileset-672-0">
+<image ref="i-tileset-672-0" />
+</tile>
+<tile id="tileset-160-320">
+<image ref="i-tileset-160-320" />
+</tile>
+<tile id="tileset-448-480">
+<image ref="i-tileset-448-480" />
+</tile>
+<tile id="tileset-704-480">
+<image ref="i-tileset-704-480" />
+</tile>
+<tile id="tileset-64-384">
+<image ref="i-tileset-64-384" />
+</tile>
+<tile id="tileset-96-64">
+<image ref="i-tileset-96-64" />
+</tile>
+<tile id="tileset-384-128">
+<image ref="i-tileset-384-128" />
+</tile>
+<tile id="tileset-224-96">
+<image ref="i-tileset-224-96" />
+</tile>
+<tile id="tileset-672-32">
+<image ref="i-tileset-672-32" />
+</tile>
+<tile id="tileset-32-0">
+<image ref="i-tileset-32-0" />
+</tile>
+<tile id="tileset-96-352">
+<image ref="i-tileset-96-352" />
+</tile>
+<tile id="tileset-672-512">
+<image ref="i-tileset-672-512" />
+</tile>
+<tile id="tileset-480-256">
+<image ref="i-tileset-480-256" />
+</tile>
+<tile id="tileset-128-320">
+<property name="right" type="bool" value="True" />
+<image ref="i-tileset-128-320" />
+</tile>
+<tile id="tileset-640-544">
+<image ref="i-tileset-640-544" />
+</tile>
+<tile id="tileset-608-96">
+<image ref="i-tileset-608-96" />
+</tile>
+<tile id="tileset-256-224">
+<image ref="i-tileset-256-224" />
+</tile>
+<tile id="tileset-448-416">
+<image ref="i-tileset-448-416" />
+</tile>
+<tile id="tileset-640-0">
+<image ref="i-tileset-640-0" />
+</tile>
+<tile id="tileset-704-224">
+<image ref="i-tileset-704-224" />
+</tile>
+<tile id="tileset-416-160">
+<image ref="i-tileset-416-160" />
+</tile>
+<tile id="tileset-416-96">
+<image ref="i-tileset-416-96" />
+</tile>
+<tile id="tileset-64-448">
+<image ref="i-tileset-64-448" />
+</tile>
+<tile id="tileset-32-192">
+<image ref="i-tileset-32-192" />
+</tile>
+<tile id="tileset-576-544">
+<image ref="i-tileset-576-544" />
+</tile>
+<tile id="tileset-640-416">
+<image ref="i-tileset-640-416" />
+</tile>
+<tile id="tileset-32-96">
+<image ref="i-tileset-32-96" />
+</tile>
+<tile id="tileset-736-160">
+<image ref="i-tileset-736-160" />
+</tile>
+<tile id="tileset-32-352">
+<property name="top" type="bool" value="True" />
+<image ref="i-tileset-32-352" />
+</tile>
+<tile id="tileset-352-128">
+<image ref="i-tileset-352-128" />
+</tile>
+<tile id="tileset-288-320">
+<image ref="i-tileset-288-320" />
+</tile>
+<tile id="tileset-704-352">
+<image ref="i-tileset-704-352" />
+</tile>
+<tile id="tileset-640-288">
+<image ref="i-tileset-640-288" />
+</tile>
+<tile id="tileset-736-64">
+<image ref="i-tileset-736-64" />
+</tile>
+<tile id="tileset-192-224">
+<image ref="i-tileset-192-224" />
+</tile>
+<tile id="tileset-192-384">
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-192-384" />
+</tile>
+<tile id="tileset-32-128">
+<image ref="i-tileset-32-128" />
+</tile>
+<tile id="tileset-0-32">
+<image ref="i-tileset-0-32" />
+</tile>
+<tile id="tileset-480-320">
+<image ref="i-tileset-480-320" />
+</tile>
+<tile id="tileset-480-448">
+<image ref="i-tileset-480-448" />
+</tile>
+<tile id="tileset-704-64">
+<image ref="i-tileset-704-64" />
+</tile>
+<tile id="tileset-640-160">
+<image ref="i-tileset-640-160" />
+</tile>
+<tile id="tileset-512-448">
+<image ref="i-tileset-512-448" />
+</tile>
+<tile id="tileset-256-480">
+<image ref="i-tileset-256-480" />
+</tile>
+<tile id="tileset-544-448">
+<image ref="i-tileset-544-448" />
+</tile>
+<tile id="tileset-384-416">
+<image ref="i-tileset-384-416" />
+</tile>
+<tile id="tileset-128-448">
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-128-448" />
+</tile>
+<tile id="tileset-128-512">
+<image ref="i-tileset-128-512" />
+</tile>
+<tile id="tileset-0-512">
+<image ref="i-tileset-0-512" />
+</tile>
+<tile id="tileset-544-32">
+<image ref="i-tileset-544-32" />
+</tile>
+<tile id="tileset-384-160">
+<image ref="i-tileset-384-160" />
+</tile>
+<tile id="tileset-736-192">
+<image ref="i-tileset-736-192" />
+</tile>
+<tile id="tileset-736-544">
+<image ref="i-tileset-736-544" />
+</tile>
+<tile id="tileset-160-384">
+<image ref="i-tileset-160-384" />
+</tile>
+<tile id="tileset-768-160">
+<image ref="i-tileset-768-160" />
+</tile>
+<tile id="tileset-512-64">
+<image ref="i-tileset-512-64" />
+</tile>
+<tile id="tileset-32-384">
+<image ref="i-tileset-32-384" />
+</tile>
+<tile id="tileset-352-448">
+<image ref="i-tileset-352-448" />
+</tile>
+<tile id="tileset-576-384">
+<image ref="i-tileset-576-384" />
+</tile>
+<tile id="tileset-32-224">
+<image ref="i-tileset-32-224" />
+</tile>
+<tile id="tileset-544-384">
+<image ref="i-tileset-544-384" />
+</tile>
+<tile id="tileset-96-256">
+<image ref="i-tileset-96-256" />
+</tile>
+<tile id="tileset-384-480">
+<image ref="i-tileset-384-480" />
+</tile>
+<tile id="tileset-416-224">
+<image ref="i-tileset-416-224" />
+</tile>
+<tile id="tileset-256-384">
+<image ref="i-tileset-256-384" />
+</tile>
+<tile id="tileset-448-256">
+<image ref="i-tileset-448-256" />
+</tile>
+<tile id="tileset-416-544">
+<image ref="i-tileset-416-544" />
+</tile>
+<tile id="tileset-128-160">
+<image ref="i-tileset-128-160" />
+</tile>
+<tile id="tileset-608-352">
+<image ref="i-tileset-608-352" />
+</tile>
+<tile id="tileset-96-96">
+<image ref="i-tileset-96-96" />
+</tile>
+<tile id="tileset-448-512">
+<image ref="i-tileset-448-512" />
+</tile>
+<tile id="tileset-96-384">
+<image ref="i-tileset-96-384" />
+</tile>
+<tile id="tileset-768-544">
+<image ref="i-tileset-768-544" />
+</tile>
+<tile id="tileset-64-480">
+<image ref="i-tileset-64-480" />
+</tile>
+<tile id="tileset-192-352">
+<image ref="i-tileset-192-352" />
+</tile>
+<tile id="tileset-512-384">
+<image ref="i-tileset-512-384" />
+</tile>
+<tile id="tileset-608-32">
+<image ref="i-tileset-608-32" />
+</tile>
+<tile id="tileset-416-320">
+<image ref="i-tileset-416-320" />
+</tile>
+<tile id="tileset-736-128">
+<image ref="i-tileset-736-128" />
+</tile>
+<tile id="tileset-608-0">
+<image ref="i-tileset-608-0" />
+</tile>
+<tile id="tileset-448-32">
+<image ref="i-tileset-448-32" />
+</tile>
+<tile id="tileset-384-384">
+<image ref="i-tileset-384-384" />
+</tile>
+<tile id="tileset-416-480">
+<image ref="i-tileset-416-480" />
+</tile>
+<tile id="tileset-192-0">
+<image ref="i-tileset-192-0" />
+</tile>
+<tile id="tileset-288-64">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-288-64" />
+</tile>
+<tile id="tileset-704-256">
+<image ref="i-tileset-704-256" />
+</tile>
+<tile id="tileset-672-96">
+<image ref="i-tileset-672-96" />
+</tile>
+<tile id="tileset-64-416">
+<image ref="i-tileset-64-416" />
+</tile>
+<tile id="tileset-576-0">
+<image ref="i-tileset-576-0" />
+</tile>
+<tile id="tileset-704-32">
+<image ref="i-tileset-704-32" />
+</tile>
+<tile id="tileset-288-448">
+<image ref="i-tileset-288-448" />
+</tile>
+<tile id="tileset-512-480">
+<image ref="i-tileset-512-480" />
+</tile>
+<tile id="tileset-320-448">
+<image ref="i-tileset-320-448" />
+</tile>
+<tile id="tileset-32-160">
+<image ref="i-tileset-32-160" />
+</tile>
+<tile id="tileset-640-96">
+<image ref="i-tileset-640-96" />
+</tile>
+<tile id="tileset-160-128">
+<image ref="i-tileset-160-128" />
+</tile>
+<tile id="tileset-288-96">
+<image ref="i-tileset-288-96" />
+</tile>
+<tile id="tileset-224-224">
+<image ref="i-tileset-224-224" />
+</tile>
+<tile id="tileset-0-320">
+<image ref="i-tileset-0-320" />
+</tile>
+<tile id="tileset-224-352">
+<image ref="i-tileset-224-352" />
+</tile>
+<tile id="tileset-320-288">
+<image ref="i-tileset-320-288" />
+</tile>
+<tile id="tileset-96-0">
+<image ref="i-tileset-96-0" />
+</tile>
+<tile id="tileset-0-96">
+<image ref="i-tileset-0-96" />
+</tile>
+<tile id="tileset-256-288">
+<image ref="i-tileset-256-288" />
+</tile>
+<tile id="tileset-608-544">
+<image ref="i-tileset-608-544" />
+</tile>
+<tile id="tileset-512-416">
+<image ref="i-tileset-512-416" />
+</tile>
+<tile id="tileset-320-384">
+<image ref="i-tileset-320-384" />
+</tile>
+<tile id="tileset-608-384">
+<image ref="i-tileset-608-384" />
+</tile>
+<tile id="tileset-288-288">
+<image ref="i-tileset-288-288" />
+</tile>
+<tile id="tileset-608-448">
+<image ref="i-tileset-608-448" />
+</tile>
+<tile id="tileset-128-128">
+<image ref="i-tileset-128-128" />
+</tile>
+<tile id="tileset-544-96">
+<image ref="i-tileset-544-96" />
+</tile>
+<tile id="tileset-0-192">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-0-192" />
+</tile>
+<tile id="tileset-768-512">
+<image ref="i-tileset-768-512" />
+</tile>
+<tile id="tileset-96-192">
+<image ref="i-tileset-96-192" />
+</tile>
+<tile id="tileset-0-352">
+<property name="top" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-0-352" />
+</tile>
+<tile id="tileset-448-288">
+<image ref="i-tileset-448-288" />
+</tile>
+<tile id="tileset-448-320">
+<image ref="i-tileset-448-320" />
+</tile>
+<tile id="tileset-384-448">
+<image ref="i-tileset-384-448" />
+</tile>
+<tile id="tileset-416-0">
+<image ref="i-tileset-416-0" />
+</tile>
+<tile id="tileset-768-192">
+<image ref="i-tileset-768-192" />
+</tile>
+<tile id="tileset-544-64">
+<image ref="i-tileset-544-64" />
+</tile>
+<tile id="tileset-512-96">
+<image ref="i-tileset-512-96" />
+</tile>
+<tile id="tileset-480-0">
+<image ref="i-tileset-480-0" />
+</tile>
+<tile id="tileset-608-160">
+<image ref="i-tileset-608-160" />
+</tile>
+<tile id="tileset-352-96">
+<image ref="i-tileset-352-96" />
+</tile>
+<tile id="tileset-256-64">
+<image ref="i-tileset-256-64" />
+</tile>
+<tile id="tileset-64-352">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<image ref="i-tileset-64-352" />
+</tile>
+<tile id="tileset-192-416">
+<property name="top" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-192-416" />
+</tile>
+<tile id="tileset-256-544">
+<image ref="i-tileset-256-544" />
+</tile>
+<tile id="tileset-160-192">
+<image ref="i-tileset-160-192" />
+</tile>
+<tile id="tileset-384-96">
+<image ref="i-tileset-384-96" />
+</tile>
+<tile id="tileset-448-352">
+<image ref="i-tileset-448-352" />
+</tile>
+<tile id="tileset-672-448">
+<image ref="i-tileset-672-448" />
+</tile>
+<tile id="tileset-480-224">
+<image ref="i-tileset-480-224" />
+</tile>
+<tile id="tileset-256-352">
+<image ref="i-tileset-256-352" />
+</tile>
+<tile id="tileset-128-64">
+<image ref="i-tileset-128-64" />
+</tile>
+<tile id="tileset-416-64">
+<image ref="i-tileset-416-64" />
+</tile>
+<tile id="tileset-64-288">
+<image ref="i-tileset-64-288" />
+</tile>
+<tile id="tileset-64-320">
+<image ref="i-tileset-64-320" />
+</tile>
+<tile id="tileset-352-416">
+<image ref="i-tileset-352-416" />
+</tile>
+<tile id="tileset-32-32">
+<image ref="i-tileset-32-32" />
+</tile>
+<tile id="tileset-64-512">
+<image ref="i-tileset-64-512" />
+</tile>
+<tile id="tileset-288-0">
+<image ref="i-tileset-288-0" />
+</tile>
+<tile id="tileset-736-384">
+<image ref="i-tileset-736-384" />
+</tile>
+<tile id="tileset-288-480">
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-288-480" />
+</tile>
+<tile id="tileset-32-320">
+<image ref="i-tileset-32-320" />
+</tile>
+<tile id="tileset-160-160">
+<image ref="i-tileset-160-160" />
+</tile>
+<tile id="tileset-32-288">
+<image ref="i-tileset-32-288" />
+</tile>
+<tile id="tileset-160-512">
+<image ref="i-tileset-160-512" />
+</tile>
+<tile id="tileset-576-320">
+<image ref="i-tileset-576-320" />
+</tile>
+<tile id="tileset-128-192">
+<image ref="i-tileset-128-192" />
+</tile>
+<tile id="tileset-288-256">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-288-256" />
+</tile>
+<tile id="tileset-704-288">
+<image ref="i-tileset-704-288" />
+</tile>
+<tile id="tileset-672-352">
+<image ref="i-tileset-672-352" />
+</tile>
+<tile id="tileset-288-32">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-288-32" />
+</tile>
+<tile id="tileset-608-224">
+<image ref="i-tileset-608-224" />
+</tile>
+<tile id="tileset-192-96">
+<image ref="i-tileset-192-96" />
+</tile>
+<tile id="tileset-768-224">
+<image ref="i-tileset-768-224" />
+</tile>
+<tile id="tileset-224-480">
+<image ref="i-tileset-224-480" />
+</tile>
+<tile id="tileset-288-416">
+<image ref="i-tileset-288-416" />
+</tile>
+<tile id="tileset-480-352">
+<image ref="i-tileset-480-352" />
+</tile>
+<tile id="tileset-640-192">
+<image ref="i-tileset-640-192" />
+</tile>
+<tile id="tileset-352-384">
+<image ref="i-tileset-352-384" />
+</tile>
+<tile id="tileset-512-512">
+<image ref="i-tileset-512-512" />
+</tile>
+<tile id="tileset-0-256">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-0-256" />
+</tile>
+<tile id="tileset-768-416">
+<image ref="i-tileset-768-416" />
+</tile>
+<tile id="tileset-736-448">
+<image ref="i-tileset-736-448" />
+</tile>
+<tile id="tileset-96-544">
+<image ref="i-tileset-96-544" />
+</tile>
+<tile id="tileset-96-448">
+<image ref="i-tileset-96-448" />
+</tile>
+<tile id="tileset-576-288">
+<image ref="i-tileset-576-288" />
+</tile>
+<tile id="tileset-256-0">
+<image ref="i-tileset-256-0" />
+</tile>
+<tile id="tileset-608-128">
+<image ref="i-tileset-608-128" />
+</tile>
+<tile id="tileset-192-128">
+<image ref="i-tileset-192-128" />
+</tile>
+<tile id="tileset-672-128">
+<image ref="i-tileset-672-128" />
+</tile>
+<tile id="tileset-352-480">
+<image ref="i-tileset-352-480" />
+</tile>
+<tile id="tileset-768-256">
+<image ref="i-tileset-768-256" />
+</tile>
+<tile id="tileset-416-192">
+<image ref="i-tileset-416-192" />
+</tile>
+<tile id="tileset-96-480">
+<image ref="i-tileset-96-480" />
+</tile>
+<tile id="tileset-192-512">
+<image ref="i-tileset-192-512" />
+</tile>
+<tile id="tileset-96-320">
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-96-320" />
+</tile>
+<tile id="tileset-544-544">
+<image ref="i-tileset-544-544" />
+</tile>
+<tile id="tileset-0-224">
+<image ref="i-tileset-0-224" />
+</tile>
+<tile id="tileset-768-480">
+<image ref="i-tileset-768-480" />
+</tile>
+<tile id="tileset-32-256">
+<property name="left" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-32-256" />
+</tile>
+<tile id="tileset-352-512">
+<image ref="i-tileset-352-512" />
+</tile>
+<tile id="tileset-544-0">
+<image ref="i-tileset-544-0" />
+</tile>
+<tile id="tileset-416-256">
+<image ref="i-tileset-416-256" />
+</tile>
+<tile id="tileset-0-384">
+<image ref="i-tileset-0-384" />
+</tile>
+<tile id="tileset-736-0">
+<image ref="i-tileset-736-0" />
+</tile>
+<tile id="tileset-256-256">
+<image ref="i-tileset-256-256" />
+</tile>
+<tile id="tileset-704-544">
+<image ref="i-tileset-704-544" />
+</tile>
+<tile id="tileset-0-480">
+<image ref="i-tileset-0-480" />
+</tile>
+<tile id="tileset-384-64">
+<image ref="i-tileset-384-64" />
+</tile>
+<tile id="tileset-768-0">
+<image ref="i-tileset-768-0" />
+</tile>
+<tile id="tileset-640-320">
+<image ref="i-tileset-640-320" />
+</tile>
+<tile id="tileset-576-64">
+<image ref="i-tileset-576-64" />
+</tile>
+<tile id="tileset-64-224">
+<image ref="i-tileset-64-224" />
+</tile>
+<tile id="tileset-160-480">
+<property name="top" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-160-480" />
+</tile>
+<tile id="tileset-544-160">
+<image ref="i-tileset-544-160" />
+</tile>
+<tile id="tileset-480-480">
+<image ref="i-tileset-480-480" />
+</tile>
+<tile id="tileset-704-320">
+<image ref="i-tileset-704-320" />
+</tile>
+<tile id="tileset-672-416">
+<image ref="i-tileset-672-416" />
+</tile>
+<tile id="tileset-256-512">
+<image ref="i-tileset-256-512" />
+</tile>
+<tile id="tileset-576-96">
+<image ref="i-tileset-576-96" />
+</tile>
+<tile id="tileset-448-224">
+<image ref="i-tileset-448-224" />
+</tile>
+<tile id="tileset-64-64">
+<image ref="i-tileset-64-64" />
+</tile>
+<tile id="tileset-160-416">
+<property name="top" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-160-416" />
+</tile>
+<tile id="tileset-672-64">
+<image ref="i-tileset-672-64" />
+</tile>
+<tile id="tileset-256-320">
+<image ref="i-tileset-256-320" />
+</tile>
+<tile id="tileset-64-256">
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-64-256" />
+</tile>
+<tile id="tileset-768-128">
+<image ref="i-tileset-768-128" />
+</tile>
+<tile id="tileset-224-288">
+<image ref="i-tileset-224-288" />
+</tile>
+<tile id="tileset-320-32">
+<property name="top" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-320-32" />
+</tile>
+<tile id="tileset-736-32">
+<image ref="i-tileset-736-32" />
+</tile>
+<tile id="tileset-224-128">
+<image ref="i-tileset-224-128" />
+</tile>
+<tile id="tileset-32-544">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-32-544" />
+</tile>
+<tile id="tileset-288-192">
+<image ref="i-tileset-288-192" />
+</tile>
+<tile id="tileset-448-0">
+<image ref="i-tileset-448-0" />
+</tile>
+<tile id="tileset-512-320">
+<image ref="i-tileset-512-320" />
+</tile>
+<tile id="tileset-448-160">
+<image ref="i-tileset-448-160" />
+</tile>
+<tile id="tileset-416-384">
+<image ref="i-tileset-416-384" />
+</tile>
+<tile id="tileset-288-512">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-288-512" />
+</tile>
+<tile id="tileset-480-416">
+<image ref="i-tileset-480-416" />
+</tile>
+<tile id="tileset-480-64">
+<image ref="i-tileset-480-64" />
+</tile>
+<tile id="tileset-768-288">
+<image ref="i-tileset-768-288" />
+</tile>
+<tile id="tileset-608-288">
+<image ref="i-tileset-608-288" />
+</tile>
+<tile id="tileset-288-224">
+<image ref="i-tileset-288-224" />
+</tile>
+<tile id="tileset-352-320">
+<image ref="i-tileset-352-320" />
+</tile>
+<tile id="tileset-352-0">
+<image ref="i-tileset-352-0" />
+</tile>
+<tile id="tileset-0-544">
+<image ref="i-tileset-0-544" />
+</tile>
+<tile id="tileset-672-160">
+<image ref="i-tileset-672-160" />
+</tile>
+<tile id="tileset-768-32">
+<image ref="i-tileset-768-32" />
+</tile>
+<tile id="tileset-512-288">
+<image ref="i-tileset-512-288" />
+</tile>
+<tile id="tileset-224-192">
+<image ref="i-tileset-224-192" />
+</tile>
+<tile id="tileset-192-160">
+<image ref="i-tileset-192-160" />
+</tile>
+<tile id="tileset-192-64">
+<image ref="i-tileset-192-64" />
+</tile>
+<tile id="tileset-512-352">
+<image ref="i-tileset-512-352" />
+</tile>
+<tile id="tileset-320-544">
+<image ref="i-tileset-320-544" />
+</tile>
+<tile id="tileset-128-480">
+<property name="top" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-128-480" />
+</tile>
+<tile id="tileset-288-352">
+<image ref="i-tileset-288-352" />
+</tile>
+<tile id="tileset-736-416">
+<image ref="i-tileset-736-416" />
+</tile>
+<tile id="tileset-64-96">
+<image ref="i-tileset-64-96" />
+</tile>
+<tile id="tileset-288-544">
+<image ref="i-tileset-288-544" />
+</tile>
+<tile id="tileset-352-256">
+<image ref="i-tileset-352-256" />
+</tile>
+<tile id="tileset-32-512">
+<image ref="i-tileset-32-512" />
+</tile>
+<tile id="tileset-384-224">
+<image ref="i-tileset-384-224" />
+</tile>
+<tile id="tileset-416-512">
+<image ref="i-tileset-416-512" />
+</tile>
+<tile id="tileset-672-288">
+<image ref="i-tileset-672-288" />
+</tile>
+<tile id="tileset-160-224">
+<image ref="i-tileset-160-224" />
+</tile>
+<tile id="tileset-448-544">
+<image ref="i-tileset-448-544" />
+</tile>
+<tile id="tileset-352-64">
+<image ref="i-tileset-352-64" />
+</tile>
+<tile id="tileset-736-480">
+<image ref="i-tileset-736-480" />
+</tile>
+<tile id="tileset-320-160">
+<image ref="i-tileset-320-160" />
+</tile>
+<tile id="tileset-544-128">
+<image ref="i-tileset-544-128" />
+</tile>
+<tile id="tileset-192-544">
+<image ref="i-tileset-192-544" />
+</tile>
+<tile id="tileset-704-512">
+<image ref="i-tileset-704-512" />
+</tile>
+<tile id="tileset-544-512">
+<image ref="i-tileset-544-512" />
+</tile>
+<tile id="tileset-256-416">
+<image ref="i-tileset-256-416" />
+</tile>
+<tile id="tileset-128-224">
+<image ref="i-tileset-128-224" />
+</tile>
+<tile id="tileset-640-448">
+<image ref="i-tileset-640-448" />
+</tile>
+<tile id="tileset-160-352">
+<image ref="i-tileset-160-352" />
+</tile>
+<tile id="tileset-640-480">
+<image ref="i-tileset-640-480" />
+</tile>
+<tile id="tileset-512-32">
+<image ref="i-tileset-512-32" />
+</tile>
+<tile id="tileset-544-192">
+<image ref="i-tileset-544-192" />
+</tile>
+<tile id="tileset-256-160">
+<image ref="i-tileset-256-160" />
+</tile>
+<tile id="tileset-480-192">
+<image ref="i-tileset-480-192" />
+</tile>
+<tile id="tileset-576-32">
+<image ref="i-tileset-576-32" />
+</tile>
+<tile id="tileset-448-128">
+<image ref="i-tileset-448-128" />
+</tile>
+<tile id="tileset-576-448">
+<image ref="i-tileset-576-448" />
+</tile>
+<tile id="tileset-672-224">
+<image ref="i-tileset-672-224" />
+</tile>
+<tile id="tileset-288-128">
+<image ref="i-tileset-288-128" />
+</tile>
+<tile id="tileset-672-544">
+<image ref="i-tileset-672-544" />
+</tile>
+<tile id="tileset-0-160">
+<image ref="i-tileset-0-160" />
+</tile>
+<tile id="tileset-480-512">
+<image ref="i-tileset-480-512" />
+</tile>
+<tile id="tileset-160-96">
+<image ref="i-tileset-160-96" />
+</tile>
+<tile id="tileset-480-288">
+<image ref="i-tileset-480-288" />
+</tile>
+<tile id="tileset-576-256">
+<image ref="i-tileset-576-256" />
+</tile>
+<tile id="tileset-480-128">
+<image ref="i-tileset-480-128" />
+</tile>
+<tile id="tileset-480-384">
+<image ref="i-tileset-480-384" />
+</tile>
+<tile id="tileset-224-544">
+<image ref="i-tileset-224-544" />
+</tile>
+<tile id="tileset-0-64">
+<image ref="i-tileset-0-64" />
+</tile>
+<tile id="tileset-320-64">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-320-64" />
+</tile>
+<tile id="tileset-224-64">
+<image ref="i-tileset-224-64" />
+</tile>
+<tile id="tileset-320-192">
+<image ref="i-tileset-320-192" />
+</tile>
+<tile id="tileset-672-320">
+<image ref="i-tileset-672-320" />
+</tile>
+<tile id="tileset-512-256">
+<image ref="i-tileset-512-256" />
+</tile>
+<tile id="tileset-416-416">
+<image ref="i-tileset-416-416" />
+</tile>
+<tile id="tileset-736-288">
+<image ref="i-tileset-736-288" />
+</tile>
+<tile id="tileset-736-320">
+<image ref="i-tileset-736-320" />
+</tile>
+<tile id="tileset-448-192">
+<image ref="i-tileset-448-192" />
+</tile>
+<tile id="tileset-224-160">
+<image ref="i-tileset-224-160" />
+</tile>
+<tile id="tileset-544-256">
+<image ref="i-tileset-544-256" />
+</tile>
+<tile id="tileset-672-480">
+<image ref="i-tileset-672-480" />
+</tile>
+<tile id="tileset-64-160">
+<image ref="i-tileset-64-160" />
+</tile>
+<tile id="tileset-128-544">
+<image ref="i-tileset-128-544" />
+</tile>
+<tile id="tileset-736-512">
+<image ref="i-tileset-736-512" />
+</tile>
+<tile id="tileset-480-32">
+<image ref="i-tileset-480-32" />
+</tile>
+<tile id="tileset-96-128">
+<image ref="i-tileset-96-128" />
+</tile>
+<tile id="tileset-32-416">
+<image ref="i-tileset-32-416" />
+</tile>
+<tile id="tileset-352-352">
+<image ref="i-tileset-352-352" />
+</tile>
+<tile id="tileset-768-448">
+<image ref="i-tileset-768-448" />
+</tile>
+<tile id="tileset-608-480">
+<image ref="i-tileset-608-480" />
+</tile>
+<tile id="tileset-736-224">
+<image ref="i-tileset-736-224" />
+</tile>
+<tile id="tileset-320-96">
+<image ref="i-tileset-320-96" />
+</tile>
+<tile id="tileset-320-128">
+<image ref="i-tileset-320-128" />
+</tile>
+<tile id="tileset-704-384">
+<image ref="i-tileset-704-384" />
+</tile>
+<tile id="tileset-512-224">
+<image ref="i-tileset-512-224" />
+</tile>
+<tile id="tileset-224-384">
+<image ref="i-tileset-224-384" />
+</tile>
+<tile id="tileset-352-288">
+<image ref="i-tileset-352-288" />
+</tile>
+<tile id="tileset-192-32">
+<image ref="i-tileset-192-32" />
+</tile>
+<tile id="tileset-544-224">
+<image ref="i-tileset-544-224" />
+</tile>
+<tile id="tileset-736-352">
+<image ref="i-tileset-736-352" />
+</tile>
+<tile id="tileset-704-448">
+<image ref="i-tileset-704-448" />
+</tile>
+<tile id="tileset-128-384">
+<image ref="i-tileset-128-384" />
+</tile>
+<tile id="tileset-544-416">
+<image ref="i-tileset-544-416" />
+</tile>
+<tile id="tileset-512-160">
+<image ref="i-tileset-512-160" />
+</tile>
+<tile id="tileset-224-416">
+<image ref="i-tileset-224-416" />
+</tile>
+<tile id="tileset-128-96">
+<image ref="i-tileset-128-96" />
+</tile>
+<tile id="tileset-32-480">
+<image ref="i-tileset-32-480" />
+</tile>
+<tile id="tileset-768-96">
+<image ref="i-tileset-768-96" />
+</tile>
+<tile id="tileset-160-256">
+<image ref="i-tileset-160-256" />
+</tile>
+<tile id="tileset-64-0">
+<image ref="i-tileset-64-0" />
+</tile>
+<tile id="tileset-256-128">
+<image ref="i-tileset-256-128" />
+</tile>
+<tile id="tileset-608-416">
+<image ref="i-tileset-608-416" />
+</tile>
+<tile id="tileset-768-352">
+<image ref="i-tileset-768-352" />
+</tile>
+<tile id="tileset-320-512">
+<image ref="i-tileset-320-512" />
+</tile>
+<tile id="tileset-448-64">
+<image ref="i-tileset-448-64" />
+</tile>
+<tile id="tileset-64-544">
+<image ref="i-tileset-64-544" />
+</tile>
+<tile id="tileset-576-480">
+<image ref="i-tileset-576-480" />
+</tile>
+<tile id="tileset-704-96">
+<image ref="i-tileset-704-96" />
+</tile>
+<tile id="tileset-320-224">
+<image ref="i-tileset-320-224" />
+</tile>
+<tile id="tileset-640-64">
+<image ref="i-tileset-640-64" />
+</tile>
+<tile id="tileset-288-160">
+<image ref="i-tileset-288-160" />
+</tile>
+<tile id="tileset-0-288">
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-0-288" />
+</tile>
+<tile id="tileset-256-448">
+<image ref="i-tileset-256-448" />
+</tile>
+<tile id="tileset-544-480">
+<image ref="i-tileset-544-480" />
+</tile>
+<tile id="tileset-480-160">
+<image ref="i-tileset-480-160" />
+</tile>
+<tile id="tileset-0-128">
+<image ref="i-tileset-0-128" />
+</tile>
+<tile id="tileset-576-352">
+<image ref="i-tileset-576-352" />
+</tile>
+<tile id="tileset-256-96">
+<image ref="i-tileset-256-96" />
+</tile>
+<tile id="tileset-576-192">
+<image ref="i-tileset-576-192" />
+</tile>
+<tile id="tileset-160-32">
+<image ref="i-tileset-160-32" />
+</tile>
+<tile id="tileset-640-384">
+<image ref="i-tileset-640-384" />
+</tile>
+<tile id="tileset-608-64">
+<image ref="i-tileset-608-64" />
+</tile>
+<tile id="tileset-576-416">
+<image ref="i-tileset-576-416" />
+</tile>
+<tile id="tileset-320-256">
+<image ref="i-tileset-320-256" />
+</tile>
+<tile id="tileset-192-480">
+<property name="top" type="bool" value="True" />
+<property name="right" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-192-480" />
+</tile>
+<tile id="tileset-512-544">
+<image ref="i-tileset-512-544" />
+</tile>
+<tile id="tileset-480-544">
+<image ref="i-tileset-480-544" />
+</tile>
+<tile id="tileset-32-64">
+<property name="bottom" type="bool" value="True" />
+<property name="left" type="bool" value="True" />
+<image ref="i-tileset-32-64" />
+</tile>
+<tile id="tileset-576-224">
+<image ref="i-tileset-576-224" />
+</tile>
+<tile id="tileset-640-256">
+<image ref="i-tileset-640-256" />
+</tile>
+<tile id="tileset-96-512">
+<image ref="i-tileset-96-512" />
+</tile>
+<tile id="tileset-320-480">
+<image ref="i-tileset-320-480" />
+</tile>
+<tile id="tileset-256-192">
+<image ref="i-tileset-256-192" />
+</tile>
+<tile id="tileset-608-192">
+<image ref="i-tileset-608-192" />
+</tile>
+<tile id="tileset-224-32">
+<image ref="i-tileset-224-32" />
+</tile>
+<tile id="tileset-192-256">
+<image ref="i-tileset-192-256" />
+</tile>
+<tile id="tileset-768-64">
+<image ref="i-tileset-768-64" />
+</tile>
+<tile id="tileset-160-0">
+<image ref="i-tileset-160-0" />
+</tile>
+<tile id="tileset-736-256">
+<image ref="i-tileset-736-256" />
+</tile>
+<tile id="tileset-320-416">
+<image ref="i-tileset-320-416" />
+</tile>
+<tile id="tileset-224-512">
+<image ref="i-tileset-224-512" />
+</tile>
+<tile id="tileset-384-544">
+<image ref="i-tileset-384-544" />
+</tile>
+<tile id="tileset-224-0">
+<image ref="i-tileset-224-0" />
+</tile>
+<tile id="tileset-544-320">
+<image ref="i-tileset-544-320" />
+</tile>
+<tile id="tileset-704-128">
+<image ref="i-tileset-704-128" />
+</tile>
+<tile id="tileset-768-384">
+<image ref="i-tileset-768-384" />
+</tile>
+<tile id="tileset-64-192">
+<image ref="i-tileset-64-192" />
+</tile>
+<tile id="tileset-512-128">
+<image ref="i-tileset-512-128" />
+</tile>
+<tile id="tileset-0-448">
+<image ref="i-tileset-0-448" />
+</tile>
+<tile id="tileset-704-160">
+<image ref="i-tileset-704-160" />
+</tile>
+<tile id="tileset-352-544">
+<image ref="i-tileset-352-544" />
+</tile>
+<tile id="tileset-576-128">
+<image ref="i-tileset-576-128" />
+</tile>
+<tile id="tileset-32-448">
+<image ref="i-tileset-32-448" />
+</tile>
+<tile id="tileset-544-288">
+<image ref="i-tileset-544-288" />
+</tile>
+<tile id="tileset-384-352">
+<image ref="i-tileset-384-352" />
+</tile>
+<tile id="tileset-448-96">
+<image ref="i-tileset-448-96" />
+</tile>
+<tile id="tileset-416-288">
+<image ref="i-tileset-416-288" />
+</tile>
+<tile id="tileset-384-0">
+<image ref="i-tileset-384-0" />
+</tile>
+<tile id="tileset-384-192">
+<image ref="i-tileset-384-192" />
+</tile>
+<tile id="tileset-96-32">
+<image ref="i-tileset-96-32" />
+</tile>
+<tile id="tileset-416-448">
+<image ref="i-tileset-416-448" />
+</tile>
+<tile id="tileset-544-352">
+<image ref="i-tileset-544-352" />
+</tile>
+<tile id="tileset-64-128">
+<image ref="i-tileset-64-128" />
+</tile>
+<tile id="tileset-608-512">
+<image ref="i-tileset-608-512" />
+</tile>
+<tile id="tileset-96-160">
+<image ref="i-tileset-96-160" />
+</tile>
+<tile id="tileset-96-288">
+<image ref="i-tileset-96-288" />
+</tile>
+<tile id="tileset-704-192">
+<image ref="i-tileset-704-192" />
+</tile>
+<tile id="tileset-416-32">
+<image ref="i-tileset-416-32" />
+</tile>
+<tile id="tileset-704-0">
+<image ref="i-tileset-704-0" />
+</tile>
+<tile id="tileset-64-32">
+<image ref="i-tileset-64-32" />
+</tile>
+<tile id="tileset-160-448">
+<property name="top" type="bool" value="True" />
+<property name="bottom" type="bool" value="True" />
+<image ref="i-tileset-160-448" />
+</tile>
+<tile id="tileset-128-352">
+<image ref="i-tileset-128-352" />
+</tile>
+<tile id="tileset-0-0">
+<image ref="i-tileset-0-0" />
+</tile>
+<tile id="tileset-640-512">
+<image ref="i-tileset-640-512" />
+</tile>
+<tile id="tileset-480-96">
+<image ref="i-tileset-480-96" />
+</tile>
+<tile id="tileset-512-192">
+<image ref="i-tileset-512-192" />
+</tile>
+<tile id="tileset-160-288">
+<image ref="i-tileset-160-288" />
+</tile>
+<tile id="tileset-672-192">
+<image ref="i-tileset-672-192" />
+</tile>
+<tile id="tileset-448-448">
+<image ref="i-tileset-448-448" />
+</tile>
+<tile id="tileset-384-288">
+<image ref="i-tileset-384-288" />
+</tile>
+</tileset>
+</resource>

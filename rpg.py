@@ -274,7 +274,7 @@ def stop_sprite(sprite):
     sprite.walking = False
 
 def create_sprite(x, y):
-    sprite = Character('King', anims, rect.Rect(x, y, 30, 38), (-4, 0), 500)
+    sprite = Character('King', anims, rect.Rect(x, y, 28, 32), (-4, 0), 500)
     return sprite
 
 class Fountain(MapObject, cocos.sprite.Sprite):
@@ -323,7 +323,7 @@ if __name__ == "__main__":
     action = player.do(MovePlayer())
 
     # Load map
-    map = tiles.load('test3-map.xml')
+    map = tiles.load('test4-map.xml')
 
     # Load a map and put it in a scrolling layer
     scroller = layer.ScrollingManager()
@@ -335,7 +335,7 @@ if __name__ == "__main__":
     scroller.add(over_layer, z=3)
 
     # Load object layer and add it to the scrolling layer
-    object_layer = map['objects']
+    object_layer = map['objects'] if 'objects' in map else ObjectLayer()
     object_layer.add_object(player)
     object_layer.add_object(fountain)
     scroller.add(object_layer, z=2)

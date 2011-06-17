@@ -4,7 +4,7 @@
 </objects>
 <rectmap id="ground" origin="0,0,0" tile_size="32x32">
 	<column>
-		<cell tile="wall" />
+		<cell tile="0" />
 		<cell tile="wall" />
 		<cell tile="wall" />
 		<cell tile="wall" />
