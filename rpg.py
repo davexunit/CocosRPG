@@ -9,6 +9,8 @@ pyglet.resource.reindex()
 import cocos
 from cocos import tiles, actions, layer, rect
 
+import loadmap
+
 class MovePlayer(actions.Move, tiles.RectMapCollider):
     def step(self, dt):
         global ground_layer
@@ -323,7 +325,7 @@ if __name__ == "__main__":
     action = player.do(MovePlayer())
 
     # Load map
-    map = tiles.load('test4-map.xml')
+    map = tiles.load('test3-map.xml')
 
     # Load a map and put it in a scrolling layer
     scroller = layer.ScrollingManager()
