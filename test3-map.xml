@@ -1,10 +1,7 @@
 <resource><requires file="Exterior_Castle-tiles.xml" />
-<objects id="objects">
-    <dialog id="hello" xy="128,128" wh="32,32" text="Welcome to Dave's RPG map demo! Right click anywhere on the map to place a new sprite. Left click on a sprite to take control of it!" />
-</objects>
 <rectmap id="ground" origin="0,0,0" tile_size="32x32">
 	<column>
-		<cell tile="0" />
+		<cell tile="wall" />
 		<cell tile="wall" />
 		<cell tile="wall" />
 		<cell tile="wall" />

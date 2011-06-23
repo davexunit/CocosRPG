@@ -10,6 +10,7 @@ import array
 import pyglet
 from pyglet.gl import *
 import cocos
+import entity
 
 class TileSet(list):
     pass
@@ -42,6 +43,10 @@ def load_map(filename):
     layers = dict()
     for tag in root.findall('layer'):
         layer = load_layer(tag, tileset, tile_width, tile_height)
+        layers[layer.id] = layer
+    # Load object layers
+    for tag in root.findall('objectgroup'):
+        layer = load_object_layer(tag)
         layers[layer.id] = layer
     return layers
 
@@ -127,6 +132,36 @@ def load_data(tag):
     # decoded_data is a string made of 64 bit integers now
     # Turn that string into an array of 64 bit integers
     return array.array('L', decoded_data)
+
+def load_object_layer(tag):
+    name = tag.get('name')
+    width = int(tag.get('width'))
+    height = int(tag.get('height'))
+    layer = entity.ObjectLayer(name)
+    for child in tag.findall('object'):
+        layer.add_object(load_object(child))
+    return layer
+
+def load_object(tag):
+    # Get object properties
+    name = tag.get('name')
+    type = tag.get('type')
+    x = int(tag.get('x'))
+    y = int(tag.get('y'))
+    width = int(tag.get('width'))
+    height = int(tag.get('height'))
+    properties = dict()
+    for p in tag.find('properties'):
+        properties[p.get('name')] = p.get('value')
+    # Factory
+    if type == 'portal':
+        return load_portal(properties, name, cocos.rect.Rect(x, y, width, height))
+    else:
+        raise MapException('Object type %s not supported' % type)
+
+def load_portal(properties, name, rect):
+    map_file = properties['map']
+    spawn = properties['spawn'].split(',')
 
 # Test
 if __name__ == '__main__':

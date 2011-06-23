@@ -10,12 +10,13 @@ import cocos
 from cocos import tiles, actions, layer, rect
 
 import loadmap
+from entity import *
 
-class MovePlayer(actions.Move, tiles.RectMapCollider):
+class MovePlayer(actions.Move):
     def step(self, dt):
         global ground_layer
         # Potential velocity if no collision occurs
-        self.dx, self.dy = (keyboard[key.D] - keyboard[key.A]) * self.target.speed, (keyboard[key.W] - keyboard[key.S]) * self.target.speed
+        self.dx, self.dy = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * self.target.speed, (keyboard[key.UP] - keyboard[key.DOWN]) * self.target.speed
 
         # Skip collision checks if the sprite isn't moving
         if self.dx != 0 or self.dy != 0:
@@ -30,39 +31,27 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
                 self.target.direction = 'west'
             # Create rect for collision testing by translating hitbox by sprite location
             last = self.target.get_hitbox()
-
             # Test for collision along x axis
             new = last.copy()
             new.x += self.dx * dt
-            if self.collide_player(new):
+            if self.collide_player(new) or self.check_collision(new):
                 self.dx = 0
-            else:
-                self.collide_map(ground_layer, last, new, None, None)
-                self.collide_map(fringe_layer, last, new, None, None)
-
             # Test for collision along y axis
             new = last.copy()
             new.y += self.dy * dt
-            if self.collide_player(new):
+            if self.collide_player(new) or self.check_collision(new):
                 self.dy = 0
-            else:
-                self.collide_map(ground_layer, last, new, None, None)
-                self.collide_map(fringe_layer, last, new, None, None)
         else:
-            stop_sprite(self.target)
+            self.target.walking = False
 
         # Set new velocity
         self.target.velocity = (self.dx, self.dy)
-
         # Get objects that sprite is currently over before moving
-        old_objects = object_layer.get_in_region(self.target.get_hitbox())
-
+        old_objects = map['objects'].get_in_region(self.target.get_hitbox())
         # Move
         super(MovePlayer, self).step(dt)
-
         # Get objects that sprite is currently over after moving
-        new_objects = object_layer.get_in_region(self.target.get_hitbox())
-
+        new_objects = map['objects'].get_in_region(self.target.get_hitbox())
         # Call on_object_enter event handler for any object that is in the new list but not in the old list
         for obj in new_objects:
             if obj not in old_objects:
@@ -71,217 +60,29 @@ class MovePlayer(actions.Move, tiles.RectMapCollider):
         for obj in old_objects:
             if obj not in new_objects:
                     obj.on_object_exit(self.target)
-
         # Focus scrolling layer on player
-        scroller.set_focus(self.target.x, self.target.y)
+        map.set_focus(self.target.x, self.target.y)
         # Y sort
-        object_layer.remove_object(self.target)
-        object_layer.add_object(self.target)
+        map['objects'].remove_object(self.target)
+        map['objects'].add_object(self.target)
+
+    def check_collision(self, rect):
+        for cell in map['collision'].get_in_region(*(rect.bottomleft + rect.topright)):
+            if cell.tile != None:
+                return True
+        return False
 
     def collide_player(self, new):
-        for s in object_layer.get_in_region(new):
+        for s in map['objects'].get_in_region(new):
             if s == self.target:
                 continue
             if s.collidable and s.get_hitbox().intersects(new):
                 return True
         return False
 
-    def collide_top(self, dy):
-        self.dy = 0
-
-    def collide_bottom(self, dy):
-        self.dy = 0
-
-    def collide_left(self, dx):
-        self.dx = 0
-
-    def collide_right(self, dx):
-        self.dx = 0
-
-class MapObject(object):
-    def __init__(self, id, hitbox, collidable=True):
-        self.id = id
-        self.hitbox= hitbox.copy()
-        self.collidable = collidable
-
-    def get_hitbox(self):
-        return self.hitbox.copy()
-
-    def on_object_enter(self, obj):
-        pass
-
-    def on_object_exit(self, obj):
-        pass
-
-class Portal(MapObject):
-    def __init__(self, id, rect, map_file, collidable=False):
-        super(Portal, self).__init__(id, rect, collidable)
-        self.map_file = map_file
-    
-    def on_object_enter(self, obj):
-        global ground_layer, object_layer, map
-        print obj.id, "in", self.map_file
-        scroller.remove(ground_layer)
-        scroller.remove(object_layer)
-        map = tiles.load(self.map_file)
-        ground_layer = map['ground']
-        object_layer = map['objects']
-        object_layer.add_object(obj)
-        scroller.add(ground_layer)
-        scroller.add(object_layer, z=1)
-
-    def on_object_exit(self, obj):
-        print obj.id, "out"
-
-class Dialog(MapObject):
-    def __init__(self, id, rect, text, collidable=False):
-        super(Dialog, self).__init__(id, rect, collidable)
-        self.text = text
-
-class Character(MapObject, cocos.sprite.Sprite):
-    def __init__(self, id, anims, hitbox, offset, speed, direction='south', collidable=True):
-        '''Anims is a list of pyglet.image.Animation.
-        Order:
-            standing north, standing south, standing east, standing west, walking north, walking south, walking east, walking west
-        '''
-        self.speed = speed
-        self._direction = direction
-        self._walking = False
-        self.anims = anims
-        MapObject.__init__(self, id, hitbox, collidable)
-        cocos.sprite.Sprite.__init__(self, self.anims['stand_' + self._direction])
-        super(Character, self)._set_position(hitbox.position)
-        self.image_anchor = (0, 0)
-
-    def _update_animation(self):
-        prefix = 'walk_' if self._walking else 'stand_'
-        self.image = self.anims[prefix + self._direction]
-
-    def _set_x(self, x):
-        super(Character, self)._set_x(x)
-        self.hitbox.x = x
-
-    def _set_y(self, y):
-        super(Character, self)._set_y(y)
-        self.hitbox.y = y
-
-    @property
-    def direction(self):
-        return self._direction
-
-    @direction.setter
-    def direction(self, dir):
-        if self._direction != dir:
-            self._direction = dir
-            self._update_animation()
-
-    @property
-    def walking(self):
-        return self._walking
-
-    @walking.setter
-    def walking(self, walking):
-        if self._walking != walking:
-            self._walking = walking
-            self._update_animation()
-
-class ObjectLayer(cocos.layer.ScrollableLayer):
-    def __init__(self, id=''):
-        super(ObjectLayer, self).__init__()
-        self.id = id
-        self.objects = []
-        self.batch = cocos.batch.BatchNode()
-        self.add(self.batch)
-
-    def add_object(self, obj):
-        self.objects.append(obj)
-        # If the object is a sprite then add it to the batch for drawing
-        if isinstance(obj, cocos.sprite.Sprite):
-            self.batch.add(obj, z=obj.y)
-    
-    def remove_object(self, obj):
-        self.objects.remove(obj)
-        # If the object is a sprite then remove it from the batch
-        if isinstance(obj, cocos.sprite.Sprite):
-            self.batch.remove(obj)
-
-    def get_objects(self):
-        return self.objects
-
-    def get_in_region(self, rect):
-        objs = []
-        for o in self.objects:
-            if o.get_hitbox().intersects(rect):
-                objs.append(o)
-        return objs
-
-@cocos.tiles.Resource.register_factory('objects')
-def objectlayer_factory(resource, tag):
-    obj_layer = ObjectLayer()
-    for child in tag:
-        # Construct bounding box
-        x, y = child.get('xy').split(',')
-        x, y = int(x), int(y)
-        w, h = child.get('wh').split(',')
-        w, h = int(w), int(h)
-        hitbox = cocos.rect.Rect(x, y, w, h)
-        # Get object identifier
-        id = child.get('id')
-        # Get collidable
-        collidable = child.get('collidable')
-        obj = None
-        # Object factory
-        if child.tag == 'portal':
-            obj = _handle_portal(child, id, hitbox, collidable)
-        elif child.tag == 'dialog':
-            obj = _handle_dialog(child, id, hitbox, collidable)
-        elif child.tag == 'character':
-            obj = _handle_character(child, id, hitbox, collidable)
-        if obj != None:
-            obj_layer.add_object(obj)
-
-    if tag.get('id'):
-        obj_layer.id = tag.get('id')
-        resource.add_resource(obj_layer.id, obj_layer)
-
-    return obj_layer
-
-def _handle_character(tag, id, hitbox, collidable):
-    if collidable == None:
-        collidable = True
-    image = pyglet.resource.get(tag.get('image'))
-    speed = tag.get('speed')
-    direction = tag.get('direction')
-    if tag.get('direction') == None:
-        direction = 'south'
-    anims = _handle_anims(tag.findall('anim'))
-
-def _handle_anims(tags):
-    for tag in tags:
-        print tag
-
-def _handle_portal(tag, hitbox, id, collidable):
-    if collidable == None:
-        collidable = False
-    map_file = tag.get('map')
-    return Portal(rect, id, map_file, collidable)
-
-def _handle_dialog(tag, id, hitbox, collidable):
-    if collidable == None:
-        collidable = False
-    text = tag.get('text')
-    return Dialog(id, hitbox, text, collidable)
-
-def stop_sprite(sprite):
-    sprite.walking = False
-
-def create_sprite(x, y):
-    sprite = Character('King', anims, rect.Rect(x, y, 28, 32), (-4, 0), 500)
-    return sprite
-
-class Fountain(MapObject, cocos.sprite.Sprite):
+class Fountain(MapEntity, cocos.sprite.Sprite):
     def __init__(self, id, hitbox, anims, collidable=False):
-        MapObject.__init__(self, id, hitbox, collidable)
+        MapEntity.__init__(self, id, hitbox, collidable)
         cocos.sprite.Sprite.__init__(self, anims['idle'])
         self.anims = anims
         self.position = hitbox.position
@@ -293,10 +94,41 @@ class Fountain(MapObject, cocos.sprite.Sprite):
     def on_object_exit(self, object):
         self.image = self.anims['idle']
 
+class Map(layer.ScrollingManager, dict):
+    def __init__(self, filename):
+        layer.ScrollingManager.__init__(self)
+        dict.__init__(self)
+        self.load(filename)
+
+    def load(self, filename):
+        # Load map file
+        layers = loadmap.load_map(filename)
+        # Remove layers from scroller
+        if len(self.children):
+            self.remove('ground')
+            self.remove('fringe')
+            self.remove('over')
+            self.remove('objects')
+        # Add all new layers to internal dictionary
+        for key, value in layers.iteritems():
+            self[key] = value
+        self['objects'] = ObjectLayer()
+        # Add new layers to scrolling layer
+        self.add(self['ground'], z=0, name='ground')
+        self.add(self['fringe'], z=1, name='fringe')
+        self.add(self['objects'], z=2, name='objects')
+        self.add(self['over'], z=3, name='over')
+
+def create_sprite(x, y):
+    return Character('King', anims, rect.Rect(x, y, 24, 30), (0, 0), 300)
+
 if __name__ == "__main__":
     from cocos.director import director
     director.init(width=640, height=480, do_not_scale=True, resizable=True)
     director.show_FPS = True
+
+    # Load map
+    map = Map('outside.tmx')
 
     # Load animation
     image = pyglet.resource.image('king.png')
@@ -317,35 +149,24 @@ if __name__ == "__main__":
     idle = pyglet.image.Animation.from_image_sequence(sequence2[0:3], .1, loop=True)
     active = pyglet.image.Animation.from_image_sequence(sequence2[9:12], .1, loop=True)
     anims2 = {'idle':idle, 'active':active}
-    fountain = Fountain('fountain', cocos.rect.Rect(256, 256, 32, 32), anims2)
+    fountain = Fountain('fountain', cocos.rect.Rect(400, 300, 32, 32), anims2)
+    message = Dialog('message', cocos.rect.Rect(15*32, 9*32, 32, 32), 'You shouldn\'t read other people\'s mail.')
+    portal = Portal('portal', cocos.rect.Rect(19*32, 9*32, 32, 32), map, 'inn.tmx', (256, 32))
 
     # Setup player sprite
-    player = create_sprite(200, 100)
-
+    player = create_sprite(450, 200)
     action = player.do(MovePlayer())
 
-    # Load map
-    map = tiles.load('test3-map.xml')
+    # Add objects to map
+    map['objects'].add_object(player)
+    map['objects'].add_object(fountain)
+    map['objects'].add_object(message)
+    map['objects'].add_object(portal)
 
-    # Load a map and put it in a scrolling layer
-    scroller = layer.ScrollingManager()
-    ground_layer = map['ground']
-    fringe_layer = map['fringe']
-    over_layer = map['over']
-    scroller.add(ground_layer, z=0)
-    scroller.add(fringe_layer, z=1)
-    scroller.add(over_layer, z=3)
-
-    # Load object layer and add it to the scrolling layer
-    object_layer = map['objects'] if 'objects' in map else ObjectLayer()
-    object_layer.add_object(player)
-    object_layer.add_object(fountain)
-    scroller.add(object_layer, z=2)
-
-    dialog_layer = layer.ColorLayer(64, 69, 83, 255, height=90)
+    dialog_layer = layer.ColorLayer(64, 128, 200,255, height=140)
 
     # Create the main scene
-    main_scene = cocos.scene.Scene(scroller)
+    main_scene = cocos.scene.Scene(map)
 
     # Handle input
     keyboard = key.KeyStateHandler()
@@ -359,10 +180,10 @@ if __name__ == "__main__":
         if state == "walkaround":
             # Zoom in/out
             if key == pyglet.window.key.Z:
-                if scroller.scale == .75:
-                    scroller.do(actions.ScaleTo(1, 2))
+                if map.scale == .75:
+                    map.do(actions.ScaleTo(1, 2))
                 else:
-                    scroller.do(actions.ScaleTo(.75, 2))
+                    map.do(actions.ScaleTo(.75, 2))
             if key == pyglet.window.key.SPACE:
                 dialog = None
                 player_rect = player.get_hitbox()
@@ -374,26 +195,17 @@ if __name__ == "__main__":
                     player_rect.x += player.hitbox.width
                 elif player.direction == 'west':
                     player_rect.x -= player.hitbox.width
-                for s in object_layer.get_objects():
+                for s in map['objects'].get_objects():
                     if s != player and isinstance(s, Dialog):
                         rect = s.get_hitbox()
                         if rect.intersects(player_rect) :
                             dialog = s
                             break
                 if dialog != None:
+                    dialog.on_interact(player)
                     state = "dialog"
                     player.remove_action(action)
-                    stop_sprite(player)
-                    '''
-                    if player.direction == 'north':
-                        npc.direction = 'south'
-                    elif player.direction == 'south':
-                        npc.direction = 'north'
-                    elif player.direction == 'east':
-                        npc.direction = 'west'
-                    elif player.direction == 'west':
-                        npc.direction = 'east'
-                    '''
+                    player.walking = False
                     label = cocos.text.Label(dialog.text, font_name='DroidSans', font_size=18, multiline=True, width=dialog_layer.width)
                     label.position =(0, dialog_layer.height) 
                     label.element.anchor_y = 'top'
@@ -411,13 +223,13 @@ if __name__ == "__main__":
         if state == "walkaround":
             # Add a sprite to screen at the mouse location on right click
             if buttons & mouse.RIGHT:
-                new_sprite = create_sprite(*scroller.pixel_from_screen(x, y))
-                object_layer.add_object(new_sprite)
+                new_sprite = create_sprite(*map.pixel_from_screen(x, y))
+                map['objects'].add_object(new_sprite)
             # Left click changes sprite that player is controlling
             elif buttons & mouse.LEFT:
                 global player, action
-                for s in object_layer.get_objects():
-                    if isinstance(s, Character) and s.get_rect().contains(*scroller.pixel_from_screen(x, y)):
+                for s in map['objects'].get_objects():
+                    if isinstance(s, Character) and s.get_rect().contains(*map.pixel_from_screen(x, y)):
                         player.remove_action(action)
                         player = s
                         action = player.do(MovePlayer())
