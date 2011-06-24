@@ -1,4 +1,5 @@
 import cocos
+import loadmap
 
 class MapEntity(object):
     def __init__(self, id, hitbox, collidable=True):
@@ -24,6 +25,10 @@ class Dialog(MapEntity):
     def __init__(self, id, rect, text, collidable=False):
         super(Dialog, self).__init__(id, rect, collidable)
         self.text = text
+@loadmap.Map.register_object_factory('dialog')
+def load_dialog(map, name, rect, properties):
+    text = properties['text']
+    return Dialog(name, rect, text)
 
 class Portal(MapEntity):
     def __init__(self, id, rect, map, map_file, spawn_position, collidable=False):
@@ -39,9 +44,14 @@ class Portal(MapEntity):
 
     def on_object_exit(self, obj):
         pass
+@loadmap.Map.register_object_factory('portal')
+def load_portal(map, name, rect, properties):
+    map_file = properties['map']
+    spawn = tuple([int(x) for x in properties['spawn'].split(',')])
+    return Portal(name, rect, map, map_file, spawn)
 
 class Character(Dialog, cocos.sprite.Sprite):
-    def __init__(self, id, anims, hitbox, offset, speed, direction='south', collidable=True):
+    def __init__(self, id, anims, hitbox, offset, speed, direction='south', collidable=True, dialog=None):
         '''Anims is a list of pyglet.image.Animation.
         Order:
             standing north, standing south, standing east, standing west, walking north, walking south, walking east, walking west
@@ -50,7 +60,9 @@ class Character(Dialog, cocos.sprite.Sprite):
         self._direction = direction
         self._walking = False
         self.anims = anims
-        Dialog.__init__(self, id, hitbox, 'Hello. My name is %s' % id, collidable)
+        if dialog == None:
+            dialog = 'Hello. My name is %s' % id
+        Dialog.__init__(self, id, hitbox, dialog, collidable)
         cocos.sprite.Sprite.__init__(self, self.anims['stand_' + self._direction])
         super(Character, self)._set_position(hitbox.position)
         self.image_anchor = (0, 0)

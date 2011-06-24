@@ -1,4 +1,6 @@
 # This code is so you can run the samples without installing the package
+import sqlite3
+
 import pyglet
 from pyglet.window import key, mouse
 from pyglet.gl import *
@@ -80,45 +82,6 @@ class MovePlayer(actions.Move):
                 return True
         return False
 
-class Fountain(MapEntity, cocos.sprite.Sprite):
-    def __init__(self, id, hitbox, anims, collidable=False):
-        MapEntity.__init__(self, id, hitbox, collidable)
-        cocos.sprite.Sprite.__init__(self, anims['idle'])
-        self.anims = anims
-        self.position = hitbox.position
-        self.image_anchor = (0, 0)
-    
-    def on_object_enter(self, object):
-        self.image = self.anims['active']
-
-    def on_object_exit(self, object):
-        self.image = self.anims['idle']
-
-class Map(layer.ScrollingManager, dict):
-    def __init__(self, filename):
-        layer.ScrollingManager.__init__(self)
-        dict.__init__(self)
-        self.load(filename)
-
-    def load(self, filename):
-        # Load map file
-        layers = loadmap.load_map(filename)
-        # Remove layers from scroller
-        if len(self.children):
-            self.remove('ground')
-            self.remove('fringe')
-            self.remove('over')
-            self.remove('objects')
-        # Add all new layers to internal dictionary
-        for key, value in layers.iteritems():
-            self[key] = value
-        self['objects'] = ObjectLayer()
-        # Add new layers to scrolling layer
-        self.add(self['ground'], z=0, name='ground')
-        self.add(self['fringe'], z=1, name='fringe')
-        self.add(self['objects'], z=2, name='objects')
-        self.add(self['over'], z=3, name='over')
-
 def create_sprite(x, y):
     return Character('King', anims, rect.Rect(x, y, 24, 30), (0, 0), 300)
 
@@ -127,8 +90,10 @@ if __name__ == "__main__":
     director.init(width=640, height=480, do_not_scale=True, resizable=True)
     director.show_FPS = True
 
+	# Open database
+    db = sqlite3.connect('database')
     # Load map
-    map = Map('outside.tmx')
+    map = loadmap.Map('outside.tmx', db)
 
     # Load animation
     image = pyglet.resource.image('king.png')
@@ -143,15 +108,6 @@ if __name__ == "__main__":
     stand_west = pyglet.image.Animation.from_image_sequence(sequence[8:9], .25, loop=True)
     stand_south = pyglet.image.Animation.from_image_sequence(sequence[12:13], .25, loop=True)
     anims = {'stand_north':stand_north, 'stand_south':stand_south, 'stand_east':stand_east, 'stand_west':stand_west, 'walk_north':walk_north, 'walk_south':walk_south, 'walk_east':walk_east, 'walk_west':walk_west}
-    image2 = pyglet.resource.image('fountain.png')
-    grid2 = pyglet.image.ImageGrid(image2, 4, 3)
-    sequence2 = grid2.get_texture_sequence()
-    idle = pyglet.image.Animation.from_image_sequence(sequence2[0:3], .1, loop=True)
-    active = pyglet.image.Animation.from_image_sequence(sequence2[9:12], .1, loop=True)
-    anims2 = {'idle':idle, 'active':active}
-    fountain = Fountain('fountain', cocos.rect.Rect(400, 300, 32, 32), anims2)
-    message = Dialog('message', cocos.rect.Rect(15*32, 9*32, 32, 32), 'You shouldn\'t read other people\'s mail.')
-    portal = Portal('portal', cocos.rect.Rect(19*32, 9*32, 32, 32), map, 'inn.tmx', (256, 32))
 
     # Setup player sprite
     player = create_sprite(450, 200)
@@ -159,9 +115,6 @@ if __name__ == "__main__":
 
     # Add objects to map
     map['objects'].add_object(player)
-    map['objects'].add_object(fountain)
-    map['objects'].add_object(message)
-    map['objects'].add_object(portal)
 
     dialog_layer = layer.ColorLayer(64, 128, 200,255, height=140)
 
@@ -186,15 +139,15 @@ if __name__ == "__main__":
                     map.do(actions.ScaleTo(.75, 2))
             if key == pyglet.window.key.SPACE:
                 dialog = None
-                player_rect = player.get_hitbox()
+                player_rect = cocos.rect.Rect(player.x, player.y, 32, 32)#player.get_hitbox()
                 if player.direction == 'north':
-                    player_rect.y += player.hitbox.height
+                    player_rect.y += player_rect.height
                 elif player.direction == 'south':
-                    player_rect.y -= player.hitbox.height
+                    player_rect.y -= player_rect.height
                 elif player.direction == 'east':
-                    player_rect.x += player.hitbox.width
+                    player_rect.x += player_rect.width
                 elif player.direction == 'west':
-                    player_rect.x -= player.hitbox.width
+                    player_rect.x -= player_rect.width
                 for s in map['objects'].get_objects():
                     if s != player and isinstance(s, Dialog):
                         rect = s.get_hitbox()
