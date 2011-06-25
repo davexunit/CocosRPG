@@ -20,6 +20,66 @@ class AnimSet(dict):
 class MapException(Exception):
     pass
 
+def load_animset(filename):
+    # Open xml file
+    root = ElementTree.parse(filename).getroot()
+    if root.tag != 'animset':
+        raise MapException('Expected <animset> tag, found <%s> tag' % root.tag)
+    # Get animset properties
+    image = pyglet.resource.image(root.get('image'))
+    tile_width = int(root.get('tilewidth'))
+    tile_height = int(root.get('tileheight'))
+    # Create image sequence of tiles
+    grid = pyglet.image.ImageGrid(image, image.width / tile_width, image.height / tile_height)
+    sequence = grid.get_texture_sequence()
+    anims = AnimSet()
+    # Loop through all animations
+    for child in root.findall('anim'):
+        anim_name = child.get('name')
+        anim_duration = float(child.get('duration'))
+        frame_indices = [int(x) for x in child.text.split(',')]
+        frames = list()
+        for f in frame_indices:
+            frames.append(sequence[f])
+        anims[anim_name] = pyglet.image.Animation.from_image_sequence(frames, anim_duration, loop=True)
+    return anims
+
+def load_image(tag):
+    # Get image properties
+    source = tag.get('source')
+    width = int(tag.get('width'))
+    height = int(tag.get('height'))
+    return pyglet.resource.image(source), width, height
+
+def load_tileset(tag):
+    # Get tileset properties
+    firstgid = int(tag.get('firstgid'))
+    name = tag.get('name')
+    tile_width = int(tag.get('tilewidth'))
+    tile_height = int(tag.get('tileheight'))
+
+    child = tag.find('image')
+    # Raise an exception if child tag is not <image>
+    if child.tag != 'image':
+        raise MapException('Unsupported tag in tileset: %s' % child.tag)
+    # Load image
+    image, image_width, image_height  = load_image(child)
+
+    # Construct tileset
+    tileset = TileSet()
+    for y in range(0, image_height, tile_height):
+        for x in range(0, image_width, tile_width):
+            tile = image.get_region(x, image_height - y - tile_height, tile_width, tile_height)
+            tileset.append(cocos.tiles.Tile(y * (image_width / tile_width) + x, None, tile))
+            # set texture clamping to avoid mis-rendering subpixel edges
+            # Taken from cocos2d tiles.py
+            # BSD licensed
+            tile.texture.id
+            glBindTexture(tile.texture.target, tile.texture.id)
+            glTexParameteri(tile.texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
+            glTexParameteri(tile.texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+    return tileset
+
 class Map(cocos.layer.ScrollingManager, dict):
     factories = dict()
     @classmethod
@@ -51,6 +111,7 @@ class Map(cocos.layer.ScrollingManager, dict):
         self.add(self['over'], z=3, name='over')
 
     def load(self, filename):
+        # Open xml file
         self.filename = filename
         tree = ElementTree.parse(filename)
         root = tree.getroot()
@@ -71,10 +132,9 @@ class Map(cocos.layer.ScrollingManager, dict):
         # Load tilesets
         self.tileset = TileSet()
         for tag in root.findall('tileset'):
-            self.tileset += self.load_tileset(tag)
+            self.tileset += load_tileset(tag)
 
         self.clear_layers()
-
         # Load layers
         for tag in root.findall('layer'):
             layer = self.load_layer(tag)
@@ -85,7 +145,6 @@ class Map(cocos.layer.ScrollingManager, dict):
             self[layer.id] = layer
         # Load objects form database
         self.load_from_db()
-
         self.add_layers()
 
     def load_from_db(self):
@@ -104,74 +163,13 @@ class Map(cocos.layer.ScrollingManager, dict):
             npc_name, npc_anim_file, npc_x, npc_y, npc_dialog = row
             npc_x, npc_y = int(npc_x), int(npc_y)
             # Load animset
-            tag = ElementTree.parse(npc_anim_file).getroot()
-            if tag.tag != 'animset':
-                raise MapException('Expected <animset> tag, found <%s> tag' % tag.tag)
             if npc_anim_file not in animsets:
-                animset = self.load_animset(tag)
+                animset = load_animset(npc_anim_file)
                 animsets[npc_anim_file] = animset
             # Create character
             npc = entity.Character(npc_name, animsets[npc_anim_file], cocos.rect.Rect(0, 0, 24, 24), (0,0), 300, dialog=npc_dialog)
             npc.position = npc_x, npc_y
             self['objects'].add_object(npc)
-
-    def load_animset(self, tag):
-        # Get animset properties
-        image = pyglet.resource.image(tag.get('image'))
-        tile_width = int(tag.get('tilewidth'))
-        tile_height = int(tag.get('tileheight'))
-        # Create image sequence of tiles
-        grid = pyglet.image.ImageGrid(image, image.width / tile_width, image.height / tile_height)
-        sequence = grid.get_texture_sequence()
-        anims = AnimSet()
-        # Loop through all animations
-        for child in tag.findall('anim'):
-            anim_name = child.get('name')
-            anim_duration = float(child.get('duration'))
-            frame_indices = [int(x) for x in child.text.split(',')]
-            frames = list()
-            for f in frame_indices:
-                frames.append(sequence[f])
-            anims[anim_name] = pyglet.image.Animation.from_image_sequence(frames, anim_duration, loop=True)
-        return anims
-
-    def load_tileset(self, tag):
-        # Get tileset properties
-        firstgid = int(tag.get('firstgid'))
-        name = tag.get('name')
-        tile_width = int(tag.get('tilewidth'))
-        tile_height = int(tag.get('tileheight'))
-
-        child = tag.find('image')
-        # Raise an exception if child tag is not <image>
-        if child.tag != 'image':
-            raise MapException('Unsupported tag in tileset: %s' % child.tag)
-        # Load image
-        image, image_width, image_height  = self.load_image(child)
-
-        # Construct tileset
-        #tileset = cocos.tiles.TileSet(name, None)
-        tileset = TileSet()
-        for y in range(0, image_height, tile_height):
-            for x in range(0, image_width, tile_width):
-                tile = image.get_region(x, image_height - y - tile_height, tile_width, tile_height)
-                tileset.append(cocos.tiles.Tile(y * (image_width / tile_width) + x, None, tile))
-                # set texture clamping to avoid mis-rendering subpixel edges
-                # Taken from cocos2d tiles.py
-                # BSD licensed
-                tile.texture.id
-                glBindTexture(tile.texture.target, tile.texture.id)
-                glTexParameteri(tile.texture.target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
-                glTexParameteri(tile.texture.target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-        return tileset
-
-    def load_image(self, tag):
-        # Get image properties
-        source = tag.get('source')
-        width = int(tag.get('width'))
-        height = int(tag.get('height'))
-
-        return pyglet.resource.image(source), width, height
 
     def load_layer(self, tag):
         # Get layer properties

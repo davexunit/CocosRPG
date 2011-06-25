@@ -82,8 +82,49 @@ class MovePlayer(actions.Move):
                 return True
         return False
 
+class MapController(object):
+    def on_start(self):
+        pass
+
+    def on_stop(self):
+        pass
+
 def create_sprite(x, y):
     return Character('King', anims, rect.Rect(x, y, 24, 30), (0, 0), 300)
+
+def make_dialog_box():
+    image = pyglet.resource.image('Dialog_Border.png')
+    grid = pyglet.image.ImageGrid(image, 3, 3)
+    w = cocos.director.director.get_window_size()[0]
+    num_columns, num_rows = w / grid.item_width, 128 / grid.item_height
+    columns = list()
+    for i in range(0, num_columns):
+        row = list()
+        columns.append(row)
+        for j in range(0, num_rows):
+            if i == 0 and j == 0:
+                index = 0
+            elif i == 0 and j == num_rows - 1:
+                index = 6
+            elif i == num_columns - 1 and j == 0:
+                index = 2
+            elif i == num_columns - 1 and j == num_rows - 1:
+                index = 8
+            elif i == 0 and j != 0 and j != num_rows - 1:
+                index = 3
+            elif i == num_columns - 1 and j != 0 and j != num_rows - 1:
+                index = 5
+            elif i != 0 and i != num_columns - 1  and j == 0:
+                index = 1
+            elif i != 0 and i != num_columns - 1  and j == num_rows - 1:
+                index = 7
+            else:
+                index = 4
+            tile = cocos.tiles.Tile(1, None, grid[index])
+            row.append(cocos.tiles.RectCell(i, j, grid.item_width, grid.item_height, None, tile))
+    dialog_box = cocos.tiles.RectMapLayer('Dialog', grid.item_width, grid.item_height, columns, (0,0,0), None)
+    dialog_box.set_view(0, 0, dialog_box.px_width, dialog_box.px_height)
+    return dialog_box
 
 if __name__ == "__main__":
     from cocos.director import director
@@ -94,49 +135,25 @@ if __name__ == "__main__":
     db = sqlite3.connect('database')
     # Load map
     map = loadmap.Map('outside.tmx', db)
-
     # Load animation
-    image = pyglet.resource.image('king.png')
-    grid = pyglet.image.ImageGrid(image, 4, 4)
-    sequence = grid.get_texture_sequence()
-    walk_north = pyglet.image.Animation.from_image_sequence(sequence[:4], .25, loop=True)
-    walk_east = pyglet.image.Animation.from_image_sequence(sequence[4:8], .25, loop=True)
-    walk_west = pyglet.image.Animation.from_image_sequence(sequence[8:12], .25, loop=True)
-    walk_south = pyglet.image.Animation.from_image_sequence(sequence[12:16], .25, loop=True)
-    stand_north = pyglet.image.Animation.from_image_sequence(sequence[0:1], .25, loop=True)
-    stand_east = pyglet.image.Animation.from_image_sequence(sequence[4:5], .25, loop=True)
-    stand_west = pyglet.image.Animation.from_image_sequence(sequence[8:9], .25, loop=True)
-    stand_south = pyglet.image.Animation.from_image_sequence(sequence[12:13], .25, loop=True)
-    anims = {'stand_north':stand_north, 'stand_south':stand_south, 'stand_east':stand_east, 'stand_west':stand_west, 'walk_north':walk_north, 'walk_south':walk_south, 'walk_east':walk_east, 'walk_west':walk_west}
-
+    anims = loadmap.load_animset('king.xml')
     # Setup player sprite
     player = create_sprite(450, 200)
     action = player.do(MovePlayer())
-
     # Add objects to map
     map['objects'].add_object(player)
-
-    dialog_layer = layer.ColorLayer(64, 128, 200,255, height=140)
-
+    dialog_layer = make_dialog_box()
     # Create the main scene
     main_scene = cocos.scene.Scene(map)
-
     # Handle input
     keyboard = key.KeyStateHandler()
     director.window.push_handlers(keyboard)
 
     state = "walkaround"
-
     def on_key_press(key, modifier):
         global state # is bad
         global action # is needed
         if state == "walkaround":
-            # Zoom in/out
-            if key == pyglet.window.key.Z:
-                if map.scale == .75:
-                    map.do(actions.ScaleTo(1, 2))
-                else:
-                    map.do(actions.ScaleTo(.75, 2))
             if key == pyglet.window.key.SPACE:
                 dialog = None
                 player_rect = cocos.rect.Rect(player.x, player.y, 32, 32)#player.get_hitbox()
@@ -159,12 +176,11 @@ if __name__ == "__main__":
                     state = "dialog"
                     player.remove_action(action)
                     player.walking = False
-                    label = cocos.text.Label(dialog.text, font_name='DroidSans', font_size=18, multiline=True, width=dialog_layer.width)
-                    label.position =(0, dialog_layer.height) 
+                    label = cocos.text.Label(dialog.text, font_name='DroidSans', font_size=18, multiline=True, width=dialog_layer.px_width)
+                    label.position = (32, dialog_layer.px_height - 32) 
                     label.element.anchor_y = 'top'
                     dialog_layer.add(label, name='label')
                     main_scene.add(dialog_layer, z=1)
-
         elif state == "dialog":
             if key == pyglet.window.key.SPACE:
                 state = "walkaround"
