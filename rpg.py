@@ -176,8 +176,8 @@ if __name__ == "__main__":
                     state = "dialog"
                     player.remove_action(action)
                     player.walking = False
-                    label = cocos.text.Label(dialog.text, font_name='DroidSans', font_size=18, multiline=True, width=dialog_layer.px_width)
-                    label.position = (32, dialog_layer.px_height - 32) 
+                    label = cocos.text.Label(dialog.text, font_name='DroidSans', font_size=16, multiline=True, width=dialog_layer.px_width)
+                    label.position = (16, dialog_layer.px_height - 16) 
                     label.element.anchor_y = 'top'
                     dialog_layer.add(label, name='label')
                     main_scene.add(dialog_layer, z=1)
