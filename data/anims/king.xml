@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animset image="king.png" tilewidth="38" tileheight="66">
+<animset image="tilesets/king.png" tilewidth="38" tileheight="66">
     <anim name="stand_north" duration=".25">
         0
     </anim>

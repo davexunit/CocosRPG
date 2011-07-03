@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animset image="NPCFemale1.png" tilewidth="32" tileheight="68">
+<animset image="tilesets/NPCFemale1.png" tilewidth="32" tileheight="68">
     <anim name="stand_north" duration=".25">
         0
     </anim>

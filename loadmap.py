@@ -10,6 +10,7 @@ import array
 import pyglet
 from pyglet.gl import *
 import cocos
+import utility
 
 class TileSet(list):
     pass
@@ -22,7 +23,7 @@ class MapException(Exception):
 
 def load_animset(filename):
     # Open xml file
-    root = ElementTree.parse(filename).getroot()
+    root = ElementTree.parse(utility.resource_path(filename)).getroot()
     if root.tag != 'animset':
         raise MapException('Expected <animset> tag, found <%s> tag' % root.tag)
     # Get animset properties
@@ -113,7 +114,7 @@ class Map(cocos.layer.ScrollingManager, dict):
     def load(self, filename):
         # Open xml file
         self.filename = filename
-        tree = ElementTree.parse(filename)
+        tree = ElementTree.parse(utility.resource_path(filename))
         root = tree.getroot()
 
         # Root level tag is expected to be <map> so raise an exception if it's not
@@ -213,7 +214,9 @@ class Map(cocos.layer.ScrollingManager, dict):
         decoded_data = zlib.decompress(base64.b64decode(data))
         # decoded_data is a string made of 64 bit integers now
         # Turn that string into an array of 64 bit integers
-        return array.array('L', decoded_data)
+        # TODO: Use encoding 'L' or 'I' accordingly based upon CPU architecture.
+        #       32 bit = 'L' and 64 bit = 'I'
+        return array.array('I', decoded_data)
 
     def load_object_layer(self, tag):
         import entity

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Outside" tilewidth="32" tileheight="32">
+  <image source="tilesets/Exterior_Castle.png" width="800" height="576"/>
+ </tileset>
+ <tileset firstgid="451" name="Collision" tilewidth="32" tileheight="32">
+  <image source="tilesets/collision.png" width="128" height="32"/>
+ </tileset>
+ <layer name="ground" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1kEOwUAUxvE3J62L4ABYorFGrGjDFrGkt8BBPLumGW1nhrw39S1+++8/06STGKIEAAAAAAAAANQasbGHiYLtZUu28rBWsL0LHdXv6BJph+/5owMd/9BxZCdHG4Ud37pDiY5ZgE93eBbo6AXIBfZ2vWPnaKC0w9UUHapUO+ZElFosSH6rS8ee9+YWh8g6rrz3ZlGgQ6TjznsfFs+IOoam+d2iVbkjpv99SEeqYG+bjr6pf8NIb62zjeS823ifdaZgB8CvvQBl5fg+
+  </data>
+ </layer>
+ <layer name="fringe" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2FsOwUAYhuFJLINw0SUgSCwBwR4Q7MLhwhocbqyBZdBdaHfha1rSTCZjqpqhvid5M0Ma/j/uCEFERERERERERJQ/ju0BPqQdnUdUsDkIERERPTVQU1PL3miJ9FEV1RTV0dDeaIkEe3RQV1FP6PdYSOc5oxlNpNljK53XjGY0kWaPE1qiFVqjTaaT6r2zxy06L2iH9uiQ+aR6aX6Pb/JPe5RRxdaAhoI9RmisaCLCPUqoaGtAQ1M0iDWTXs/tjUY/ysnB3RXhf1Ee8mN3L7q70jPx91X3+OfI77svnvcNvle+P565AyeMTIM=
+  </data>
+ </layer>
+ <layer name="over" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2DEKhEAQRUETF9QbbCjeQryaYrqntkEDAxNRaGapgocdftOpKgAAAADYNVEbddlDHuqjbzREv+QtT4zHd0pdAQC8ZY6Wi9bMUQB/oo4+2SOA285vUSXf/fE/Q+H3+S2q5HsDQdYTNg==
+  </data>
+ </layer>
+ <layer name="collision" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1UEKgCAQhlG7/7G6WLQIWhhCFDl/74EguJkPhGkNAAAAAPKsy9cTPOPoSOkBgAT7Xh6dCkZzXr3P1q1DxxvudPTmrtgxoz91VNgjSR0J+5x5nP9M1XvK2QDGrW8F
+  </data>
+ </layer>
+ <objectgroup name="objects" width="50" height="50">
+  <object name="Inn Door" type="portal" x="608" y="1280" width="32" height="32">
+   <properties>
+    <property name="map" value="inn.tmx"/>
+    <property name="spawn" value="288,32"/>
+   </properties>
+  </object>
+  <object name="Mailbox" type="dialog" x="480" y="1280" width="32" height="32">
+   <properties>
+    <property name="text" value="You shouldn't read other people's mail! D:&lt;"/>
+   </properties>
+  </object>
+  <object name="Inn Sign" type="dialog" x="672" y="1280" width="32" height="32">
+   <properties>
+    <property name="text" value="The Muddy Rudder Inn"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

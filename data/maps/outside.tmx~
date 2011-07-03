@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Outside" tilewidth="32" tileheight="32">
-  <image source="Exterior_Castle.png" width="800" height="576"/>
+  <image source="../images/Exterior_Castle.png" width="800" height="576"/>
  </tileset>
  <tileset firstgid="451" name="Collision" tilewidth="32" tileheight="32">
-  <image source="collision.png" width="128" height="32"/>
+  <image source="../images/collision.png" width="128" height="32"/>
  </tileset>
  <layer name="ground" width="50" height="50">
   <data encoding="base64" compression="zlib">

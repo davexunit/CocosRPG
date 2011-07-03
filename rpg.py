@@ -1,5 +1,6 @@
 # This code is so you can run the samples without installing the package
 import sqlite3
+import utility
 
 import pyglet
 from pyglet.window import key, mouse
@@ -131,8 +132,14 @@ if __name__ == "__main__":
     director.init(width=640, height=480, do_not_scale=True, resizable=True)
     director.show_FPS = True
 
-	# Open database
-    db = sqlite3.connect('database')
+    # Add resource file paths
+    pyglet.resource.path.append('data')
+    pyglet.resource.path.append('data/images')
+    pyglet.resource.path.append('data/maps')
+    pyglet.resource.path.append('data/anims')
+    pyglet.resource.reindex()
+    # Open database
+    db = sqlite3.connect(utility.resource_path('database'))
     # Load map
     map = loadmap.Map('outside.tmx', db)
     # Load animation
