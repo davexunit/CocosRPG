@@ -10,6 +10,7 @@ That said, I hope that this code could be of use to someone. Particularly, the c
 
 Features
 --------
+* Multi-layered tile maps
 * Integration with the Tiled map editor
 * Dynamically populated maps from SQLite database
 * Simple XML sprite animation format
@@ -29,8 +30,10 @@ The top layer.
 Used for things that should be drawn over everything else, including objects.
 ### Collision layer
 Defines the collision map.
+
 * No tile = no collision.
 * Any tile = collision.
+
 Perhaps this can be improved upon in the future to support many collision types, but for now it is not a priority.
 ### Object layer
 Where all game entities such as the player, NPCs, etc. live.
@@ -41,8 +44,6 @@ Try it out!
 -----------
 ### Tile engine test
 python rpg.py
-### Battle engine test
-to be written (I hope...)
 
 License
 -------
