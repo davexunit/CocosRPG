@@ -8,10 +8,16 @@ The goal is to design a decent codebase that could be used to make an RPG.
 This is not a framework. I don't expect this to ever be a library but merely a foundation to write a specific type of game.
 That said, I hope that this code could be of use to someone. Particularly, the code that loads Tiled .tmx map files.
 
+Features
+--------
+* Integration with the Tiled map editor
+* Dynamically populated maps from SQLite database
+* Simple XML sprite animation format
+
 Map Files
 ---------
 Map files are in Tiled .tmx format.
-Each map file must have tile layers named "ground", "fringe", "over", and "collision" and an object layer named "objects".
+Each map file must have tile layers named *ground*, *fringe*, *over*, and *collision* and an object layer named *objects*.
 Multiple tilesets are supported.
 ### Ground layer
 The bottom tile layer of the map. Pretty self explanatory.
@@ -23,9 +29,9 @@ The top layer.
 Used for things that should be drawn over everything else, including objects.
 ### Collision layer
 Defines the collision map.
-No tile = no collision
-Any tile = collision
-Perhaps this can be improved upon in the future to support many collision types.
+* No tile = no collision.
+* Any tile = collision.
+Perhaps this can be improved upon in the future to support many collision types, but for now it is not a priority.
 ### Object layer
 Where all game entities such as the player, NPCs, etc. live.
 Static objects (things that exist in a map regardless of game state) can be placed in the map file such as Portals and Dialog triggers.
@@ -40,5 +46,4 @@ to be written (I hope...)
 
 License
 -------
-GPL v3
-Because sharing is caring. :)
+GPL v3 because sharing is caring. :)
