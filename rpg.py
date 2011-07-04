@@ -1,20 +1,16 @@
-# This code is so you can run the samples without installing the package
 import sqlite3
 import sys
 import utility
 
 import pyglet
 from pyglet.window import key, mouse
-from pyglet.gl import *
-
-pyglet.resource.path.append(pyglet.resource.get_script_home())
-pyglet.resource.reindex()
 
 import cocos
-from cocos import tiles, actions, layer, rect
+from cocos import tiles, actions, layer, rect, scenes
 
 import loadmap
 from entity import *
+import battle
 
 class MovePlayer(actions.Move):
     def start(self):
@@ -88,7 +84,7 @@ class MovePlayer(actions.Move):
                 return True
         return False
 
-class State(cocos.layer.Layer):
+class State(layer.Layer):
     '''State objects control the tile engine.
     State objects register input events and perform their specific task.
     Common tile engines states are: Walkaround, Dialog, and Cinematic
@@ -107,10 +103,10 @@ class WalkaroundState(State):
 
     def on_key_press(self, key, modifier):
         if key == pyglet.window.key.SPACE:
-			# Entity to possibly interact with
+            # Entity to possibly interact with
             entity = None
             player = self.parent.player
-			# Translate hitbox up, down, left, or right depending on player direction
+            # Translate hitbox up, down, left, or right depending on player direction
             player_rect = cocos.rect.Rect(player.x, player.y, 32, 32)#player.get_hitbox()
             if player.direction == 'north':
                 player_rect.y += player_rect.height
@@ -120,7 +116,7 @@ class WalkaroundState(State):
                 player_rect.x += player_rect.width
             elif player.direction == 'west':
                 player_rect.x -= player_rect.width
-		    # Check for entities with dialog
+            # Check for entities with dialog
             for s in self.parent.map_layer['objects'].get_objects():
                 if s != player and isinstance(s, Dialog):
                     rect = s.get_hitbox()
@@ -151,12 +147,18 @@ class WalkaroundState(State):
 class DialogState(State):
     def __init__(self, text):
         super(DialogState, self).__init__()
-        self.text = text
         self.dialog_layer = self._make_dialog_layer()
-        self.label = cocos.text.Label(text, font_name='DroidSans', font_size=16, multiline=True, width=self.dialog_layer.px_width)
-        self.label.position = (16, self.dialog_layer.px_height - 16) 
-        self.label.element.anchor_y = 'top'
+        self.text = text
+        self.font_name = 'Sans'
+        self.font_size = 12
+        self.label = self._make_label()
         self.dialog_layer.add(self.label, name='label')
+
+    def _make_label(self):
+        label = cocos.text.Label(self.text, font_name=self.font_name, font_size=self.font_size, multiline=True, width=self.dialog_layer.px_width - self.dialog_layer.tw*2)
+        label.position = (self.dialog_layer.tw, self.dialog_layer.px_height - self.dialog_layer.th) 
+        label.element.anchor_y = 'top'
+        return label
  
     def _make_dialog_layer(self):
         # Load dialog box border
@@ -271,6 +273,8 @@ if __name__ == "__main__":
     # Add objects to map
     map_scene.map_layer['objects'].add_object(player)
     map_scene.player = player
-    keyboard = key.KeyStateHandler()
-    director.window.push_handlers(keyboard)
+    # Trigger
+    def do_battle(obj):
+        director.push(scenes.transitions.FadeTransition(battle.BattleScene()))
+    map_scene.map_layer['objects'].add_object(Trigger('battletrigger', rect.Rect(512, 128, 128, 128), do_battle, None))
     director.run(map_scene)

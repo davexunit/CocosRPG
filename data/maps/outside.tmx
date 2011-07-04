@@ -40,7 +40,7 @@
   </object>
   <object name="Inn Sign" type="dialog" x="672" y="1280" width="32" height="32">
    <properties>
-    <property name="text" value="The Muddy Rudder Inn"/>
+    <property name="text" value="The Foobar Inn"/>
    </properties>
   </object>
  </objectgroup>

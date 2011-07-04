@@ -21,6 +21,20 @@ class MapEntity(object):
         '''
         pass
 
+class Trigger(MapEntity):
+    def __init__(self, id, rect, enter_func, exit_func, collidable=False):
+        super(Trigger, self).__init__(id, rect, collidable)
+        self.enter_func = enter_func
+        self.exit_func = exit_func
+
+    def on_object_enter(self, obj):
+        if self.enter_func != None:
+            self.enter_func(obj)
+
+    def on_object_exit(self, obj):
+        if self.exit_func != None:
+            self.exit_func(obj)
+
 class Dialog(MapEntity):
     def __init__(self, id, rect, text, collidable=False):
         super(Dialog, self).__init__(id, rect, collidable)

@@ -39,6 +39,7 @@ Perhaps this can be improved upon in the future to support many collision types,
 Where all game entities such as the player, NPCs, etc. live.
 Static objects (things that exist in a map regardless of game state) can be placed in the map file such as Portals and Dialog triggers.
 Consult the map files that are included for formatting of these objects.
+Dynamic objects are loaded from a SQLite database file that is the game's save file. This is where you keep NPCs, item chests, triggers, etc. that change their state throughout the game.
 
 Try it out!
 -----------
