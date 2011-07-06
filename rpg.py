@@ -95,7 +95,7 @@ class State(layer.Layer):
 class WalkaroundState(State):
     def on_enter(self):
         super(WalkaroundState, self).on_enter()
-        self.action = map_scene.player.do(MovePlayer())
+        #self.action = map_scene.player.do(MovePlayer())
 
     def on_exit(self):
         super(WalkaroundState, self).on_exit()
@@ -107,22 +107,23 @@ class WalkaroundState(State):
             entity = None
             player = self.parent.player
             # Translate hitbox up, down, left, or right depending on player direction
-            player_rect = cocos.rect.Rect(player.x, player.y, 32, 32)#player.get_hitbox()
-            if player.direction == 'north':
+            player_rect = player.get_rect()
+            if player.move.direction == 'north':
                 player_rect.y += player_rect.height
-            elif player.direction == 'south':
+            elif player.move.direction == 'south':
                 player_rect.y -= player_rect.height
-            elif player.direction == 'east':
+            elif player.move.direction == 'east':
                 player_rect.x += player_rect.width
-            elif player.direction == 'west':
+            elif player.move.direction == 'west':
                 player_rect.x -= player_rect.width
             # Check for entities with dialog
             for s in self.parent.map_layer['objects'].get_objects():
-                if s != player and isinstance(s, Dialog):
+                '''if s != player and isinstance(s, Dialog):
                     rect = s.get_hitbox()
                     if rect.intersects(player_rect) :
                         entity = s
                         break
+                '''
             if entity != None:
                 entity.on_interact(player)
                 player.walking = False
@@ -264,17 +265,40 @@ if __name__ == "__main__":
     map_scene = TileMapScene('outside.tmx', 'database')
     map_scene.state_replace(WalkaroundState())
 
-    def create_sprite(name, x, y):
-        return Character(name, anims, rect.Rect(x, y, 24, 30), (0, 0), 300)
+    def create_sprite(name, x, y, player=False):
+        move = PlayerMoveComponent(200) if player else MoveComponent(200)
+        character = Character(name, anims, (0, 0), move)
+        character.position = (x, y)
+        character.size = (24, 30)
+        return character
+    class PlayerMoveComponent(MoveComponent):
+        def start(self):
+            super(PlayerMoveComponent, self).start()
+            self.keyboard = key.KeyStateHandler()
+            director.window.push_handlers(self.keyboard)
+        def step(self, dt):
+            vx = self.keyboard[key.RIGHT] - self.keyboard[key.LEFT]
+            vy = self.keyboard[key.UP] - self.keyboard[key.DOWN]
+            if vx == 0 and vy == 0:
+                self.walking = False
+            else:
+                self.walking = True
+            if vx==1:
+                self.direction = 'east'
+            elif vx==-1:
+                self.direction = 'west'
+            elif vy==1:
+                self.direction = 'north'
+            elif vy==-1:
+                self.direction = 'south'
+            super(PlayerMoveComponent, self).step(dt)
+            map_scene.map_layer.set_focus(int(self.target.x), int(self.target.y))
+
     # Load animation
     anims = loadmap.load_animset('king.xml')
     # Setup player sprite
-    player = create_sprite('player', 450, 200)
+    player = create_sprite('player', 450, 200, True)
     # Add objects to map
     map_scene.map_layer['objects'].add_object(player)
     map_scene.player = player
-    # Trigger
-    def do_battle(obj):
-        director.push(scenes.transitions.FadeTransition(battle.BattleScene()))
-    map_scene.map_layer['objects'].add_object(Trigger('battletrigger', rect.Rect(512, 128, 128, 128), do_battle, None))
     director.run(map_scene)

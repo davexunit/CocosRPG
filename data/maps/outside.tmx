@@ -29,16 +29,16 @@
  <objectgroup name="objects" width="50" height="50">
   <object name="Inn Door" type="portal" x="608" y="1280" width="32" height="32">
    <properties>
+    <property name="exit" value="Outside"/>
     <property name="map" value="inn.tmx"/>
-    <property name="spawn" value="288,32"/>
    </properties>
   </object>
-  <object name="Mailbox" type="dialog" x="480" y="1280" width="32" height="32">
+  <object name="Mailbox" type="sign" x="480" y="1280" width="32" height="32">
    <properties>
     <property name="text" value="You shouldn't read other people's mail! D:&lt;"/>
    </properties>
   </object>
-  <object name="Inn Sign" type="dialog" x="672" y="1280" width="32" height="32">
+  <object name="Inn Sign" type="sign" x="672" y="1280" width="32" height="32">
    <properties>
     <property name="text" value="The Foobar Inn"/>
    </properties>

@@ -240,5 +240,5 @@ class Map(cocos.layer.ScrollingManager, dict):
         properties = dict()
         for p in tag.find('properties'):
             properties[p.get('name')] = p.get('value')
-        return self.factories[type](self, name, rect, properties)
+        return self.factories[type](self, name, x, y, width, height, properties)
 

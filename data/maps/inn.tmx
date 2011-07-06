@@ -29,8 +29,8 @@
  <objectgroup name="objects" width="20" height="20">
   <object name="Outside" type="portal" x="288" y="608" width="64" height="32">
    <properties>
+    <property name="exit" value="Inn"/>
     <property name="map" value="outside.tmx"/>
-    <property name="spawn" value="608,288"/>
    </properties>
   </object>
  </objectgroup>

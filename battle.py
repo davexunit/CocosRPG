@@ -34,7 +34,7 @@ class Combatant(cocos.sprite.Sprite):
         self.ap = 0
 
     def attack(self, opponent):
-        damage = self.stats._atk * (1.0 - (opponent.stats._def / 100.0))
+        damage = int(self.stats._atk * (1.0 - (opponent.stats._def / 100.0)))
         opponent.stats._hp -= damage
         self.dispatch_event('on_damage', self, opponent, damage)
         if opponent.stats._hp <= 0:
@@ -42,7 +42,6 @@ class Combatant(cocos.sprite.Sprite):
 
     def heal(self, health):
         self.stats._hp = min(self.stats._hp + health, self.stats._max_hp)
-        self.dispatch_event('on_heal', self, health)
     
     def take_turn(self):
         pass
@@ -56,7 +55,7 @@ class Enemy(Combatant):
         self.attack(ally)
         def next_turn():
             self.battle.next_turn()
-        self.do(cocos.actions.Delay(.4) + cocos.actions.CallFunc(next_turn))
+        self.do(cocos.actions.Delay(1) + cocos.actions.CallFunc(next_turn))
 
 class AllyMenu(cocos.menu.Menu):
     def __init__(self, ally, on_attack, on_guard):
@@ -83,11 +82,18 @@ class Ally(Combatant):
             self.battle.remove(menu)
             self.battle.next_turn()
         def on_guard():
-            self.heal(self.stats._max_hp * .1)
+            self.heal(int(self.stats._max_hp * .1))
             self.battle.remove(menu)
             self.battle.next_turn()
         menu = AllyMenu(self, on_attack, on_guard)
         self.battle.add(menu, z=3)
+
+class Attack(cocos.layer.Layer):
+    def __init__(self, chain):
+        self.chain = chain
+
+    def start(self):
+        self.time = 0.0
 
 class BattleScene(cocos.scene.Scene):
     def __init__(self):
@@ -116,14 +122,21 @@ class BattleScene(cocos.scene.Scene):
             self.combatants += (ally, enemy)
         self.next_turn()
 
+    def popup_label(self, position, text):
+        label = cocos.text.Label(text, position, font_size=18)
+        def kill():
+            label.kill()
+        self.add(label, z=4)
+        label.do(cocos.actions.FadeOut(2) + cocos.actions.CallFunc(kill))
+
     def on_damage(self, attacker, defender, damage):
-        print "%s deals %d damage to %s!" % (attacker.name, damage, defender.name)
+        self.popup_label(defender.position, '-%d' % damage)
 
     def on_heal(self, combatant, health):
-        print "%s healed %d HP." % (combatant.name, health)
+        self.popup_label(combatant.position, '+%d' % health)
 
     def on_death(self, combatant):
-        print "%s has died." % combatant.name
+        self.popup_label((300, 300), '%s has died' % combatant.name)
         if combatant in self.allies:
             self.allies.remove(combatant)
             self.ally_layer.remove(combatant)
@@ -150,6 +163,17 @@ class BattleScene(cocos.scene.Scene):
             elif combatant.ap > next_combatant.ap:
                 next_combatant = combatant
         next_combatant.ap = 0
-        print 'Next: %s' % next_combatant.name
         next_combatant.take_turn()
 
+if __name__ == '__main__':
+    director.init(width=640, height=480, do_not_scale=True, resizable=True)
+    director.show_FPS = True
+
+    # Add resource file paths
+    pyglet.resource.path.append('data')
+    pyglet.resource.path.append('data/images')
+    pyglet.resource.path.append('data/maps')
+    pyglet.resource.path.append('data/anims')
+    pyglet.resource.reindex()
+
+    director.run(BattleScene())
