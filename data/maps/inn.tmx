@@ -26,7 +26,7 @@
    eJw7zMjAcHgUU4RBAJlNKh+beTBxZEAOH12MEjBqHnXMI5SWSNVDbfNI9ROpdpBqHrq5pLqPWPdgy4+U2kUJGIj0h62MwocBfleTAQ==
   </data>
  </layer>
- <objectgroup name="objects" width="20" height="20">
+ <objectgroup name="actors" width="20" height="20">
   <object name="Outside" type="portal" x="288" y="608" width="64" height="32">
    <properties>
     <property name="exit" value="Inn"/>

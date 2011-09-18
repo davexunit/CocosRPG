@@ -26,7 +26,7 @@
    eJzt1UEKgCAQhlG7/7G6WLQIWhhCFDl/74EguJkPhGkNAAAAAPKsy9cTPOPoSOkBgAT7Xh6dCkZzXr3P1q1DxxvudPTmrtgxoz91VNgjSR0J+5x5nP9M1XvK2QDGrW8F
   </data>
  </layer>
- <objectgroup name="objects" width="50" height="50">
+ <objectgroup name="actors" width="50" height="50">
   <object name="Inn Door" type="portal" x="608" y="1280" width="32" height="32">
    <properties>
     <property name="exit" value="Outside"/>
