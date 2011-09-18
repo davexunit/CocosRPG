@@ -1,4 +1,6 @@
-class MapActor(object):
+import pyglet
+
+class MapActor(pyglet.event.EventDispatcher):
     '''MapActors represent any object on the map that isn't a tile. This class
     is simply a container of components. Mix and match components to create the
     MapActors that you need.
@@ -6,20 +8,43 @@ class MapActor(object):
     def __init__(self):
         super(MapActor, self).__init__()
         self.name = "Anonymous"
-        self.x = 0
-        self.y = 0
+        self._x = 0
+        self._y = 0
         self.width = 0
         self.height = 0
         self.parent_map = None
         self.components = {}
 
     @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, newx):
+        dx = newx - self._x
+        self._x = newx
+        self.dispatch_event('on_move', self._x, self._y, dx, 0)
+
+    @property
+    def y(self):
+        return self._y
+
+    @x.setter
+    def y(self, newy):
+        dy = newy - self._y
+        self._y = newy
+        self.dispatch_event('on_move', self._x, self._y, 0, dy)
+
+    @property
     def position(self):
-        return (self.x, self.y)
+        return (self._x, self._y)
 
     @position.setter
     def position(self, position):
-        self.x, self.y = position
+        newx, newy = position
+        dx, dy = newx - self._x, newy - self._y
+        self._x, self._y = newx, newy
+        self.dispatch_event('on_move', self._x, self._y, dx, dy)
         
     @property
     def size(self):
@@ -71,10 +96,14 @@ class MapActor(object):
         for component in self.components.values():
             component.on_refresh()
 
+# Event handlers for MapActor
+MapActor.register_event_type('on_move')
+
+from component import *
 class Player(MapActor):
-    def __init__():
-        super(MapActor, self).__init__()
-        self.add_component(HumanInputComponent())
-        self.add_component(SpriteComponent())
-        self.add_component(CollisionComponent())
+    def __init__(self):
+        super(Player, self).__init__()
+        #self.add_component(HumanInputComponent())
+        self.add_component(SpriteComponent("golem.png"))
+        #self.add_component(CollisionComponent())
         self.refresh_components()

@@ -54,6 +54,12 @@ class SpriteComponent(Component, cocos.sprite.Sprite):
     component_type = "graphics"
 
     def __init__(self, image_file):
-        super(SpriteComponent, self).__init__(image_file)
+        cocos.sprite.Sprite.__init__(self, image_file)
+        Component.__init__(self)
 
+    def on_refresh(self):
+        self.owner.push_handlers(self)
+
+    def on_move(self, x, y, rel_x, rel_y):
+        self.position = (x, y)
 
