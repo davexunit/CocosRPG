@@ -10,7 +10,8 @@ import array
 import pyglet
 from pyglet.gl import *
 import cocos
-import utility
+
+from .. import utility
 import mapscene
 
 class TileSet(list):

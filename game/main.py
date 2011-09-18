@@ -1,11 +1,11 @@
+import sqlite3
+import utility
+from map import mapload
+from map.mapscene import *
+from actor import actor
+from cocos.director import director
+
 def main():
-    import sqlite3
-    import utility
-    import mapload
-    import mapactor
-    import component
-    from mapscene import *
-    from cocos.director import director
     director.init(width=640, height=480, do_not_scale=True, resizable=True)
     director.show_FPS = True
 
@@ -20,11 +20,13 @@ def main():
     anims = mapload.load_animset('king.xml')
 
     # Setup player sprite
-    player = mapactor.Player()
-    player.position = (200, 200)
+    player = actor.Player()
+    player.position = (440, 200)
+    player.size = (32, 32)
 
     # Add player to map
     map_scene.actors.add_actor(player)
+    map_scene.focus = player
 
     # Run map scene
     director.run(map_scene)

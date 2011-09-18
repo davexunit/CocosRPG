@@ -136,11 +136,16 @@ class ActorLayer(cocos.layer.ScrollableLayer):
         super(ActorLayer, self).__init__()
         self.id = id
         self.actors = []
+        self.map_scene = None
 
     def add_actor(self, actor):
         self.actors.append(actor)
+
+        if self.map_scene != None:
+            actor.parent_map = self.map_scene
+
         if actor.has_component('graphics'):
-            self.add(actor.get_component('graphics'))
+            self.add(actor.get_component('graphics').sprite)
     
     def remove_actor(self, actor):
         self.actors.remove(actor)
@@ -151,8 +156,9 @@ class ActorLayer(cocos.layer.ScrollableLayer):
         self.collision_components
 
     def set_map_scene(self, map_scene):
+        self.map_scene = map_scene
         for a in self.actors:
-            self.map_scene = map_scene
+            a.parent_map = map_scene
 
     def get_actors(self):
         return self.actors
@@ -178,6 +184,13 @@ class MapScene(cocos.scene.Scene):
         self.tile_size = (tile_width, tile_height)
         # State
         self.state = list()
+        # Actor to focus on
+        self.focus = None
+        pyglet.clock.schedule(self.do_focus)
+
+    def do_focus(self, dt):
+        if self.focus != None:
+            self.scroller.set_focus(self.focus.x, self.focus.y)
 
     def init_layers(self, ground, fringe, over, collision, actors):
         # Set member variables

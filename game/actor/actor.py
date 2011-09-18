@@ -1,12 +1,13 @@
 import pyglet
+import cocos
 
-class MapActor(pyglet.event.EventDispatcher):
-    '''MapActors represent any object on the map that isn't a tile. This class
+class Actor(pyglet.event.EventDispatcher):
+    '''Actors represent any object on the map that isn't a tile. This class
     is simply a container of components. Mix and match components to create the
-    MapActors that you need.
+    Actors that you need.
     '''
     def __init__(self):
-        super(MapActor, self).__init__()
+        super(Actor, self).__init__()
         self.name = "Anonymous"
         self._x = 0
         self._y = 0
@@ -29,7 +30,7 @@ class MapActor(pyglet.event.EventDispatcher):
     def y(self):
         return self._y
 
-    @x.setter
+    @y.setter
     def y(self, newy):
         dy = newy - self._y
         self._y = newy
@@ -53,6 +54,9 @@ class MapActor(pyglet.event.EventDispatcher):
     @size.setter
     def size(self, size):
         self.width, self.height = size
+    
+    def get_rect(self):
+        return cocos.rect.Rect(self._x, self._y, self.width, self.height)
 
     def add_component(self, component):
         '''Adds a component to the component dictionary. If a component of the same type is
@@ -88,22 +92,23 @@ class MapActor(pyglet.event.EventDispatcher):
 
     def refresh_components(self):
         '''Refreshing the components gives each component the chance to hook
-        into the events of other components that belong to the MapActor.
-        You should call this once during the initial creation of the MapActor,
+        into the events of other components that belong to the Actor.
+        You should call this once during the initial creation of the Actor,
         after all of the components have been added.
         If you add/remove components later, make sure to refresh.
         '''
         for component in self.components.values():
             component.on_refresh()
 
-# Event handlers for MapActor
-MapActor.register_event_type('on_move')
+# Event handlers for Actor
+Actor.register_event_type('on_move')
 
 from component import *
-class Player(MapActor):
+class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
-        #self.add_component(HumanInputComponent())
+        self.add_component(HumanInputComponent())
         self.add_component(SpriteComponent("golem.png"))
-        #self.add_component(CollisionComponent())
+        self.add_component(PhysicsComponent())
+        self.add_component(PlayerSoundComponent())
         self.refresh_components()
