@@ -137,6 +137,8 @@ class ActorLayer(cocos.layer.ScrollableLayer):
         self.id = id
         self.actors = []
         self.map_scene = None
+        self.batch = cocos.batch.BatchNode()
+        self.add(self.batch)
 
     def add_actor(self, actor):
         self.actors.append(actor)
@@ -145,7 +147,7 @@ class ActorLayer(cocos.layer.ScrollableLayer):
             actor.parent_map = self.map_scene
 
         if actor.has_component('graphics'):
-            self.add(actor.get_component('graphics').sprite)
+            self.batch.add(actor.get_component('graphics').sprite)
     
     def remove_actor(self, actor):
         self.actors.remove(actor)

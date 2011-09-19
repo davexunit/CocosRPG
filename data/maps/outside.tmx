@@ -4,7 +4,7 @@
   <image source="tilesets/Exterior_Castle.png" width="800" height="576"/>
  </tileset>
  <tileset firstgid="451" name="Collision" tilewidth="32" tileheight="32">
-  <image source="tilesets/collision.png" width="128" height="32"/>
+  <image source="tilesets/collision.png" width="128" height="128"/>
  </tileset>
  <layer name="ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
@@ -23,7 +23,7 @@
  </layer>
  <layer name="collision" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1UEKgCAQhlG7/7G6WLQIWhhCFDl/74EguJkPhGkNAAAAAPKsy9cTPOPoSOkBgAT7Xh6dCkZzXr3P1q1DxxvudPTmrtgxoz91VNgjSR0J+5x5nP9M1XvK2QDGrW8F
+   eJzt2UEKgCAUBmG7/7G8WNsoqcULmvc3A4ILET8QXDi3MWbI6J4OVjpY6WClg5UOVjpY6WClg5UOVjpY6WBVcZD8bzgIHu8VKx2sdLDSwSrR0fnf6ux4Wnu3x5duHdc9dNSrOlbn7uig9FcH9R1JdSS8551LcxwtXecpYweox94J
   </data>
  </layer>
  <objectgroup name="actors" width="50" height="50">

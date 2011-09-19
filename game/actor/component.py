@@ -52,11 +52,11 @@ class SpriteComponent(Component):
     '''
     component_type = "graphics"
 
-    def __init__(self, anims):
+    def __init__(self, anims, offset=(0,0)):
         super(SpriteComponent, self).__init__()
         self.sprite = cocos.sprite.Sprite(anims['stand_south'], anchor=(0,0))
         # Offset the sprite from the actor's hitbox
-        self._dx, self._dy = 0, 0
+        self._dx, self._dy = offset
         self.anims = anims
         self.walking = False
         self.direction = 'south'
@@ -66,7 +66,7 @@ class SpriteComponent(Component):
         self.owner.get_component('physics').push_handlers(self)
 
     def on_move(self, x, y, rel_x, rel_y):
-        self.sprite.position = (x - self._dx, y - self._dy)
+        self.sprite.position = (int(x + self._dx), int(y + self._dy))
 
     def update_animation(self):
         prefix = 'walk_' if self.walking else 'stand_'
@@ -121,14 +121,28 @@ class HumanInputComponent(Component):
         elif key == pyglet.window.key.LEFT:
             self.physics.dx += 1.0
 
+class DumbAI(Component):
+    component_type = "input"
+
+    def on_refresh(self):
+        self.physics = self.owner.get_component('physics')
+        self.physics.push_handlers(self)
+        self.physics.direction = (1, 1)
+
+    def on_collision(self, collide_x, collide_y):
+        if collide_x:
+            self.physics.dx *= -1
+        if collide_y:
+            self.physics.dy *= -1
+
 import pyglet
 class PhysicsComponent(Component):
     component_type = "physics"
 
-    def __init__(self):
+    def __init__(self, speed):
         super(PhysicsComponent, self).__init__()
         self._dx, self._dy = 0, 0
-        self.speed = 300
+        self.speed = speed
         self.collidable = True
         pyglet.clock.schedule(self.do_move)
 
@@ -190,7 +204,7 @@ class PhysicsComponent(Component):
 
         # Dispatch collision event if collision occurred
         if collide_x or collide_y:
-            self.dispatch_event('on_collision')
+            self.dispatch_event('on_collision', collide_x, collide_y)
 
     def check_collision(self, rect):
         # Ignore collision test if collidable flag is not set
@@ -219,7 +233,7 @@ class PlayerSoundComponent(Component):
     def on_refresh(self):
         self.owner.get_component('physics').push_handlers(self)
 
-    def on_collision(self):
+    def on_collision(self, collide_x, collide_y):
         if self.play_collision:
             self.collision.play()
             self.play_collision = False

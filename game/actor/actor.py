@@ -107,8 +107,28 @@ from component import *
 class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
+        self.size = (24, 24)
+
+        # Load animations
+        from .. import mapload
+        anims = mapload.load_animset('king.xml')
+
         self.add_component(HumanInputComponent())
-        self.add_component(SpriteComponent("golem.png"))
-        self.add_component(PhysicsComponent())
+        self.add_component(SpriteComponent(anims, offset=(-4,0)))
+        self.add_component(PhysicsComponent(200))
         self.add_component(PlayerSoundComponent())
+        self.refresh_components()
+
+class Derp(Actor):
+    def __init__(self):
+        super(Derp, self).__init__()
+        self.size = (24, 24)
+
+        # Load animations
+        from .. import mapload
+        anims = mapload.load_animset('king.xml')
+
+        self.add_component(DumbAI())
+        self.add_component(SpriteComponent(anims, offset=(-4,0)))
+        self.add_component(PhysicsComponent(200))
         self.refresh_components()
