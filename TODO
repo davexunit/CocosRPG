@@ -1,4 +1,5 @@
 * Figure out why scrolling isn't very smooth and fix it
+* Eliminate dependency on global pyglet.clock for all component updates
 * Re-implement portal and sign actors
 * Re-implement loading of portal and sign actors from .tmx map
 * Document more code
