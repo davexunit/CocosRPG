@@ -44,7 +44,8 @@ Dynamic objects are loaded from a SQLite database file that is the game's save f
 Try it out!
 -----------
 ### Tile engine test
-python rpg.py
+python test.py
+Make sure you are running python 2.7, 3.0 will not work.
 
 License
 -------

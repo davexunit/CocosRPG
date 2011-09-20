@@ -18,7 +18,8 @@ def main():
 
     # Load map scene
     map_scene = mapload.load_map('outside.tmx', db)
-    map_scene.state_replace(WalkaroundState())
+    walkaround = WalkaroundState()
+    map_scene.state_replace(walkaround)
 
     # Setup player sprite
     player = actor.Player()
@@ -27,6 +28,7 @@ def main():
     # Add player to map
     map_scene.actors.add_actor(player)
     map_scene.focus = player
+    walkaround.input_component = player.get_component('input')
 
     # Add retarded NPCs
     import random

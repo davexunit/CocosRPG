@@ -89,6 +89,7 @@ class SpriteComponent(Component):
         self.update_animation()
 
 import math
+from .. import config
 class HumanInputComponent(Component):
     '''Input component that takes input from the keyboard.
     '''
@@ -96,29 +97,29 @@ class HumanInputComponent(Component):
 
     def __init__(self):
         super(HumanInputComponent, self).__init__()
-        cocos.director.director.window.push_handlers(self)
+        #cocos.director.director.window.push_handlers(self)
 
     def on_refresh(self):
         self.physics = self.owner.get_component('physics')
 
     def on_key_press(self, key, modifiers):
-        if key == pyglet.window.key.UP:
+        if key == config.keycode('move_up'):
             self.physics.dy += 1.0
-        elif key == pyglet.window.key.DOWN:
+        elif key == config.keycode('move_down'):
             self.physics.dy -= 1.0
-        elif key == pyglet.window.key.RIGHT:
+        elif key == config.keycode('move_right'):
             self.physics.dx += 1.0
-        elif key == pyglet.window.key.LEFT:
+        elif key == config.keycode('move_left'):
             self.physics.dx -= 1.0
 
     def on_key_release(self, key, modifiers):
-        if key == pyglet.window.key.UP:
+        if key == config.keycode('move_up'):
             self.physics.dy -= 1.0
-        elif key == pyglet.window.key.DOWN:
+        elif key == config.keycode('move_down'):
             self.physics.dy += 1.0
-        elif key == pyglet.window.key.RIGHT:
+        elif key == config.keycode('move_right'):
             self.physics.dx -= 1.0
-        elif key == pyglet.window.key.LEFT:
+        elif key == config.keycode('move_left'):
             self.physics.dx += 1.0
 
 class DumbAI(Component):

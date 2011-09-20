@@ -15,6 +15,18 @@ class State(layer.Layer):
     is_event_handler = True
 
 class WalkaroundState(State):
+    def __init__(self):
+        super(WalkaroundState, self).__init__()
+        self.input_component = None
+
+    def on_enter(self):
+        if self.input_component:
+            cocos.director.director.window.push_handlers(self.input_component)
+    
+    def on_exit(self):
+        if self.input_component:
+            cocos.director.director.window.remove_handlers(self.input_component)
+
     def on_key_press(self, key, modifier):
         if key == pyglet.window.key.SPACE:
             # Entity to possibly interact with
@@ -188,11 +200,16 @@ class MapScene(cocos.scene.Scene):
         self.state = list()
         # Actor to focus on
         self.focus = None
-        pyglet.clock.schedule(self.do_focus)
+        #pyglet.clock.schedule(self.do_focus)
 
-    def do_focus(self, dt):
+    def do_focus(self):
         if self.focus != None:
             self.scroller.set_focus(self.focus.x, self.focus.y)
+
+    def visit(self):
+        # For some reason this is the only way to the map scroll smoothly
+        self.do_focus()
+        super(MapScene, self).visit()
 
     def init_layers(self, ground, fringe, over, collision, actors):
         # Set member variables
