@@ -9,6 +9,7 @@ class Actor(pyglet.event.EventDispatcher):
     def __init__(self):
         super(Actor, self).__init__()
         self.name = "Anonymous"
+        self.group = None
         self._x = 0
         self._y = 0
         self.width = 0
@@ -104,13 +105,13 @@ class Actor(pyglet.event.EventDispatcher):
 Actor.register_event_type('on_move')
 
 from component import *
+from .. import mapload
 class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
         self.size = (24, 24)
 
         # Load animations
-        from .. import mapload
         anims = mapload.load_animset('king.xml')
 
         self.add_component(HumanInputComponent())
@@ -132,3 +133,19 @@ class Derp(Actor):
         self.add_component(SpriteComponent(anims, offset=(-4,0)))
         self.add_component(PhysicsComponent(200))
         self.refresh_components()
+
+class Sign(Actor):
+    def __init__(self, text):
+        super(Sign, self).__init__()
+        self.add_component(DialogComponent(text))
+        self.add_component(PhysicsComponent(200))
+        self.refresh_components()
+
+@mapload.register_actor_factory("sign")
+def load_sign(mapscene, width, height, properties):
+    sign = Sign(properties['text'])
+    sign.size = (width, height)
+    return sign
+@mapload.register_actor_factory("portal")
+def load_portal(mapscene, width, height, properties):
+    return Actor()

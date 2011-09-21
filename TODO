@@ -1,10 +1,8 @@
-* Figure out why scrolling isn't very smooth and fix it
 * Eliminate dependency on global pyglet.clock for all component updates
 * Re-implement portal and sign actors
 * Re-implement loading of portal and sign actors from .tmx map
 * Document more code
 * Add game loading/saving with SQLite database
-* Add global configuration file for things like keybindings and screen size
 * Add dialog system
 * Add HUD and other needed UI elements (cocos built in menu class won't cut it
 * Add cinematic scripting

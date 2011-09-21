@@ -20,10 +20,12 @@ class WalkaroundState(State):
         self.input_component = None
 
     def on_enter(self):
+        super(WalkaroundState, self).on_enter()
         if self.input_component:
             cocos.director.director.window.push_handlers(self.input_component)
     
     def on_exit(self):
+        super(WalkaroundState, self).on_exit()
         if self.input_component:
             cocos.director.director.window.remove_handlers(self.input_component)
 
@@ -31,29 +33,29 @@ class WalkaroundState(State):
         if key == pyglet.window.key.SPACE:
             # Entity to possibly interact with
             entity = None
-            player = self.parent.player
+            player = self.input_component.owner
             # Translate hitbox up, down, left, or right depending on player direction
             player_rect = player.get_rect()
-            if player.move.direction == 'north':
+            physics = player.get_component("physics")
+            if physics.dy > 0:
                 player_rect.y += player_rect.height
-            elif player.move.direction == 'south':
+            elif physics.dy < 0:
                 player_rect.y -= player_rect.height
-            elif player.move.direction == 'east':
+            elif physics.dx > 0:
                 player_rect.x += player_rect.width
-            elif player.move.direction == 'west':
+            elif physics.dx < 0:
                 player_rect.x -= player_rect.width
             # Check for entities with dialog
-            for s in self.parent.map_layer['actors'].get_actors():
-                '''if s != player and isinstance(s, Dialog):
-                    rect = s.get_hitbox()
-                    if rect.intersects(player_rect) :
-                        entity = s
-                        break
-                '''
+            for s in self.parent.actors.get_actors():
+                rect = s.get_rect()
+                if rect.intersects(player_rect) :
+                    entity = s
+                    break
             if entity != None:
-                entity.on_interact(player)
-                player.walking = False
-                self.parent.state_push(DialogState(entity.text))
+                #entity.on_interact(player)
+                physics.stop()
+                if entity.has_component("dialog"):
+                    self.parent.state_push(DialogState(entity.get_component("dialog").text))
 
     def on_mouse_press (self, x, y, buttons, modifiers):
         '''This is just to test some stuff. Should be removed at some point.

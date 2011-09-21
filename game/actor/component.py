@@ -174,6 +174,9 @@ class PhysicsComponent(Component):
         self._dx, self._dy = dir
         self.dispatch_event('on_direction_changed', self._dx, self._dy)
 
+    def stop(self):
+        self.direction = (0, 0)
+
     def do_move(self, dt):
         # Normalize direction vector
         mag = math.sqrt((self._dx * self._dx) + (self._dy * self._dy))
@@ -241,4 +244,13 @@ class PlayerSoundComponent(Component):
             def activate_sound(dt):
                 self.play_collision = True
             pyglet.clock.schedule_once(activate_sound, .5)
+
+class DialogComponent(Component):
+    '''TODO: Make this a real dialog system. For now it only stores on text
+    field to be displayed when the actor is activated.'''
+    component_type = "dialog"
+
+    def __init__(self, text):
+        super(DialogComponent, self).__init__()
+        self.text = text
 
