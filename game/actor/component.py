@@ -226,6 +226,21 @@ class PhysicsComponent(Component):
 PhysicsComponent.register_event_type('on_collision')
 PhysicsComponent.register_event_type('on_direction_changed')
 
+class TriggerComponent(Component):
+    '''A trigger provides actors with the ability to respond to another actor
+    entering or exiting its bounding box.
+    A trigger will only respond to bounding box intersections if the actor has
+    the given group name. The trigger will respond to all actors if no group
+    name is given.
+    '''
+    component_type = "trigger"
+
+    def __init__(self, on_enter, on_exit):
+        super(TriggerComponent, self).__init__()
+        self.on_enter = on_enter
+        self.on_exit = on_exit
+        self.actor_group = None
+
 class PlayerSoundComponent(Component):
     component_type = "sound"
 

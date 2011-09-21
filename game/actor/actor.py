@@ -141,11 +141,24 @@ class Sign(Actor):
         self.add_component(PhysicsComponent(200))
         self.refresh_components()
 
-@mapload.register_actor_factory("sign")
+@mapload.register_actor_factory('sign')
 def load_sign(mapscene, width, height, properties):
     sign = Sign(properties['text'])
     sign.size = (width, height)
     return sign
-@mapload.register_actor_factory("portal")
+
+class Portal(Actor):
+    def __init__(self, destination):
+        super(Portal, self).__init__()
+        self.destination = destination
+        self.add_component(TriggerComponent(self.transport, None))
+        self.refresh_components()
+
+    def transport(self, actor):
+        new_scene = mapload.load_map(self.destination, None)
+        new_scene.actors.add_actor(actor)
+        cocos.director.director.replace(new_scene)
+
+@mapload.register_actor_factory('portal')
 def load_portal(mapscene, width, height, properties):
-    return Actor()
+    return Portal(properties['map'])

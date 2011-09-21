@@ -36,14 +36,15 @@ class WalkaroundState(State):
             player = self.input_component.owner
             # Translate hitbox up, down, left, or right depending on player direction
             player_rect = player.get_rect()
-            physics = player.get_component("physics")
-            if physics.dy > 0:
+            sprite = player.get_component("graphics")
+
+            if sprite.direction == "north":
                 player_rect.y += player_rect.height
-            elif physics.dy < 0:
+            elif sprite.direction == "south":
                 player_rect.y -= player_rect.height
-            elif physics.dx > 0:
+            elif sprite.direction == "east":
                 player_rect.x += player_rect.width
-            elif physics.dx < 0:
+            elif sprite.direction == "west":
                 player_rect.x -= player_rect.width
             # Check for entities with dialog
             for s in self.parent.actors.get_actors():
@@ -53,6 +54,7 @@ class WalkaroundState(State):
                     break
             if entity != None:
                 #entity.on_interact(player)
+                physics = player.get_component("physics")
                 physics.stop()
                 if entity.has_component("dialog"):
                     self.parent.state_push(DialogState(entity.get_component("dialog").text))
