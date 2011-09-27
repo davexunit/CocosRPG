@@ -31,6 +31,7 @@
    <properties>
     <property name="exit" value="Outside"/>
     <property name="map" value="inn.tmx"/>
+    <property name="walk_exit" value="south"/>
    </properties>
   </object>
   <object name="Mailbox" type="sign" x="480" y="1280" width="32" height="32">
@@ -41,6 +42,11 @@
   <object name="Inn Sign" type="sign" x="672" y="1280" width="32" height="32">
    <properties>
     <property name="text" value="The Foobar Inn"/>
+   </properties>
+  </object>
+  <object name="Test" type="sign" x="480" y="1408" width="224" height="96">
+   <properties>
+    <property name="text" value="Testing"/>
    </properties>
   </object>
  </objectgroup>

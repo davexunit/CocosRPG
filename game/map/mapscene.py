@@ -1,4 +1,5 @@
 import sys
+import weakref
 
 import pyglet
 from pyglet.window import key, mouse
@@ -21,6 +22,7 @@ class WalkaroundState(State):
 
     def on_enter(self):
         super(WalkaroundState, self).on_enter()
+        print "hey"
         if self.input_component:
             cocos.director.director.window.push_handlers(self.input_component)
     
@@ -30,34 +32,35 @@ class WalkaroundState(State):
             cocos.director.director.window.remove_handlers(self.input_component)
 
     def on_key_press(self, key, modifier):
-        if key == pyglet.window.key.SPACE:
+        from .. import config
+        if key == config.keycode('use'):
             # Entity to possibly interact with
             entity = None
             player = self.input_component.owner
             # Translate hitbox up, down, left, or right depending on player direction
             player_rect = player.get_rect()
-            sprite = player.get_component("graphics")
+            sprite = player.get_component('graphics')
 
-            if sprite.direction == "north":
+            if sprite.direction == 'north':
                 player_rect.y += player_rect.height
-            elif sprite.direction == "south":
+            elif sprite.direction == 'south':
                 player_rect.y -= player_rect.height
-            elif sprite.direction == "east":
+            elif sprite.direction == 'east':
                 player_rect.x += player_rect.width
-            elif sprite.direction == "west":
+            elif sprite.direction == 'west':
                 player_rect.x -= player_rect.width
             # Check for entities with dialog
             for s in self.parent.actors.get_actors():
                 rect = s.get_rect()
-                if rect.intersects(player_rect) :
+                if s != player and rect.intersects(player_rect) :
                     entity = s
                     break
             if entity != None:
                 #entity.on_interact(player)
-                physics = player.get_component("physics")
+                physics = player.get_component('physics')
                 physics.stop()
-                if entity.has_component("dialog"):
-                    self.parent.state_push(DialogState(entity.get_component("dialog").text))
+                if entity.has_component('dialog'):
+                    self.parent.state_push(DialogState(entity.get_component('dialog').text))
 
     def on_mouse_press (self, x, y, buttons, modifiers):
         '''This is just to test some stuff. Should be removed at some point.
@@ -151,43 +154,52 @@ class ActorLayer(cocos.layer.ScrollableLayer):
     def __init__(self, id=''):
         super(ActorLayer, self).__init__()
         self.id = id
-        self.actors = []
+        self.actors = {}
         self.map_scene = None
         self.batch = cocos.batch.BatchNode()
         self.add(self.batch)
 
     def add_actor(self, actor):
-        self.actors.append(actor)
+        self.actors[actor.name] = actor
 
         if self.map_scene != None:
-            actor.parent_map = self.map_scene
+            actor.set_parent_map(self.map_scene)
 
         if actor.has_component('graphics'):
             self.batch.add(actor.get_component('graphics').sprite)
+
+        actor.on_enter()
     
     def remove_actor(self, actor):
-        self.actors.remove(actor)
-        self.remove(actor)
-        actor.map_scene = None
+        del self.actors[actor.name]
+        actor.parent_map = None
+        actor.on_exit()
 
     def add_actor_collision(self, c):
         self.collision_components
 
     def set_map_scene(self, map_scene):
         self.map_scene = map_scene
-        for a in self.actors:
-            a.parent_map = map_scene
+        for a in self.actors.values():
+            a.set_parent_map(map_scene)
+
+    def get_actor(self, name):
+        return self.actors[name]
 
     def get_actors(self):
-        return self.actors
+        return self.actors.values()
 
     def get_in_region(self, rect):
-        actors = []
-        for a in self.actors:
+        actors = weakref.WeakSet()
+        for a in self.actors.values():
             actor_rect = cocos.rect.Rect(a.x, a.y, a.width, a.height)
             if actor_rect.intersects(rect):
-                actors.append(a)
+                actors.add(a)
         return actors
+
+    def update(self, dt):
+        for actor in self.actors.values():
+            actor.update(dt)
 
 class MapScene(cocos.scene.Scene):
     def __init__(self, width, height, tile_width, tile_height):
@@ -204,7 +216,17 @@ class MapScene(cocos.scene.Scene):
         self.state = list()
         # Actor to focus on
         self.focus = None
-        #pyglet.clock.schedule(self.do_focus)
+
+    def on_enter(self):
+        super(MapScene, self).on_enter()
+        self.schedule(self.update)
+
+    def on_exit(self):
+        super(MapScene, self).on_exit()
+        self.unschedule(self.update)
+
+    def update(self, dt):
+        self.actors.update(dt)
 
     def do_focus(self):
         if self.focus != None:

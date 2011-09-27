@@ -1,9 +1,16 @@
-* Eliminate dependency on global pyglet.clock for all component updates
-* Re-implement portal and sign actors
-* Re-implement loading of portal and sign actors from .tmx map
+* Fix transitions between map scenes not working
+    - State doesn't appear to be correctly saved. MapScene may have to take all
+      necessary parameters in its __init__ method in order to work properly
 * Document more code
+    - Ongoing process. The main classes are decently documented.
 * Add game loading/saving with SQLite database
+    - Any way to keep a db completely in memory and then write only when player
+      saves game?
 * Add dialog system
-* Add HUD and other needed UI elements (cocos built in menu class won't cut it
+    - Do some research
+* Add HUD and other needed UI elements
+    - cocos built in menu class won't cut it
 * Add cinematic scripting
+    - Probably really difficult
 * Work on battle engine
+    - Vague as hell

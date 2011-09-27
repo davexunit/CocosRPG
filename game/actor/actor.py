@@ -1,3 +1,4 @@
+import weakref
 import pyglet
 import cocos
 
@@ -16,6 +17,7 @@ class Actor(pyglet.event.EventDispatcher):
         self.height = 0
         self.parent_map = None
         self.components = {}
+        self.intersect_actors = weakref.WeakSet()
 
     @property
     def x(self):
@@ -26,6 +28,7 @@ class Actor(pyglet.event.EventDispatcher):
         dx = newx - self._x
         self._x = newx
         self.dispatch_event('on_move', self._x, self._y, dx, 0)
+        self.check_triggers()
 
     @property
     def y(self):
@@ -36,6 +39,7 @@ class Actor(pyglet.event.EventDispatcher):
         dy = newy - self._y
         self._y = newy
         self.dispatch_event('on_move', self._x, self._y, 0, dy)
+        self.check_triggers()
 
     @property
     def position(self):
@@ -47,6 +51,7 @@ class Actor(pyglet.event.EventDispatcher):
         dx, dy = newx - self._x, newy - self._y
         self._x, self._y = newx, newy
         self.dispatch_event('on_move', self._x, self._y, dx, dy)
+        self.check_triggers()
         
     @property
     def size(self):
@@ -58,6 +63,52 @@ class Actor(pyglet.event.EventDispatcher):
     
     def get_rect(self):
         return cocos.rect.Rect(self._x, self._y, self.width, self.height)
+
+    def get_parent_map(self):
+        if self.parent_map == None:
+            return None
+
+        return self.parent_map()
+
+    def set_parent_map(self, parent_map):
+        # Weakrefs keep away evil circular references
+        self.parent_map = weakref.ref(parent_map)
+
+    def update(self, dt):
+        for component in self.components.values():
+            component.update(dt)
+    
+    def check_triggers(self):
+        '''Called when the actor moves. If the calling actor is intersecting
+        any other actors then trigger events will be dispatched.
+        '''
+        if self.parent_map == None:
+            return
+
+        # Get all actors intersecting with bounding box
+        actors = self.get_parent_map().actors.get_in_region(self.get_rect())
+        # Remove this actor from that list
+        actors.remove(self)
+
+        # Dispatch on_actor_enter on newly intersecting actors
+        enter_actors = actors.difference(self.intersect_actors)
+        for actor in enter_actors:
+            self.dispatch_event('on_actor_enter', actor)
+            actor.intersect_actors.add(self)
+            actor.dispatch_event('on_actor_enter', self)
+
+        # Dispatch on_actor_exit on actors that are no longer intersecting.
+        exit_actors = self.intersect_actors.difference(actors)
+        for actor in exit_actors:
+            self.dispatch_event('on_actor_exit', actor)
+            actor.intersect_actors.remove(self)
+            actor.dispatch_event('on_actor_exit', self)
+
+        for actor in enter_actors.union(exit_actors):
+            actor.check_triggers()
+        
+        # Set new set 
+        self.intersect_actors = actors
 
     def add_component(self, component):
         '''Adds a component to the component dictionary. If a component of the same type is
@@ -101,8 +152,25 @@ class Actor(pyglet.event.EventDispatcher):
         for component in self.components.values():
             component.on_refresh()
 
+    def on_enter(self):
+        '''Callback function when actor is added to a map.
+        '''
+        pass
+    
+    def on_exit(self):
+        '''Callback function when actor is removed from a map.
+        '''
+        #for actor in self.intersect_actors:
+            #print "purge " + actor.name
+            #actor.intersect_actors.remove(self)
+            #actor.dispatch_event('on_actor_exit', self)
+        # Purge intersecting actors list
+        #self.intersect_actors.clear()
+
 # Event handlers for Actor
 Actor.register_event_type('on_move')
+Actor.register_event_type('on_actor_enter')
+Actor.register_event_type('on_actor_exit')
 
 from component import *
 from .. import mapload
@@ -138,27 +206,50 @@ class Sign(Actor):
     def __init__(self, text):
         super(Sign, self).__init__()
         self.add_component(DialogComponent(text))
-        self.add_component(PhysicsComponent(200))
         self.refresh_components()
 
 @mapload.register_actor_factory('sign')
-def load_sign(mapscene, width, height, properties):
+def load_sign(properties):
     sign = Sign(properties['text'])
-    sign.size = (width, height)
     return sign
 
 class Portal(Actor):
-    def __init__(self, destination):
+    def __init__(self, destination, exit_portal):
         super(Portal, self).__init__()
         self.destination = destination
-        self.add_component(TriggerComponent(self.transport, None))
+        self.exit_portal = exit_portal
+        self.active = True
         self.refresh_components()
 
-    def transport(self, actor):
-        new_scene = mapload.load_map(self.destination, None)
-        new_scene.actors.add_actor(actor)
-        cocos.director.director.replace(new_scene)
+    def on_actor_enter(self, actor):
+        if self.active:
+            def do_portal(dt):
+                from .. import map
+                # Load new map
+                new_scene = mapload.load_map(self.destination, None)
+                new_scene.focus = actor
+                # Get the exit portal
+                portal = new_scene.actors.get_actor(self.exit_portal)
+                # The active flag is so that when the actor is placed onto the
+                # portal it doesn't trigger a map change causing an unbounded
+                # loop.
+                portal.active = False
+                # Remove actor from current map and place on new map
+                self.get_parent_map().actors.remove_actor(actor)
+                new_scene.actors.add_actor(actor)
+                actor.position = portal.position
+                # Add the walkaround state
+                walkaround = map.mapscene.WalkaroundState()
+                walkaround.input_component = actor.get_component('input')
+                # Replace map
+                new_scene.state_replace(walkaround)
+                #cocos.director.director.replace(cocos.scenes.transitions.FlipX3DTransition(new_scene))
+                cocos.director.director.replace(new_scene)
+            pyglet.clock.schedule_once(do_portal, 0)
+
+    def on_actor_exit(self, actor):
+        self.active = True
 
 @mapload.register_actor_factory('portal')
-def load_portal(mapscene, width, height, properties):
-    return Portal(properties['map'])
+def load_portal(properties):
+    return Portal(properties['map'], properties['exit'])

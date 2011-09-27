@@ -32,6 +32,11 @@ class Component(pyglet.event.EventDispatcher):
         self.owner = None
         self.on_detach()
 
+    def update(self, dt):
+        '''Override this method to do time-based updates.
+        '''
+        pass
+
     def on_refresh(self):
         '''This method is called by the Actor class when the component
         'wiring' needs to be refreshed. Use this method to perform all event
@@ -145,7 +150,6 @@ class PhysicsComponent(Component):
         self._dx, self._dy = 0, 0
         self.speed = speed
         self.collidable = True
-        pyglet.clock.schedule(self.do_move)
 
     @property
     def dx(self):
@@ -177,7 +181,7 @@ class PhysicsComponent(Component):
     def stop(self):
         self.direction = (0, 0)
 
-    def do_move(self, dt):
+    def update(self, dt):
         # Normalize direction vector
         mag = math.sqrt((self._dx * self._dx) + (self._dy * self._dy))
         if mag != 0:
@@ -216,7 +220,7 @@ class PhysicsComponent(Component):
             return False
 
         # Check map collision
-        for cell in self.owner.parent_map.collision.get_in_region(*(rect.bottomleft + rect.topright)):
+        for cell in self.owner.get_parent_map().collision.get_in_region(*(rect.bottomleft + rect.topright)):
             if cell.tile != None:
                 return True
 
@@ -225,21 +229,6 @@ class PhysicsComponent(Component):
 # Events for PhysicsComponent
 PhysicsComponent.register_event_type('on_collision')
 PhysicsComponent.register_event_type('on_direction_changed')
-
-class TriggerComponent(Component):
-    '''A trigger provides actors with the ability to respond to another actor
-    entering or exiting its bounding box.
-    A trigger will only respond to bounding box intersections if the actor has
-    the given group name. The trigger will respond to all actors if no group
-    name is given.
-    '''
-    component_type = "trigger"
-
-    def __init__(self, on_enter, on_exit):
-        super(TriggerComponent, self).__init__()
-        self.on_enter = on_enter
-        self.on_exit = on_exit
-        self.actor_group = None
 
 class PlayerSoundComponent(Component):
     component_type = "sound"
