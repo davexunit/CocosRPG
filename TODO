@@ -1,3 +1,7 @@
+* Fix memory leaks from map scenes'
+    - When a new map scene is loaded it appears that there are still some
+      dangling references to old scenes. These need to be tracked down and
+      removed.
 * Fix transitions between map scenes not working
     - State doesn't appear to be correctly saved. MapScene may have to take all
       necessary parameters in its __init__ method in order to work properly
