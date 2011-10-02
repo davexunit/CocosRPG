@@ -103,14 +103,14 @@ class SpriteComponent(Component):
         else:
             self.walking = True
 
-        if dx > 0:
-            self.direction = 'east'
-        elif dx < 0:
-            self.direction = 'west'
-        elif dy > 0:
+        if dy > 0:
             self.direction = 'north'
         elif dy < 0:
             self.direction = 'south'
+        elif dx > 0:
+            self.direction = 'east'
+        elif dx < 0:
+            self.direction = 'west'
         self.update_animation()
 
 import math
@@ -133,9 +133,6 @@ class HumanInputComponent(Component):
         self.physics = self.owner.get_component('physics')
 
     def on_key_press(self, key, modifiers):
-        #if self.physics.stopped:
-        #    self.physics.start()
-
         if key == config.keycode('move_up'):
             self.move |= MOVE_NORTH
         elif key == config.keycode('move_down'):
@@ -147,9 +144,6 @@ class HumanInputComponent(Component):
         self._update_physics()
 
     def on_key_release(self, key, modifiers):
-        #if self.physics.stopped:
-        #    return
-
         if key == config.keycode('move_up'):
             self.move &= ~MOVE_NORTH
         elif key == config.keycode('move_down'):
@@ -160,6 +154,10 @@ class HumanInputComponent(Component):
             self.move &= ~MOVE_WEST
         self._update_physics()
 
+    def stop_moving(self):
+        self.move = MOVE_NONE
+        self.physics.direction = (0.0, 0.0)
+
     def is_moving(self, dir):
         if dir == MOVE_NONE:
             return self.move == 0
@@ -167,8 +165,8 @@ class HumanInputComponent(Component):
         return (self.move & dir) / dir
 
     def _update_physics(self):
-        self.physics.dy = 1.0 * (self.is_moving(MOVE_NORTH) - self.is_moving(MOVE_SOUTH))
-        self.physics.dx = 1.0 * (self.is_moving(MOVE_EAST) - self.is_moving(MOVE_WEST))
+        self.physics.dy = float(self.is_moving(MOVE_NORTH) - self.is_moving(MOVE_SOUTH))
+        self.physics.dx = float(self.is_moving(MOVE_EAST) - self.is_moving(MOVE_WEST))
 
 class DumbAI(Component):
     component_type = 'input'
@@ -193,7 +191,6 @@ class PhysicsComponent(Component):
         self._dx, self._dy = 0, 0
         self.speed = speed
         self.collidable = True
-        self.stopped = True
 
     @property
     def dx(self):
@@ -222,10 +219,6 @@ class PhysicsComponent(Component):
         self._dx, self._dy = dir
         self.dispatch_event('on_direction_changed', self._dx, self._dy)
 
-    def stop(self):
-        self.direction = (0, 0)
-        self.stopped = True
-    
     def start(self):
         self.stopped = False
 

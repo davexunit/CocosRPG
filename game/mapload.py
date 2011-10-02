@@ -128,16 +128,15 @@ def load_map(filename, db):
 
     #layers['actors'] = mapscene.ActorLayer('actors')
     # Load actors from database
-    #self.load_from_db(layers['actors'])
+    load_from_db(layers['actors'], filename, db)
 
     map_scene.init_layers(layers['ground'], layers['fringe'], layers['over'], layers['collision'], layers['actors'])
     return map_scene
     
-def load_from_db():
-    import entity
+def load_from_db(layer, filename, db):
     # Get mapnum associated with this map file
-    c = self.db.cursor()
-    args = (self.filename,)
+    c = db.cursor()
+    args = (filename,)
     c.execute('SELECT mapnum FROM map WHERE file=?', args)
     mapnum = c.fetchone()[0]
     # Get all npc rows
@@ -153,9 +152,11 @@ def load_from_db():
             animset = load_animset(npc_anim_file)
             animsets[npc_anim_file] = animset
         # Create character
-        npc = entity.Character(npc_name, animsets[npc_anim_file], cocos.rect.Rect(0, 0, 24, 24), (0,0), 300, dialog=npc_dialog)
+        from actor import actor
+        npc = actor.Derp(npc_anim_file, npc_dialog)
+        npc.name = npc_name
         npc.position = npc_x, npc_y
-        self['actors'].add_object(npc)
+        layer.add_actor(npc)
 
 def load_layer(tag, tileset, tile_width, tile_height):
     # Get layer properties

@@ -1,13 +1,18 @@
+* Create global Game class for universal game state
+    - Global state: database connection, player stats
 * Fix memory leaks from map scenes
     - When a new map scene is loaded it appears that there are still some
       dangling references to old scenes. These need to be tracked down and
       removed.
     - THIS IS A BUG IN COCOS2D - BUG REPORT SUBMITTED
+* Add game loading/saving with SQLite database
+    - Changes to db schema (add/remove tables) are updated automatically in
+      the db but insertions and deletions only affect the db in memory, not
+      until commit() is called will the changes saved. This makes sqlite
+      perfect for game saves.
+    - Construct database schema
 * Document more code
     - Ongoing process. The main classes are decently documented.
-* Add game loading/saving with SQLite database
-    - Any way to keep a db completely in memory and then write only when player
-      saves game?
 * Add dialog system
     - Do some research
 * Add HUD and other needed UI elements

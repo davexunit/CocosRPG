@@ -15,7 +15,7 @@ def main():
     director.show_FPS = True
 
     # Load database
-    db = sqlite3.connect(utility.resource_path('database'))
+    db = sqlite3.connect(utility.resource_path('saves/test.save'))
 
     # Load map scene
     def death(ref):

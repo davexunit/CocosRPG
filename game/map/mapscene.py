@@ -56,8 +56,8 @@ class WalkaroundState(State):
                     break
             if entity != None:
                 #entity.on_interact(player)
-                physics = player.get_component('physics')
-                physics.stop()
+                input = player.get_component('input')
+                input.stop_moving()
                 if entity.has_component('dialog'):
                     self.parent.state_push(DialogState(entity.get_component('dialog').text))
 

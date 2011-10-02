@@ -205,17 +205,18 @@ class Player(Actor):
         self.refresh_components()
 
 class Derp(Actor):
-    def __init__(self):
+    def __init__(self, animfile, dialog):
         super(Derp, self).__init__()
         self.size = (24, 24)
 
         # Load animations
         from .. import mapload
-        anims = mapload.load_animset('king.xml')
+        anims = mapload.load_animset(animfile)
 
-        self.add_component(DumbAI())
+        #self.add_component(DumbAI())
         self.add_component(SpriteComponent(anims, offset=(-4,0)))
         self.add_component(PhysicsComponent(200))
+        self.add_component(DialogComponent(dialog))
         self.refresh_components()
 
 class Sign(Actor):
@@ -241,9 +242,12 @@ class Portal(Actor):
         if self.active:
             def load_map(dt):
                 #print "LOADING NEW MAP"
-                from .. import map
                 # Load new map
-                new_scene = mapload.load_map(self.destination, None)
+                from .. import map
+                import sqlite3
+                from .. import utility
+                db = sqlite3.connect(utility.resource_path('saves/test.save'))
+                new_scene = mapload.load_map(self.destination, db)
                 new_scene.name = self.destination
                 new_scene.focus = actor
                 #actor.get_component('physics').stop()
