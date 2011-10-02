@@ -5,6 +5,7 @@ from config import config
 from map.mapscene import *
 from actor import actor
 from cocos.director import director
+import weakref
 
 def main():
     director.init(width=config.getint("Graphics", "screen_width"),
@@ -17,17 +18,24 @@ def main():
     db = sqlite3.connect(utility.resource_path('database'))
 
     # Load map scene
-    map_scene = mapload.load_map('outside.tmx', db)
+    def death(ref):
+        print "map has died"
+    map = mapload.load_map('outside.tmx', db)
+    from sys import getrefcount
+    #print getrefcount(map)
+    map_scene = weakref.ref(map)
+    #print getrefcount(map)
     walkaround = WalkaroundState()
-    map_scene.state_replace(walkaround)
+    map_scene().state_replace(walkaround)
 
     # Setup player sprite
     player = actor.Player()
+    player.name = "Dave"
     player.position = (460, 180)
 
     # Add player to map
-    map_scene.actors.add_actor(player)
-    map_scene.focus = player
+    map_scene().actors.add_actor(player)
+    map_scene().focus = player
     walkaround.input_component = player.get_component('input')
 
     # Add retarded NPCs
@@ -40,5 +48,6 @@ def main():
         map_scene.actors.add_actor(npc)
     '''
 
+    #print "Start: %d" % (getrefcount(map),)
     # Run map scene
-    director.run(map_scene)
+    director.run(map_scene())

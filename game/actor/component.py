@@ -1,4 +1,5 @@
 import pyglet
+import weakref
 
 class Component(pyglet.event.EventDispatcher):
     '''Components provide functionality to Actors. Components avoid the deep
@@ -12,14 +13,33 @@ class Component(pyglet.event.EventDispatcher):
     component_type = None
 
     def __init__(self):
-        self.owner = None
+        self._owner = None
+
+    @property
+    def owner(self):
+        if self._owner == None:
+            return None
+
+        return self._owner()
+    
+    @owner.setter
+    def owner(self, new_owner):
+        if new_owner == None:
+            self._owner = None
+            return
+
+        if self._owner != None:
+            raise Exception("Component of type %s already has an owner" %
+                    (self.component_type,))
+
+        self._owner = weakref.ref(new_owner)
 
     def attach(self, actor):
         '''Sets the owner of this component to the given actor. An exception
         will be raised if this component is already owned by someone else.
         '''
         if self.owner != None:
-            raise Exception("Component of type %s already has an owner" %
+            raise Exception('Component of type %s already has an owner' %
                     self.type)
         self.owner = actor
 
@@ -55,7 +75,7 @@ import cocos
 class SpriteComponent(Component):
     '''Graphics component that displays an animated sprite.
     '''
-    component_type = "graphics"
+    component_type = 'graphics'
 
     def __init__(self, anims, offset=(0,0)):
         super(SpriteComponent, self).__init__()
@@ -98,16 +118,18 @@ from .. import config
 class HumanInputComponent(Component):
     '''Input component that takes input from the keyboard.
     '''
-    component_type = "input"
+    component_type = 'input'
 
     def __init__(self):
         super(HumanInputComponent, self).__init__()
-        #cocos.director.director.window.push_handlers(self)
 
     def on_refresh(self):
         self.physics = self.owner.get_component('physics')
 
     def on_key_press(self, key, modifiers):
+        if self.physics.stopped:
+            self.physics.start()
+
         if key == config.keycode('move_up'):
             self.physics.dy += 1.0
         elif key == config.keycode('move_down'):
@@ -118,6 +140,9 @@ class HumanInputComponent(Component):
             self.physics.dx -= 1.0
 
     def on_key_release(self, key, modifiers):
+        if self.physics.stopped:
+            return
+
         if key == config.keycode('move_up'):
             self.physics.dy -= 1.0
         elif key == config.keycode('move_down'):
@@ -128,7 +153,7 @@ class HumanInputComponent(Component):
             self.physics.dx += 1.0
 
 class DumbAI(Component):
-    component_type = "input"
+    component_type = 'input'
 
     def on_refresh(self):
         self.physics = self.owner.get_component('physics')
@@ -143,13 +168,14 @@ class DumbAI(Component):
 
 import pyglet
 class PhysicsComponent(Component):
-    component_type = "physics"
+    component_type = 'physics'
 
     def __init__(self, speed):
         super(PhysicsComponent, self).__init__()
         self._dx, self._dy = 0, 0
         self.speed = speed
         self.collidable = True
+        self.stopped = True
 
     @property
     def dx(self):
@@ -180,6 +206,10 @@ class PhysicsComponent(Component):
 
     def stop(self):
         self.direction = (0, 0)
+        self.stopped = True
+    
+    def start(self):
+        self.stopped = False
 
     def update(self, dt):
         # Normalize direction vector
@@ -219,8 +249,11 @@ class PhysicsComponent(Component):
         if not self.collidable:
             return False
 
+        if self.owner.parent_map == None:
+            return false
+
         # Check map collision
-        for cell in self.owner.get_parent_map().collision.get_in_region(*(rect.bottomleft + rect.topright)):
+        for cell in self.owner.parent_map.collision.get_in_region(*(rect.bottomleft + rect.topright)):
             if cell.tile != None:
                 return True
 
@@ -231,7 +264,7 @@ PhysicsComponent.register_event_type('on_collision')
 PhysicsComponent.register_event_type('on_direction_changed')
 
 class PlayerSoundComponent(Component):
-    component_type = "sound"
+    component_type = 'sound'
 
     def __init__(self):
         super(PlayerSoundComponent, self).__init__()
@@ -252,7 +285,7 @@ class PlayerSoundComponent(Component):
 class DialogComponent(Component):
     '''TODO: Make this a real dialog system. For now it only stores on text
     field to be displayed when the actor is activated.'''
-    component_type = "dialog"
+    component_type = 'dialog'
 
     def __init__(self, text):
         super(DialogComponent, self).__init__()

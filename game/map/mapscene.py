@@ -22,7 +22,6 @@ class WalkaroundState(State):
 
     def on_enter(self):
         super(WalkaroundState, self).on_enter()
-        print "hey"
         if self.input_component:
             cocos.director.director.window.push_handlers(self.input_component)
     
@@ -65,7 +64,7 @@ class WalkaroundState(State):
     def on_mouse_press (self, x, y, buttons, modifiers):
         '''This is just to test some stuff. Should be removed at some point.
         '''
-        # Add a sprite to screen at the mouse location on right click
+        '''# Add a sprite to screen at the mouse location on right click
         if buttons & mouse.RIGHT:
             new_sprite = create_sprite('new', *self.parent.map_layer.pixel_from_screen(x, y))
             self.parent.map_layer['actors'].add_object(new_sprite)
@@ -77,6 +76,7 @@ class WalkaroundState(State):
                     self.parent.player = s
                     self.action = self.parent.player.do(MovePlayer())
                     break
+        '''
 
 class DialogState(State):
     def __init__(self, text):
@@ -159,11 +159,28 @@ class ActorLayer(cocos.layer.ScrollableLayer):
         self.batch = cocos.batch.BatchNode()
         self.add(self.batch)
 
+    @property
+    def map_scene(self):
+        if self._map_scene == None:
+            return None
+
+        return self._map_scene()
+
+    @map_scene.setter
+    def map_scene(self, new_map_scene):
+        if new_map_scene == None:
+            self._map_scene = None
+        else:
+            self._map_scene = weakref.ref(new_map_scene)
+
+        for a in self.actors.values():
+            a.parent_map = new_map_scene
+
     def add_actor(self, actor):
         self.actors[actor.name] = actor
 
         if self.map_scene != None:
-            actor.set_parent_map(self.map_scene)
+            actor.parent_map = self.map_scene
 
         if actor.has_component('graphics'):
             self.batch.add(actor.get_component('graphics').sprite)
@@ -173,15 +190,11 @@ class ActorLayer(cocos.layer.ScrollableLayer):
     def remove_actor(self, actor):
         del self.actors[actor.name]
         actor.parent_map = None
+
+        if actor.has_component('graphics'):
+            self.batch.remove(actor.get_component('graphics').sprite)
+
         actor.on_exit()
-
-    def add_actor_collision(self, c):
-        self.collision_components
-
-    def set_map_scene(self, map_scene):
-        self.map_scene = map_scene
-        for a in self.actors.values():
-            a.set_parent_map(map_scene)
 
     def get_actor(self, name):
         return self.actors[name]
@@ -204,6 +217,7 @@ class ActorLayer(cocos.layer.ScrollableLayer):
 class MapScene(cocos.scene.Scene):
     def __init__(self, width, height, tile_width, tile_height):
         super(MapScene, self).__init__()
+        self.name = "Nowhere"
         # Map dimensions in tiles
         self.map_width = width
         self.map_height = height
@@ -220,10 +234,14 @@ class MapScene(cocos.scene.Scene):
     def on_enter(self):
         super(MapScene, self).on_enter()
         self.schedule(self.update)
+        #from sys import getrefcount
+        #print "enter: " + str(getrefcount(self))
 
     def on_exit(self):
         super(MapScene, self).on_exit()
         self.unschedule(self.update)
+        #from sys import getrefcount
+        #print "exit: " + str(getrefcount(self))
 
     def update(self, dt):
         self.actors.update(dt)
@@ -244,14 +262,14 @@ class MapScene(cocos.scene.Scene):
         self.over = over
         self.collision = collision
         self.actors = actors
-        self.actors.set_map_scene(self)
+        self.actors.map_scene = self
         # Create a scrolling manager for the map layers
         self.scroller = cocos.layer.ScrollingManager()
-        self.scroller.add(self.ground, z=0)
-        self.scroller.add(self.fringe, z=1)
-        self.scroller.add(self.actors, z=2)
-        self.scroller.add(self.over, z=3)
-        self.add(self.scroller)
+        self.scroller.add(self.ground, name='ground', z=0)
+        self.scroller.add(self.fringe, name='fringe', z=1)
+        self.scroller.add(self.actors, name='actors', z=2)
+        self.scroller.add(self.over, name='over', z=3)
+        self.add(self.scroller, name='scroller')
 
     def state_replace(self, new_state):
         # Remove old state is there was one and suppress the exception

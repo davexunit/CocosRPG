@@ -11,11 +11,11 @@ class Actor(pyglet.event.EventDispatcher):
         super(Actor, self).__init__()
         self.name = "Anonymous"
         self.group = None
+        self._parent_map = None
         self._x = 0
         self._y = 0
         self.width = 0
         self.height = 0
-        self.parent_map = None
         self.components = {}
         self.intersect_actors = weakref.WeakSet()
 
@@ -64,15 +64,24 @@ class Actor(pyglet.event.EventDispatcher):
     def get_rect(self):
         return cocos.rect.Rect(self._x, self._y, self.width, self.height)
 
-    def get_parent_map(self):
-        if self.parent_map == None:
+    @property
+    def parent_map(self):
+        if self._parent_map == None:
             return None
 
-        return self.parent_map()
+        return self._parent_map()
 
-    def set_parent_map(self, parent_map):
+    @parent_map.setter
+    def parent_map(self, new_parent_map):
+        if new_parent_map == None:
+            self._parent_map = None
+            return
+
+        if self._parent_map != None:
+            raise Exception("Actor '%s' already has a parent map" %
+                    (self.name,))
         # Weakrefs keep away evil circular references
-        self.parent_map = weakref.ref(parent_map)
+        self._parent_map = weakref.ref(new_parent_map)
 
     def update(self, dt):
         for component in self.components.values():
@@ -86,7 +95,7 @@ class Actor(pyglet.event.EventDispatcher):
             return
 
         # Get all actors intersecting with bounding box
-        actors = self.get_parent_map().actors.get_in_region(self.get_rect())
+        actors = self.parent_map.actors.get_in_region(self.get_rect())
         # Remove this actor from that list
         actors.remove(self)
 
@@ -101,7 +110,10 @@ class Actor(pyglet.event.EventDispatcher):
         exit_actors = self.intersect_actors.difference(actors)
         for actor in exit_actors:
             self.dispatch_event('on_actor_exit', actor)
-            actor.intersect_actors.remove(self)
+            try:
+                actor.intersect_actors.remove(self)
+            except Exception:
+                pass
             actor.dispatch_event('on_actor_exit', self)
 
         for actor in enter_actors.union(exit_actors):
@@ -130,6 +142,10 @@ class Actor(pyglet.event.EventDispatcher):
         type is not attached.
         '''
         self.components[component_type].detach()
+
+    def clear_components(self):
+        for component in self.components.values():
+            component.detach()
 
     def has_component(self, component_type):
         '''Tests if a component of given type is attached.
@@ -223,11 +239,14 @@ class Portal(Actor):
 
     def on_actor_enter(self, actor):
         if self.active:
-            def do_portal(dt):
+            def load_map(dt):
+                #print "LOADING NEW MAP"
                 from .. import map
                 # Load new map
                 new_scene = mapload.load_map(self.destination, None)
+                new_scene.name = self.destination
                 new_scene.focus = actor
+                actor.get_component('physics').stop()
                 # Get the exit portal
                 portal = new_scene.actors.get_actor(self.exit_portal)
                 # The active flag is so that when the actor is placed onto the
@@ -235,17 +254,47 @@ class Portal(Actor):
                 # loop.
                 portal.active = False
                 # Remove actor from current map and place on new map
-                self.get_parent_map().actors.remove_actor(actor)
+                def old_death(ref):
+                    print "old map died"
+                oldmap = weakref.ref(actor.parent_map, old_death)
+                #def killeverything(node):
+                #    for c in node.get_children():
+                #        killeverything(c)
+                #        c.kill()
+                #print "weakref count:", weakref.getweakrefcount(oldmap())
+
+                self.parent_map.actors.remove_actor(actor)
                 new_scene.actors.add_actor(actor)
                 actor.position = portal.position
+
+                '''for a in oldmap().actors.actors.values():
+                    oldmap().actors.remove_actor(a)
+                del oldmap().actors
+                del oldmap().ground
+                del oldmap().fringe
+                del oldmap().over
+                del oldmap().collision
+                killeverything(oldmap())'''
                 # Add the walkaround state
                 walkaround = map.mapscene.WalkaroundState()
                 walkaround.input_component = actor.get_component('input')
-                # Replace map
                 new_scene.state_replace(walkaround)
-                #cocos.director.director.replace(cocos.scenes.transitions.FlipX3DTransition(new_scene))
-                cocos.director.director.replace(new_scene)
-            pyglet.clock.schedule_once(do_portal, 0)
+                # Replace map
+                #new_scene.state_replace(walkaround)
+                cocos.director.director.replace(cocos.scenes.transitions.FadeTransition(new_scene, 1))
+                #cocos.director.director.replace(new_scene)
+                #cocos.director.director.replace(cocos.scenes.pause.PauseScene(pyglet.resource.image('background.png')))
+                #def do_refcount(dt):
+                #    from sys import getrefcount
+                #    print oldmap(), getrefcount(oldmap())
+                #pyglet.clock.schedule_interval(do_refcount, 1)
+                #from sys import getrefcount
+                #print "ref count:", getrefcount(oldmap())
+                #print "weakref count:", weakref.getweakrefcount(oldmap())
+                #def print_ref(dt):
+                #    import debug
+                #    debug.print_referrers(oldmap())
+            pyglet.clock.schedule_once(load_map, 0)
 
     def on_actor_exit(self, actor):
         self.active = True

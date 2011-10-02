@@ -1,10 +1,12 @@
-* Fix memory leaks from map scenes'
+* Fix input component
+    - When moving from one map to another the input component can get confused
+      and when all movement keys are released the actor will still move in one
+      direction.
+* Fix memory leaks from map scenes
     - When a new map scene is loaded it appears that there are still some
       dangling references to old scenes. These need to be tracked down and
       removed.
-* Fix transitions between map scenes not working
-    - State doesn't appear to be correctly saved. MapScene may have to take all
-      necessary parameters in its __init__ method in order to work properly
+    - THIS IS A BUG IN COCOS2D - BUG REPORT SUBMITTED
 * Document more code
     - Ongoing process. The main classes are decently documented.
 * Add game loading/saving with SQLite database
