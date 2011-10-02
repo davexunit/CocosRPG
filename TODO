@@ -1,7 +1,3 @@
-* Fix input component
-    - When moving from one map to another the input component can get confused
-      and when all movement keys are released the actor will still move in one
-      direction.
 * Fix memory leaks from map scenes
     - When a new map scene is loaded it appears that there are still some
       dangling references to old scenes. These need to be tracked down and

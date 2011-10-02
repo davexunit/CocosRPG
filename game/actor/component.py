@@ -115,6 +115,11 @@ class SpriteComponent(Component):
 
 import math
 from .. import config
+MOVE_NONE = 0
+MOVE_NORTH = 1
+MOVE_SOUTH = 2
+MOVE_EAST = 4
+MOVE_WEST = 8
 class HumanInputComponent(Component):
     '''Input component that takes input from the keyboard.
     '''
@@ -122,35 +127,48 @@ class HumanInputComponent(Component):
 
     def __init__(self):
         super(HumanInputComponent, self).__init__()
+        self.move = MOVE_NONE
 
     def on_refresh(self):
         self.physics = self.owner.get_component('physics')
 
     def on_key_press(self, key, modifiers):
-        if self.physics.stopped:
-            self.physics.start()
+        #if self.physics.stopped:
+        #    self.physics.start()
 
         if key == config.keycode('move_up'):
-            self.physics.dy += 1.0
+            self.move |= MOVE_NORTH
         elif key == config.keycode('move_down'):
-            self.physics.dy -= 1.0
+            self.move |= MOVE_SOUTH
         elif key == config.keycode('move_right'):
-            self.physics.dx += 1.0
+            self.move |= MOVE_EAST
         elif key == config.keycode('move_left'):
-            self.physics.dx -= 1.0
+            self.move |= MOVE_WEST
+        self._update_physics()
 
     def on_key_release(self, key, modifiers):
-        if self.physics.stopped:
-            return
+        #if self.physics.stopped:
+        #    return
 
         if key == config.keycode('move_up'):
-            self.physics.dy -= 1.0
+            self.move &= ~MOVE_NORTH
         elif key == config.keycode('move_down'):
-            self.physics.dy += 1.0
+            self.move &= ~MOVE_SOUTH
         elif key == config.keycode('move_right'):
-            self.physics.dx -= 1.0
+            self.move &= ~MOVE_EAST
         elif key == config.keycode('move_left'):
-            self.physics.dx += 1.0
+            self.move &= ~MOVE_WEST
+        self._update_physics()
+
+    def is_moving(self, dir):
+        if dir == MOVE_NONE:
+            return self.move == 0
+
+        return (self.move & dir) / dir
+
+    def _update_physics(self):
+        self.physics.dy = 1.0 * (self.is_moving(MOVE_NORTH) - self.is_moving(MOVE_SOUTH))
+        self.physics.dx = 1.0 * (self.is_moving(MOVE_EAST) - self.is_moving(MOVE_WEST))
 
 class DumbAI(Component):
     component_type = 'input'

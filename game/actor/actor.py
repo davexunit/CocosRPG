@@ -246,7 +246,7 @@ class Portal(Actor):
                 new_scene = mapload.load_map(self.destination, None)
                 new_scene.name = self.destination
                 new_scene.focus = actor
-                actor.get_component('physics').stop()
+                #actor.get_component('physics').stop()
                 # Get the exit portal
                 portal = new_scene.actors.get_actor(self.exit_portal)
                 # The active flag is so that when the actor is placed onto the
