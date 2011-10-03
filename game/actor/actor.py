@@ -244,10 +244,9 @@ class Portal(Actor):
                 #print "LOADING NEW MAP"
                 # Load new map
                 from .. import map
-                import sqlite3
                 from .. import utility
-                db = sqlite3.connect(utility.resource_path('saves/test.save'))
-                new_scene = mapload.load_map(self.destination, db)
+                from ..game import game
+                new_scene = mapload.load_map(self.destination, game.db)
                 new_scene.name = self.destination
                 new_scene.focus = actor
                 #actor.get_component('physics').stop()

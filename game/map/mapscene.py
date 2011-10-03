@@ -31,8 +31,8 @@ class WalkaroundState(State):
             cocos.director.director.window.remove_handlers(self.input_component)
 
     def on_key_press(self, key, modifier):
-        from .. import config
-        if key == config.keycode('use'):
+        from ..game import game
+        if key == game.config.get_keycode('use'):
             # Entity to possibly interact with
             entity = None
             player = self.input_component.owner

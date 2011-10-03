@@ -114,7 +114,7 @@ class SpriteComponent(Component):
         self.update_animation()
 
 import math
-from .. import config
+from ..game import game
 MOVE_NONE = 0
 MOVE_NORTH = 1
 MOVE_SOUTH = 2
@@ -133,24 +133,24 @@ class HumanInputComponent(Component):
         self.physics = self.owner.get_component('physics')
 
     def on_key_press(self, key, modifiers):
-        if key == config.keycode('move_up'):
+        if key == game.config.get_keycode('move_up'):
             self.move |= MOVE_NORTH
-        elif key == config.keycode('move_down'):
+        elif key == game.config.get_keycode('move_down'):
             self.move |= MOVE_SOUTH
-        elif key == config.keycode('move_right'):
+        elif key == game.config.get_keycode('move_right'):
             self.move |= MOVE_EAST
-        elif key == config.keycode('move_left'):
+        elif key == game.config.get_keycode('move_left'):
             self.move |= MOVE_WEST
         self._update_physics()
 
     def on_key_release(self, key, modifiers):
-        if key == config.keycode('move_up'):
+        if key == game.config.get_keycode('move_up'):
             self.move &= ~MOVE_NORTH
-        elif key == config.keycode('move_down'):
+        elif key == game.config.get_keycode('move_down'):
             self.move &= ~MOVE_SOUTH
-        elif key == config.keycode('move_right'):
+        elif key == game.config.get_keycode('move_right'):
             self.move &= ~MOVE_EAST
-        elif key == config.keycode('move_left'):
+        elif key == game.config.get_keycode('move_left'):
             self.move &= ~MOVE_WEST
         self._update_physics()
 

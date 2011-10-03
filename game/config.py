@@ -1,8 +1,10 @@
 import ConfigParser
 import pyglet
 
-config = ConfigParser.RawConfigParser()
-config.read("rpg.conf")
+class GameConfig(ConfigParser.RawConfigParser):
+    def __init__(self, filename):
+        ConfigParser.RawConfigParser.__init__(self)
+        self.read(filename)
 
-def keycode(name):
-    return eval("pyglet.window.key." + config.get('Controls', name))
+    def get_keycode(self, name):
+        return eval("pyglet.window.key." + self.get('Controls', name))

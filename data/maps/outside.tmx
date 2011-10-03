@@ -44,10 +44,5 @@
     <property name="text" value="The Foobar Inn"/>
    </properties>
   </object>
-  <object name="Test" type="sign" x="480" y="1408" width="224" height="96">
-   <properties>
-    <property name="text" value="Testing"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>

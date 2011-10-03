@@ -1,26 +1,27 @@
 import sqlite3
 import utility
 import mapload
-from config import config
+from game import game
 from map.mapscene import *
 from actor import actor
 from cocos.director import director
 import weakref
 
 def main():
-    director.init(width=config.getint("Graphics", "screen_width"),
-            height=config.getint("Graphics", "screen_height"),
+    game.load_config('rpg.conf')
+    director.init(width=game.config.getint("Graphics", "screen_width"),
+            height=game.config.getint("Graphics", "screen_height"),
             do_not_scale=True, resizable=True, 
-            fullscreen=config.getboolean("Graphics", "fullscreen"))
+            fullscreen=game.config.getboolean("Graphics", "fullscreen"))
     director.show_FPS = True
-
+    
     # Load database
-    db = sqlite3.connect(utility.resource_path('saves/test.save'))
+    game.db = sqlite3.connect(utility.resource_path('saves/test.save'))
 
     # Load map scene
     def death(ref):
         print "map has died"
-    map = mapload.load_map('outside.tmx', db)
+    map = mapload.load_map('outside.tmx', game.db)
     from sys import getrefcount
     #print getrefcount(map)
     map_scene = weakref.ref(map)
