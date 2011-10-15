@@ -1,5 +1,5 @@
-* Create global Game class for universal game state
-    - Global state: database connection, player stats
+* Add common loading interface for actors loaded from xml or from sqlite
+    database
 * Fix memory leaks from map scenes
     - When a new map scene is loaded it appears that there are still some
       dangling references to old scenes. These need to be tracked down and

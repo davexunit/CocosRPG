@@ -30,7 +30,7 @@
   <object name="Outside" type="portal" x="288" y="608" width="64" height="32">
    <properties>
     <property name="exit" value="Inn Door"/>
-    <property name="map" value="outside.tmx"/>
+    <property name="map" value="Outside"/>
    </properties>
   </object>
  </objectgroup>

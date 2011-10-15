@@ -1,4 +1,3 @@
-import sqlite3
 import utility
 import mapload
 from game import game
@@ -16,12 +15,12 @@ def main():
     director.show_FPS = True
     
     # Load database
-    game.db = sqlite3.connect(utility.resource_path('saves/test.save'))
+    game.load_db(utility.resource_path('saves/test.save'))
 
     # Load map scene
     def death(ref):
         print "map has died"
-    map = mapload.load_map('outside.tmx', game.db)
+    map = mapload.load_map('Outside')
     from sys import getrefcount
     #print getrefcount(map)
     map_scene = weakref.ref(map)

@@ -219,6 +219,11 @@ class Derp(Actor):
         self.add_component(DialogComponent(dialog))
         self.refresh_components()
 
+@mapload.register_actor_factory('npc')
+def load_npc(properties):
+    npc = Derp(properties['file'], properties['dialog'])
+    return npc
+
 class Sign(Actor):
     def __init__(self, text):
         super(Sign, self).__init__()
@@ -241,52 +246,39 @@ class Portal(Actor):
     def on_actor_enter(self, actor):
         if self.active:
             def load_map(dt):
-                #print "LOADING NEW MAP"
-                # Load new map
                 from .. import map
                 from .. import utility
                 from ..game import game
-                new_scene = mapload.load_map(self.destination, game.db)
+
+                # Load new map
+                new_scene = mapload.load_map(self.destination)
                 new_scene.name = self.destination
                 new_scene.focus = actor
-                #actor.get_component('physics').stop()
+
                 # Get the exit portal
                 portal = new_scene.actors.get_actor(self.exit_portal)
                 # The active flag is so that when the actor is placed onto the
                 # portal it doesn't trigger a map change causing an unbounded
                 # loop.
                 portal.active = False
-                # Remove actor from current map and place on new map
-                def old_death(ref):
-                    print "old map died"
-                oldmap = weakref.ref(actor.parent_map, old_death)
-                #def killeverything(node):
-                #    for c in node.get_children():
-                #        killeverything(c)
-                #        c.kill()
-                #print "weakref count:", weakref.getweakrefcount(oldmap())
 
+                #def old_death(ref):
+                #    print "old map died"
+                #oldmap = weakref.ref(actor.parent_map, old_death)
+
+                # Remove actor from current map and place on new map
                 self.parent_map.actors.remove_actor(actor)
                 new_scene.actors.add_actor(actor)
                 actor.position = portal.position
 
-                '''for a in oldmap().actors.actors.values():
-                    oldmap().actors.remove_actor(a)
-                del oldmap().actors
-                del oldmap().ground
-                del oldmap().fringe
-                del oldmap().over
-                del oldmap().collision
-                killeverything(oldmap())'''
                 # Add the walkaround state
                 walkaround = map.mapscene.WalkaroundState()
                 walkaround.input_component = actor.get_component('input')
                 new_scene.state_replace(walkaround)
+
                 # Replace map
-                #new_scene.state_replace(walkaround)
                 cocos.director.director.replace(cocos.scenes.transitions.FadeTransition(new_scene, 1))
-                #cocos.director.director.replace(new_scene)
-                #cocos.director.director.replace(cocos.scenes.pause.PauseScene(pyglet.resource.image('background.png')))
+
                 #def do_refcount(dt):
                 #    from sys import getrefcount
                 #    print oldmap(), getrefcount(oldmap())
@@ -297,6 +289,7 @@ class Portal(Actor):
                 #def print_ref(dt):
                 #    import debug
                 #    debug.print_referrers(oldmap())
+            # Perform the map loading on the next game loop
             pyglet.clock.schedule_once(load_map, 0)
 
     def on_actor_exit(self, actor):

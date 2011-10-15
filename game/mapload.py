@@ -13,6 +13,7 @@ import cocos
 
 import utility
 from map import mapscene
+from game import game
 
 class TileSet(list):
     pass
@@ -89,7 +90,18 @@ def register_actor_factory(name):
         return func
     return decorate
 
-def load_map(filename, db):
+def load_map(mapname):
+    # Get map file from database
+    cursor = game.db.cursor()
+    cursor.execute('SELECT mapnum, file FROM map WHERE name=?', (mapname,))
+
+    # Raise exception if the map is not found
+    row = cursor.fetchone()
+    if row == None:
+        raise MapException('Map %s not found in database' % mapname)
+    mapnum = row['mapnum']
+    filename = row['file']
+
     # Open xml file
     tree = ElementTree.parse(utility.resource_path(filename))
     root = tree.getroot()
@@ -128,35 +140,35 @@ def load_map(filename, db):
 
     #layers['actors'] = mapscene.ActorLayer('actors')
     # Load actors from database
-    load_from_db(layers['actors'], filename, db)
+    load_from_db(layers['actors'], mapnum)
 
     map_scene.init_layers(layers['ground'], layers['fringe'], layers['over'], layers['collision'], layers['actors'])
     return map_scene
     
-def load_from_db(layer, filename, db):
-    # Get mapnum associated with this map file
-    c = db.cursor()
-    args = (filename,)
-    c.execute('SELECT mapnum FROM map WHERE file=?', args)
-    mapnum = c.fetchone()[0]
-    # Get all npc rows
-    args = (mapnum,)
-    c.execute('SELECT name, file, x, y, dialog FROM npc WHERE mapnum=?', args)
-    animsets = dict()
-    for row in c:
-        # Give the rows descriptive names
-        npc_name, npc_anim_file, npc_x, npc_y, npc_dialog = row
-        npc_x, npc_y = int(npc_x), int(npc_y)
-        # Load animset
-        if npc_anim_file not in animsets:
-            animset = load_animset(npc_anim_file)
-            animsets[npc_anim_file] = animset
-        # Create character
-        from actor import actor
-        npc = actor.Derp(npc_anim_file, npc_dialog)
-        npc.name = npc_name
-        npc.position = npc_x, npc_y
-        layer.add_actor(npc)
+def load_from_db(layer, mapnum):
+    # Get all actors in the map
+    cursor = game.db.cursor()
+    cursor.execute('SELECT actornum, type, name, group_name, x, y, width,\
+            height FROM actor WHERE mapnum=?', (mapnum,))
+
+    # Load all actors
+    for row in cursor:
+        # Query for all actor properties
+        property_cursor = game.db.cursor()
+        property_cursor.execute('SELECT property, value FROM actor_property\
+            WHERE actornum=?', (row['actornum'],))
+
+        # Make a dictionary of properties
+        properties = {}
+        for property_row in property_cursor:
+            properties[property_row['property']] = property_row['value']
+
+        actor = factories[row['type']](properties)
+        actor.name = row['name']
+        actor.group = row['group_name']
+        actor.position = (int(row['x']), int(row['y']))
+        actor.size = (int(row['width']), int(row['height']))
+        layer.add_actor(actor)
 
 def load_layer(tag, tileset, tile_width, tile_height):
     # Get layer properties
@@ -225,7 +237,7 @@ def load_actor(map_scene, tag, width, height, tile_width, tile_height):
     properties = dict()
     for p in tag.find('properties'):
         properties[p.get('name')] = p.get('value')
-    actor =  factories[actor_type](properties)
+    actor = factories[actor_type](properties)
     actor.name = name
     actor.position = (x, y)
     actor.size = (width, height)
