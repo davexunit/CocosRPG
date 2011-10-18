@@ -148,7 +148,11 @@ class DialogState(State):
             self.parent.state_pop()
 
 class CinematicState(State):
-    pass
+    def __init__(self):
+        super(CinematicState, self).__init__()
+
+    def command(self, action):
+        pass
 
 class ActorLayer(cocos.layer.ScrollableLayer):
     def __init__(self, id=''):
@@ -177,6 +181,9 @@ class ActorLayer(cocos.layer.ScrollableLayer):
             a.parent_map = new_map_scene
 
     def add_actor(self, actor):
+        if actor.name in self.actors:
+            raise Exception('Duplicate actor name: %s' % actor.name)
+
         self.actors[actor.name] = actor
 
         if self.map_scene != None:
