@@ -2,6 +2,8 @@
     - Probably really difficult
     - Dialog system
     - Character movements, etc.
+    - Preferably, use cocos2d's actions to achieve desired results. Some work
+      will have to be done to adapt actions to do what we want.
 * Work on battle engine
     - Vague as hell
 * Document more code
