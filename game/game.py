@@ -1,5 +1,6 @@
 import config
 import sqlite3
+import pyglet
 
 class Game(object):
     '''The Game class contains all of the game's global state. Yeah, yeah,
@@ -10,6 +11,15 @@ class Game(object):
     def __init__(self):
         self.db = None
         self.config = None
+
+        # Add resource file paths
+        pyglet.resource.path.append('data')
+        pyglet.resource.path.append('data/images')
+        pyglet.resource.path.append('data/maps')
+        pyglet.resource.path.append('data/anims')
+        pyglet.resource.path.append('data/sounds')
+        pyglet.resource.reindex()
+
 
     def load_config(self, filename):
         self.config = config.GameConfig(filename)

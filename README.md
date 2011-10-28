@@ -69,7 +69,7 @@ Dependencies
 Try it out!
 -----------
 ### Tile engine test
-python test.py
+python test.py  
 Make sure you are running python 2.7, 3.0 will not work.
 
 License

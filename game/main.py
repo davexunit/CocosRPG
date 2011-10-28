@@ -38,6 +38,12 @@ def main():
     map_scene().focus = player
     walkaround.input_component = player.get_component('input')
 
+    # Add test script entity
+    #script = actor.TestScript()
+    #script.name = "Test"
+    #script.position = (460, 250)
+    #map_scene().actors.add_actor(script)
+
     # Add retarded NPCs
     '''
     import random

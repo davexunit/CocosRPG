@@ -298,3 +298,14 @@ class Portal(Actor):
 @mapload.register_actor_factory('portal')
 def load_portal(properties):
     return Portal(properties['map'], properties['exit'])
+
+from .. import map
+class TestScript(Actor):
+    def __init__(self):
+        super(TestScript, self).__init__()
+
+    def on_actor_enter(self, actor):
+        def func():
+            self.parent_map.state_push(map.mapscene.DialogState('Testing!'))
+        action = cocos.actions.CallFunc(func)#cocos.actions.Blink(5,.1)
+        self.parent_map.state_push(map.mapscene.CinematicState(action))

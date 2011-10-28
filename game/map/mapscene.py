@@ -148,11 +148,20 @@ class DialogState(State):
             self.parent.state_pop()
 
 class CinematicState(State):
-    def __init__(self):
+    def __init__(self, action):
+        '''A script is really just a series of special cocos actions that have
+        been combined using the necessary operators to construct the sequence
+        of operations that are to be performed.
+        '''
         super(CinematicState, self).__init__()
+        self.action = action
 
-    def command(self, action):
-        pass
+    def on_enter(self):
+        if self.action:
+            def end():
+                self.parent.state_pop()
+            self.do(self.action + cocos.actions.CallFunc(end))
+            self.action = None
 
 class ActorLayer(cocos.layer.ScrollableLayer):
     def __init__(self, id=''):
