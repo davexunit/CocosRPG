@@ -1,10 +1,10 @@
-import utility
 import mapload
 from game import game
 from map.mapscene import *
 from actor import actor
 from cocos.director import director
 import weakref
+import util.resource
 
 def main():
     game.load_config('rpg.conf')
@@ -15,7 +15,8 @@ def main():
     director.show_FPS = True
     
     # Load database
-    game.load_db(utility.resource_path('saves/test.save'))
+    print dir(util)
+    game.load_db(util.resource.resource_path('saves/test.save'))
 
     # Load map scene
     def death(ref):

@@ -96,7 +96,7 @@ class DialogState(State):
  
     def _make_dialog_layer(self):
         # Load dialog box border
-        image = pyglet.resource.image('Dialog_Border.png')
+        image = pyglet.resource.image('images/Dialog_Border.png')
         # The border is a 3x3 tile grid
         grid = pyglet.image.ImageGrid(image, 3, 3)
         # The width of the dialog box will be the width of the window

@@ -11,7 +11,7 @@ import pyglet
 from pyglet.gl import *
 import cocos
 
-import utility
+import util
 from map import mapscene
 from game import game
 
@@ -26,17 +26,20 @@ class MapException(Exception):
 
 def load_animset(filename):
     # Open xml file
-    root = ElementTree.parse(utility.resource_path(filename)).getroot()
+    root = ElementTree.parse(util.resource.resource_path(filename)).getroot()
     if root.tag != 'animset':
         raise MapException('Expected <animset> tag, found <%s> tag' % root.tag)
+
     # Get animset properties
-    image = pyglet.resource.image(root.get('image'))
+    image = pyglet.resource.image('anims/' + root.get('image'))
     tile_width = int(root.get('tilewidth'))
     tile_height = int(root.get('tileheight'))
+
     # Create image sequence of tiles
     grid = pyglet.image.ImageGrid(image, image.width / tile_width, image.height / tile_height)
     sequence = grid.get_texture_sequence()
     anims = AnimSet()
+
     # Loop through all animations
     for child in root.findall('anim'):
         anim_name = child.get('name')
@@ -103,7 +106,7 @@ def load_map(mapname):
     filename = row['file']
 
     # Open xml file
-    tree = ElementTree.parse(utility.resource_path(filename))
+    tree = ElementTree.parse(util.resource.resource_path(filename))
     root = tree.getroot()
 
     # Root level tag is expected to be <map> so raise an exception if it's not

@@ -196,7 +196,7 @@ class Player(Actor):
         self.size = (24, 24)
 
         # Load animations
-        anims = mapload.load_animset('king.xml')
+        anims = mapload.load_animset('anims/king.xml')
 
         self.add_component(HumanInputComponent())
         self.add_component(SpriteComponent(anims, offset=(-4,0)))
@@ -247,7 +247,7 @@ class Portal(Actor):
         if self.active:
             def load_map(dt):
                 from .. import map
-                from .. import utility
+                from .. import util
                 from ..game import game
 
                 # Load new map

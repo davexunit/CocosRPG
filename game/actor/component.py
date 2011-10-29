@@ -279,7 +279,7 @@ class PlayerSoundComponent(Component):
 
     def __init__(self):
         super(PlayerSoundComponent, self).__init__()
-        self.collision = pyglet.resource.media('snare.wav', streaming=False)
+        self.collision = pyglet.resource.media('sounds/snare.wav', streaming=False)
         self.play_collision = True
 
     def on_refresh(self):

@@ -13,6 +13,7 @@ Features
 --------
 * Multi-layered tile maps
 * Integration with the Tiled map editor
+* Simple spreadsheet files to define game objects and other properties
 * Dynamically populated maps from SQLite database
 * Simple XML sprite animation format
 * Simple component based map actors
@@ -46,13 +47,15 @@ placed in the map file using Tiled's object layer functionality.
 Actors are loaded by calling the appropriate factory method that is registered
 at runtime.
 
+Open Document Format Spreadsheets
+---------------------------------
+Game content is stored in .ods spreadsheet files to provide an easy way to edit
+game data. At runtime, the spreadsheets are opened and loaded into an in-memory
+SQLite database to provide easy manipulation during runtime.
+
 SQLite save files
 -----------------
-All persistent data is stored using SQLite databases. Any type of actor can be
-stored in the actor table. Actors consist of properties that are housed in the
-actor\_property table. Properties from static actors in .tmx XML files and
-dynamic actors from game saves are the same so, consequently, the same factory 
-methods can be used to load actors from either source.
+All persistent data is stored using SQLite databases. 
 
 Component based actors
 ----------------------
@@ -65,6 +68,7 @@ Dependencies
 ------------
 * cocos2d
 * pyglet
+* lpod-python - for loading .ods spreadsheet files
 
 Try it out!
 -----------
